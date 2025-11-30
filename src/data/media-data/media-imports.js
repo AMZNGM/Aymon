@@ -27,7 +27,7 @@ import geo5 from '../../../public/images/selectedImgs/geo/geo5.webp'
 import Menage from '../../../public/images/selectedImgs/ghadaAbdelrazikXMenage07/Menage.webp'
 import halal from '../../../public/images/selectedImgs/marwanPablo/halal.webp'
 
-const marwanPablo = '../../../public/vidßeos/selectedVideos/marwanPablo.mp4'
+const marwanPablo = '../../../public/videos/selectedVideos/marwanPablo.mp4'
 const awarnessUrbnlanes = '../../../public/videos/randomVideos/awarnessUrbnlanes.mp4'
 const coldInside = '../../../public/videos/randomVideos/coldInside.mp4'
 const eyes = '../../../public/videos/randomVideos/eyes.mp4'
