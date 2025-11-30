@@ -3,42 +3,27 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useAnimate } from 'motion/react'
 
-// handy function to split text into characters with support for unicode and emojis
 const splitIntoCharacters = (text) => {
   if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
     const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' })
     return Array.from(segmenter.segment(text), ({ segment }) => segment)
   }
-  // Fallback for browsers that don't support Intl.Segmenter
   return Array.from(text)
 }
 
-// handy function to extract text from children
 const extractTextFromChildren = (children) => {
-  // Handle null/undefined
   if (children == null) return ''
-
-  // Handle string
   if (typeof children === 'string') return children
-
-  // Handle number
   if (typeof children === 'number') return String(children)
-
-  // Handle arrays (including fragments)
   if (Array.isArray(children)) {
     return children.map(extractTextFromChildren).join('')
   }
-
-  // Handle React elements
   if (React.isValidElement(children)) {
     const props = children.props
     const childText = props?.children
-
-    // Recursively extract text from children
     if (childText != null) {
       return extractTextFromChildren(childText)
     }
-
     return ''
   }
 }
