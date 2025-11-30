@@ -24,18 +24,18 @@ import geo2 from '../../../public/images/selectedImgs/geo/geo2.webp'
 import geo3 from '../../../public/images/selectedImgs/geo/geo3.webp'
 import geo4 from '../../../public/images/selectedImgs/geo/geo4.webp'
 import geo5 from '../../../public/images/selectedImgs/geo/geo5.webp'
-import Menage from '../../../public/images/selectedImgs/ghadaAbdelrazikXMénage07/Menage.webp'
+import Menage from '../../../public/images/selectedImgs/ghadaAbdelrazikXMenage07/Menage.webp'
 import halal from '../../../public/images/selectedImgs/marwanPablo/halal.webp'
 
+const marwanPablo = '../../../public/vidßeos/selectedVideos/marwanPablo.mp4'
 const awarnessUrbnlanes = '../../../public/videos/randomVideos/awarnessUrbnlanes.mp4'
 const coldInside = '../../../public/videos/randomVideos/coldInside.mp4'
 const eyes = '../../../public/videos/randomVideos/eyes.mp4'
 const feeling = '../../../public/videos/randomVideos/feeling.mp4'
 const plastine = '../../../public/videos/randomVideos/plastine.mp4'
 const visualCard = '../../../public/videos/randomVideos/visualCard.mp4'
-const marwanPablo = '../../../public/videos/selectedVideos/marwanPablo.mp4'
 
-export const mediaData = [
+export const imagesData = [
   mainPhoto,
   asfour,
   aymonPortrait,
@@ -64,11 +64,6 @@ export const mediaData = [
   geo5,
   Menage,
   halal,
-  awarnessUrbnlanes,
-  coldInside,
-  eyes,
-  feeling,
-  plastine,
-  visualCard,
-  marwanPablo,
 ]
+
+export const videosData = [marwanPablo, awarnessUrbnlanes, coldInside, eyes, feeling, plastine, visualCard]
