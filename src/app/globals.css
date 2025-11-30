@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@font-face {
+  font-family: 'Gambarino-Regular';
+  src: url('/fonts/Gambarino-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
 @import 'tailwindcss';
 @theme {
   --color-main: #005240;
   --color-bg: #ffffff;
   --color-text: #030303;
+  --font-sec: 'Gambarino-Regular';
 }
 * {
   box-sizing: border-box;
