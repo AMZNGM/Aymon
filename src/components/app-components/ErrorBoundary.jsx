@@ -55,15 +55,15 @@ export default class ErrorBoundary extends Component {
             <div className="space-y-3 mb-6 text-sm">
               <p className="flex items-start">
                 <span className="text-red-500 mr-2">[ERROR]</span>
-                <Text3d>Critical exception encountered in application runtime</Text3d>
+                <Text3d as="span">Critical exception encountered in application runtime</Text3d>
               </p>
               <p className="flex items-start">
                 <span className="text-yellow-500 mr-2">[WARN]</span>
-                <Text3d>State corruption detected. Manual intervention required.</Text3d>
+                <Text3d as="span">State corruption detected. Manual intervention required.</Text3d>
               </p>
               <p className="flex items-start">
                 <span className="text-blue-400 mr-2">[INFO]</span>
-                <Text3d>Press the button below to reinitialize the system...</Text3d>
+                <Text3d as="span">Press the button below to reinitialize the system...</Text3d>
               </p>
             </div>
 

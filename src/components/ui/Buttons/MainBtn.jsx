@@ -7,7 +7,7 @@ export default function MainBtn({ children, href, className = '', onClick, withC
   return (
     <ClickEffect>
       <Component
-        href={href || ''}
+        href={href}
         onClick={onClick}
         className={`group relative bg-bg border hover:border-main overflow-hidden cursor-pointer duration-300 py-3 px-6 ${className}`}
         style={
