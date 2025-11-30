@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import ClickEffect from '../effect/ClickEffect'
+import ClickEffect from '@/components/ui/effect/ClickEffect'
 
 export default function MainBtn({ children, href, className = '', onClick, withClipPath = false, ...props }) {
   const Component = href ? Link : 'button'
