@@ -1,6 +1,7 @@
 import './globals.css'
-// import AppWrapper from '@/components/app-components/AppWrapper'
+import AppWrapper from '@/components/app-components/AppWrapper'
 // import LoadingScreen from '@/components/app-components/LoadingScreen'
+// import ErrorBoundary from '@/components/app-components/ErrorBoundary'
 
 export const metadata = {
   title: 'Ahmed Ayman',
@@ -24,8 +25,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`relative w-screen min-h-screen overflow-x-hidden! bg-bg text-text font-light scroll-smooth antialiased`}>
         {/* <LoadingScreen /> */}
-        {/* <AppWrapper>{children}</AppWrapper> */}
-        {children}
+        {/* <ErrorBoundary>
+          <AppWrapper>{children}</AppWrapper>
+          </ErrorBoundary> */}
+        <AppWrapper>{children}</AppWrapper>
       </body>
     </html>
   )
