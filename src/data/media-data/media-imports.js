@@ -35,7 +35,7 @@ const plastine = '../../../public/videos/randomVideos/plastine.mp4'
 const visualCard = '../../../public/videos/randomVideos/visualCard.mp4'
 const marwanPablo = '../../../public/videos/selectedVideos/marwanPablo.mp4'
 
-export {
+export const mediaData = [
   mainPhoto,
   asfour,
   aymonPortrait,
@@ -71,4 +71,4 @@ export {
   plastine,
   visualCard,
   marwanPablo,
-}
+]
