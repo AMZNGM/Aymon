@@ -1,121 +1,25 @@
-import { useRef, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { gsap } from '@/utils/gsapConfig'
-import { useGSAP } from '@gsap/react'
-import contactLinks from '@/data/contactLinks.js'
-import logo from '@/assets/imgs/NGMLogo.svg'
-import TextFlipper from '@/components/ui/text/TextFlipper'
+import { personalInfo } from '@/data/personal-info'
+import Text3d from '@/components/ui/text/Text3d'
+import LayeredImage from '@/components/ui/LayeredImage'
 
-const Navbar = () => {
-  const sectionRef = useRef(null)
-  const logoRef = useRef(null)
-  const linksRef = useRef([])
-  const [menuOpen, setMenuOpen] = useState(false)
-  const lastScrollY = useRef(0)
-  const isScrolling = useRef(false)
-
-  useGSAP(
-    () => {
-      gsap.fromTo(
-        linksRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.8,
-          stagger: -0.08,
-          ease: 'back.out',
-        },
-        '+=1'
-      )
-    },
-    { scope: sectionRef }
-  )
-
-  useGSAP(
-    () => {
-      const rotation = menuOpen ? 0 : 180
-      const xPos = menuOpen ? 500 : 0
-
-      gsap.to(logoRef.current, {
-        rotation,
-        duration: 0.6,
-        ease: 'back.out(2)',
-      })
-
-      gsap.to(linksRef.current, {
-        x: xPos,
-        duration: 0.5,
-        stagger: menuOpen ? 0.08 : -0.08,
-        ease: 'back.out',
-        delay: 0.2,
-      })
-    },
-    { scope: sectionRef, dependencies: [menuOpen] }
-  )
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isScrolling.current) return
-
-      const currentScrollY = window.scrollY
-
-      if (Math.abs(currentScrollY - lastScrollY.current) < 50) return
-
-      if (currentScrollY > lastScrollY.current && !menuOpen) {
-        setMenuOpen(true)
-      } else if (currentScrollY < lastScrollY.current && menuOpen) {
-        setMenuOpen(false)
-      }
-
-      lastScrollY.current = currentScrollY
-      isScrolling.current = true
-
-      setTimeout(() => {
-        isScrolling.current = false
-      }, 500)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [menuOpen])
-
+export default function Navbar() {
   return (
-    <header ref={sectionRef} className='fixed top-0 w-screen flex justify-between bg-bg p-4 z-50'>
-      <Link to='/' className='flex justify-center items-center bg-bg'>
-        <h1 className='text-text font-fake'>NGM</h1>
-      </Link>
-
-      <div className='relative overflow-hidden md:ps-8'>
-        <div onClick={() => setMenuOpen(!menuOpen)} className='absolute right-0 border bg-bg p-1 max-md:p-0.5 z-10'>
-          <img
-            ref={logoRef}
-            src={logo}
-            alt='NGM Logo'
-            loading='lazy'
-            className='size-7 object-cover select-none contrast-65 invert-100 cursor-pointer'
-          />
-        </div>
-
-        <div className='flex justify-center items-center font-fake mr-10 max-md:mr-8 p-1'>
-          {contactLinks.map((link, index) => (
-            <Link
-              ref={el => (linksRef.current[index] = el)}
-              aria-label={link.ariaLabel}
-              key={link.name}
-              to={link.url}
-              target='_blank'
-              rel='noopener noreferrer'>
-              <TextFlipper>
-                <span className='text-text text-xs tracking-wider uppercase p-4 max-md:p-2 cursor-pointer'>
-                  {link.name}
-                </span>
-              </TextFlipper>
-            </Link>
-          ))}
+    <header className="fixed left-0 w-1/4 min-h-screen bg-text text-bg py-12 px-4 z-50">
+      <div className="relative h-full flex flex-col justify-between items-center gap-4 ">
+        <div className="flex flex-col justify-between items-center gap-8">
+          <Text3d as="h1" staggerFrom="center" className="w-1/2 text-8xl font-pixel leading-12 cursor-default">
+            {personalInfo.name}
+          </Text3d>
+          <Text3d as="h2" rotateDirection="bottom" className="text-8xl font-pixel leading-12 cursor-default">
+            {personalInfo.nickname}
+          </Text3d>
+          <Text3d as="p" staggerFrom="random" className="text-4xl font-doto leading-12 cursor-default">
+            Alive from {personalInfo.birthYear} in {personalInfo.location}
+          </Text3d>
         </div>
       </div>
+
+      <LayeredImage />
     </header>
   )
 }
-
-export default Navbar

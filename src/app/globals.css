@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Coral+Pixels&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap');
 @font-face {
   font-family: 'Gambarino-Regular';
   src: url('/fonts/Gambarino-Regular.woff2') format('woff2');
@@ -12,6 +14,8 @@
   --color-bg: #030303;
   --color-text: #ffffff;
   --font-sec: 'Gambarino-Regular';
+  --font-pixel: 'Coral Pixels';
+  --font-doto: 'Doto';
 }
 * {
   box-sizing: border-box;
@@ -23,4 +27,12 @@ html {
 ::selection {
   background: var(--color-main);
   color: var(--color-bg);
+}
+.imgMask {
+  -webkit-mask-image: url(/images/mainPhotoNoBG.webp);
+  mask-image: url(/images/mainPhotoNoBG.webp);
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
 }

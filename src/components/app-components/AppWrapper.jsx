@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import Lenis from 'lenis'
-// import Navbar from '@/components/Navbar.jsx'
+import Navbar from '@/components/Navbar.jsx'
 
 export default function AppWrapper({ children }) {
   useEffect(() => {
@@ -19,9 +19,9 @@ export default function AppWrapper({ children }) {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       {children}
-      <span className="absolute bottom-1 right-2 text-text/40 text-xs uppercase">Made by NGM</span>
+      {/* <span className="absolute bottom-1 right-2 text-text/40 text-xs uppercase">Made by NGM</span> */}
     </>
   )
 }

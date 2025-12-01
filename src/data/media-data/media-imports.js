@@ -1,4 +1,5 @@
 import mainPhoto from '../../../public/images/mainPhoto.webp'
+import mainPhotoNoBG from '../../../public/images/mainPhotoNoBG.webp'
 import asfour from '../../../public/images/randomImgs/asfour.webp'
 import aymonPortrait from '../../../public/images/randomImgs/aymonPortrait.webp'
 import caligula from '../../../public/images/randomImgs/caligula.webp'
@@ -37,6 +38,7 @@ const visualCard = '../../../public/videos/randomVideos/visualCard.mp4'
 
 export const imagesData = [
   mainPhoto,
+  mainPhotoNoBG,
   asfour,
   aymonPortrait,
   caligula,
