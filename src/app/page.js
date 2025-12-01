@@ -1,14 +1,14 @@
 import BgGrid from '@/components/ui/BgGrid'
 import PixelChartGrid from '@/components/PixelChartGrid'
-import Hero from '@/components/Hero'
 import CornerText from '@/components/ui/CornerText'
+import PixelTV from '@/components/PixelTV'
 
 export default function Home() {
   return (
     <>
       <BgGrid />
       <PixelChartGrid />
-      <Hero />
+      <PixelTV />
       <CornerText />
     </>
   )

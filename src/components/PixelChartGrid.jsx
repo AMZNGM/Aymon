@@ -29,7 +29,7 @@ export default function PixelChartGrid() {
 
       images.forEach((img) => {
         gsap.set(img, {
-          x: gsap.utils.random(-vw * 100.5, vw * 0),
+          x: gsap.utils.random(-vw * -0.9, vw * 0),
           y: gsap.utils.random(-vh * 0.5, vh * 1.5),
           rotation: gsap.utils.random(-90, 90),
           scale: gsap.utils.random(0.5, 1.5),
@@ -40,24 +40,17 @@ export default function PixelChartGrid() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=200%',
+          end: '+=100%',
           scrub: 1,
           pin: true,
-          pinSpacing: true,
-          // onUpdate: (self) => {
-          //   gsap.to(images, { rotate: 360 * 2 })
-          // },
         },
       })
 
-      // Animate images to their grid positions
       images.forEach((img, i) => {
         const col = i % cols
         const row = Math.floor(i / cols)
-
         const targetX = startX + col * (GRID_SIZE + GAP)
-        const targetY = 200 + row * (GRID_SIZE + GAP) // Start 100px from top
-
+        const targetY = 200 + row * (GRID_SIZE + GAP)
         tl.to(
           img,
           {
@@ -65,6 +58,8 @@ export default function PixelChartGrid() {
             y: targetY,
             rotation: 0,
             scale: 1,
+            // rotation: gsap.utils.random(-10, 10),
+            // scale: gsap.utils.random(0.5, 1.5),
             opacity: 1,
             duration: 1,
             ease: 'power2.inOut',
@@ -73,22 +68,14 @@ export default function PixelChartGrid() {
         ).to({}, { duration: 1.1 }, '<')
       })
 
-      // 5. Enable Draggable
       Draggable.create(images, {
         type: 'x,y',
-        edgeResistance: 0.65,
-        bounds: gridRef.current,
         inertia: true,
         onDragStart: function () {
           gsap.to(this.target, { scale: 1.1, zIndex: 100, duration: 0.2 })
         },
         onDragEnd: function () {
           gsap.to(this.target, { scale: 1, zIndex: 1, duration: 0.2 })
-          // Optional: Snap to nearest grid cell
-          const x = this.x
-          const y = this.y
-          const snappedX = Math.round(x / (GRID_SIZE + GAP)) * (GRID_SIZE + GAP) + (startX % (GRID_SIZE + GAP)) // Adjust logic for exact snap
-          // For now, free drag is fine, or we can implement liveSnap
         },
       })
     },
@@ -96,7 +83,7 @@ export default function PixelChartGrid() {
   )
 
   return (
-    <section ref={sectionRef} className="relative z-20">
+    <section ref={sectionRef} className="relative w-screen h-screen max-md:h-[300vh] overflow-hidden z-20">
       <div ref={gridRef}>
         {gridPositions.map((item) => (
           <div
