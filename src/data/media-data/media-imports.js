@@ -17,7 +17,6 @@ import blitz1Image from '../../../public/images/selectedImgs/blitz/blitz1.webp'
 import blitz2Image from '../../../public/images/selectedImgs/blitz/blitz2.webp'
 import blitz3Image from '../../../public/images/selectedImgs/blitz/blitz3.webp'
 import blitz4Image from '../../../public/images/selectedImgs/blitz/blitz4.webp'
-import blitz5Image from '../../../public/images/selectedImgs/blitz/blitz5.webp'
 import blitz6Image from '../../../public/images/selectedImgs/blitz/blitz6.webp'
 import blitz7Image from '../../../public/images/selectedImgs/blitz/blitz7.webp'
 import geo1Image from '../../../public/images/selectedImgs/geo/geo1.webp'
@@ -29,8 +28,6 @@ import MenageImage from '../../../public/images/selectedImgs/ghadaAbdelrazikXMen
 import halalImage from '../../../public/images/selectedImgs/marwanPablo/halal.webp'
 
 export const imagesData = [
-  mainPhotoImage,
-  mainPhotoNoBGImage,
   asfourImage,
   aymonPortraitImage,
   caligulaImage,
@@ -48,7 +45,6 @@ export const imagesData = [
   blitz2Image,
   blitz3Image,
   blitz4Image,
-  blitz5Image,
   blitz6Image,
   blitz7Image,
   geo1Image,
@@ -79,7 +75,6 @@ export const blitz1 = blitz1Image
 export const blitz2 = blitz2Image
 export const blitz3 = blitz3Image
 export const blitz4 = blitz4Image
-export const blitz5 = blitz5Image
 export const blitz6 = blitz6Image
 export const blitz7 = blitz7Image
 export const geo1 = geo1Image

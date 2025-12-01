@@ -1,17 +1,14 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef, useState, useMemo } from 'react'
+import { useRef, useMemo } from 'react'
 import { gsap, Draggable } from '@/utils/gsapConfig'
 import { useGSAP } from '@gsap/react'
 import { imagesData } from '@/data/media-data/media-imports'
-import { personalInfo } from '@/data/personal-info'
-import Text3d from '@/components/ui/text/Text3d'
 
 export default function PixelChartGrid() {
   const sectionRef = useRef(null)
   const gridRef = useRef(null)
-  const [isGridReady, setIsGridReady] = useState(false)
   const GRID_SIZE = 150
   const GAP = 2
   const gridPositions = useMemo(() => {
@@ -27,6 +24,8 @@ export default function PixelChartGrid() {
       const images = gsap.utils.toArray('.grid-image')
       const vh = window.innerHeight
       const vw = window.innerWidth < 678 ? window.innerWidth : window.innerWidth * 0.79
+      const cols = Math.floor(vw / (GRID_SIZE + GAP))
+      const startX = (vw - cols * (GRID_SIZE + GAP)) / 2
 
       images.forEach((img) => {
         gsap.set(img, {
@@ -34,26 +33,20 @@ export default function PixelChartGrid() {
           y: gsap.utils.random(-vh * 0.5, vh * 1.5),
           rotation: gsap.utils.random(-90, 90),
           scale: gsap.utils.random(0.5, 1.5),
-          opacity: window.innerWidth < 678 ? 0 : 1,
         })
       })
 
-      // 3. Calculate Grid Layout
-      // Determine how many columns fit in the screen
-      const cols = Math.floor(vw / (GRID_SIZE + GAP))
-      const startX = (vw - cols * (GRID_SIZE + GAP)) / 2 // Center the grid horizontally
-
-      // 4. Create ScrollTrigger Animation
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=200%', // Scroll distance to complete animation
+          end: '+=200%',
           scrub: 1,
           pin: true,
-          onUpdate: (self) => {
-            // Optional: Parallax or other effects during scroll
-          },
+          pinSpacing: true,
+          // onUpdate: (self) => {
+          //   gsap.to(images, { rotate: 360 * 2 })
+          // },
         },
       })
 
@@ -63,7 +56,7 @@ export default function PixelChartGrid() {
         const row = Math.floor(i / cols)
 
         const targetX = startX + col * (GRID_SIZE + GAP)
-        const targetY = 100 + row * (GRID_SIZE + GAP) // Start 100px from top
+        const targetY = 200 + row * (GRID_SIZE + GAP) // Start 100px from top
 
         tl.to(
           img,
@@ -77,7 +70,7 @@ export default function PixelChartGrid() {
             ease: 'power2.inOut',
           },
           0
-        ) // All start at same time (0)
+        ).to({}, { duration: 1.1 }, '<')
       })
 
       // 5. Enable Draggable
@@ -98,22 +91,20 @@ export default function PixelChartGrid() {
           // For now, free drag is fine, or we can implement liveSnap
         },
       })
-
-      setIsGridReady(true)
     },
     { scope: sectionRef }
   )
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-screen bg-text text-bg">
+    <section ref={sectionRef} className="relative z-20">
       <div ref={gridRef}>
         {gridPositions.map((item) => (
           <div
             key={item.id}
-            className="grid-image size-full absolute inset-0 cursor-grab active:cursor-grabbing will-change-transform"
+            className="grid-image size-full absolute inset-0 cursor-grab active:cursor-grabbing will-change-transform max-md:opacity-0"
             style={{ width: GRID_SIZE, height: GRID_SIZE }}
           >
-            <div className="relative size-full border p-1">
+            <div className="relative size-full bg-bg border p-1">
               <Image
                 src={item.src}
                 alt={`Grid Image ${item.id}`}
@@ -124,10 +115,6 @@ export default function PixelChartGrid() {
             </div>
           </div>
         ))}
-
-        <Text3d className="absolute bottom-4 left-4 text-main/60 font-pixel tracking-wide cursor-default max-md:hidden">
-          {personalInfo.slogan}
-        </Text3d>
       </div>
     </section>
   )

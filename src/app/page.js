@@ -1,6 +1,7 @@
 import BgGrid from '@/components/ui/BgGrid'
-import Hero from '@/components/Hero'
 import PixelChartGrid from '@/components/PixelChartGrid'
+import Hero from '@/components/Hero'
+import CornerText from '@/components/ui/CornerText'
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <BgGrid />
       <PixelChartGrid />
       <Hero />
+      <CornerText />
     </>
   )
 }
