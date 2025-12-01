@@ -28,17 +28,40 @@ export default function LayeredImage() {
           const finalScale = currentScale + progressFactor * (targetScale - currentScale)
           gsap.to(maskImg, { scale: finalScale, overwrite: true })
         })
+
+        maskImgs.forEach((maskImg, index) => {
+          const maxRotation = 100
+          const targetRotation = index * (maxRotation / (maskImgs.length - 1))
+          const finalRotation = self.progress * targetRotation
+          gsap.to(maskImg, { rotate: finalRotation })
+        })
+      },
+
+      onRefreshInit: () => {
+        maskImgs.forEach((maskImg, index) => {
+          maskImg.addEventListener('mouseenter', () => {
+            gsap.to(maskImg, { scale: 0.5 + index * 0.02, rotation: '-=50', duration: 2, overwrite: true })
+          })
+          maskImg.addEventListener('mouseleave', () => {
+            gsap.to(maskImg, {
+              scale: gsap.getProperty(maskImg, 'scale'),
+              rotation: 0,
+              duration: 1,
+              overwrite: true,
+            })
+          })
+        })
       },
     })
   })
 
   return (
     <section ref={sectionRef} className="relative size-50">
-      <Image src={imagesData[0]} alt="Main Image" loading="eager" className="size-full object-cover will-change-transform" />
+      <Image src={imagesData[1]} alt="Main Image" loading="eager" className="size-full object-cover will-change-transform" />
 
       {Array.from({ length: 6 }).map((_, index) => (
         <div key={index} className="imgMask absolute inset-0 will-change-transform">
-          <Image src={imagesData[0]} alt="Mask Image" loading="eager" className="size-full object-cover will-change-transform" />
+          <Image src={imagesData[1]} alt="Mask Image" loading="eager" className="size-full object-cover will-change-transform" />
         </div>
       ))}
     </section>
