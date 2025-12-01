@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`relative w-screen min-h-screen overflow-x-hidden! bg-bg text-text font-light font-inter scroll-smooth antialiased ${inter.variable} ${doto.variable} ${micro5Charted.variable} ${coralPixels.variable} ${gambarino.variable}`}
+        className={`relative w-screen min-h-screen overflow-x-hidden! bg-text text-bg font-light font-inter scroll-smooth antialiased ${inter.variable} ${doto.variable} ${micro5Charted.variable} ${coralPixels.variable} ${gambarino.variable}`}
       >
         {/* <LoadingScreen /> */}
         <ErrorBoundary>
