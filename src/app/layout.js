@@ -1,7 +1,8 @@
 import './globals.css'
+import { inter, doto, micro5Charted, gambarino, coralPixels } from './fonts'
 // import LoadingScreen from '@/components/app-components/LoadingScreen'
-import AppWrapper from '@/components/app-components/AppWrapper'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
+import AppWrapper from '@/components/app-components/AppWrapper'
 
 export const metadata = {
   title: 'Ahmed Ayman',
@@ -23,7 +24,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`relative w-screen min-h-screen overflow-x-hidden! bg-bg text-text font-light scroll-smooth antialiased`}>
+      <body
+        className={`relative w-screen min-h-screen overflow-x-hidden! bg-bg text-text font-light font-inter scroll-smooth antialiased ${inter.variable} ${doto.variable} ${micro5Charted.variable} ${coralPixels.variable} ${gambarino.variable}`}
+      >
         {/* <LoadingScreen /> */}
         <ErrorBoundary>
           <AppWrapper>{children}</AppWrapper>

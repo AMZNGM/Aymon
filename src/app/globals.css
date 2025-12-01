@@ -1,30 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Coral+Pixels&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Micro+5+Charted&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap');
-@font-face {
-  font-family: 'Gambarino-Regular';
-  src: url('/fonts/Gambarino-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-  font-style: normal;
-}
 @import 'tailwindcss';
 @theme {
   --color-main: #005240;
   --color-bg: #030303;
   --color-text: #e8e8e8;
-  --font-sec: 'Gambarino-Regular';
-  /* --font-pixel: 'Coral Pixels'; */
-  --font-charted: 'Micro 5 Charted';
-  --font-doto: 'Doto';
+
+  --font-inter: var(--font-inter);
+  --font-sec: var(--font-sec);
+  --font-charted: var(--font-charted);
+  --font-doto: var(--font-doto);
+  --font-pixel: var(--font-pixel);
 }
 * {
   box-sizing: border-box;
 }
 html {
   scrollbar-width: none;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-inter);
 }
 ::selection {
   background: var(--color-main);
