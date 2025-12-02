@@ -6,9 +6,10 @@ import PixelTV from '@/components/PixelTV'
 export default function Home() {
   return (
     <>
-      <BgGrid />
+      {/* <BgGrid /> */}
       <PixelChartGrid />
-      <PixelTV />
+      {/* <div className="w-screen h-screen" /> */}
+      {/* <PixelTV /> */}
       <CornerText />
     </>
   )

@@ -9,8 +9,7 @@ import { imagesData } from '@/data/media-data/media-imports'
 export default function PixelChartGrid() {
   const sectionRef = useRef(null)
   const gridRef = useRef(null)
-  const GRID_SIZE = 150
-  const GAP = 2
+  const IMG_SIZE = 250
   const gridPositions = useMemo(() => {
     return imagesData.map((img, i) => ({
       id: i,
@@ -23,14 +22,12 @@ export default function PixelChartGrid() {
       if (!sectionRef.current || !gridRef.current) return
       const images = gsap.utils.toArray('.grid-image')
       const vh = window.innerHeight
-      const vw = window.innerWidth < 678 ? window.innerWidth : window.innerWidth * 0.79
-      const cols = Math.floor(vw / (GRID_SIZE + GAP))
-      const startX = (vw - cols * (GRID_SIZE + GAP)) / 2
+      const vw = window.innerWidth
 
       images.forEach((img) => {
         gsap.set(img, {
-          x: gsap.utils.random(-vw * -0.9, vw * 0),
-          y: gsap.utils.random(-vh * 0.5, vh * 1.5),
+          x: gsap.utils.random(vw * 0.9, vw * 0.5) - 350,
+          y: gsap.utils.random(-vh * 0.2, vh * 0.2) + 350,
           rotation: gsap.utils.random(-90, 90),
           scale: gsap.utils.random(0.5, 1.5),
         })
@@ -47,19 +44,15 @@ export default function PixelChartGrid() {
       })
 
       images.forEach((img, i) => {
-        const col = i % cols
-        const row = Math.floor(i / cols)
-        const targetX = startX + col * (GRID_SIZE + GAP)
-        const targetY = 200 + row * (GRID_SIZE + GAP)
+        const targetX = gsap.utils.random(vw * 1.1, vw * 0.5) - 550
+        const targetY = gsap.utils.random(-vh * 0.5, vh * 0.5) + 350
         tl.to(
           img,
           {
             x: targetX,
             y: targetY,
-            rotation: 0,
-            scale: 1,
-            // rotation: gsap.utils.random(-10, 10),
-            // scale: gsap.utils.random(0.5, 1.5),
+            rotation: gsap.utils.random(-10, 10),
+            scale: gsap.utils.random(0.5, 1.5),
             opacity: 1,
             duration: 1,
             ease: 'power2.inOut',
@@ -83,21 +76,21 @@ export default function PixelChartGrid() {
   )
 
   return (
-    <section ref={sectionRef} className="relative w-screen h-screen max-md:h-[300vh] overflow-hidden z-20">
-      <div ref={gridRef}>
+    <section ref={sectionRef} className="relative w-screen min-h-screen max-md:h-[300vh] overflow-hidden z-20">
+      <div ref={gridRef} className="size-full">
         {gridPositions.map((item) => (
           <div
             key={item.id}
-            className="grid-image size-full absolute inset-0 cursor-grab active:cursor-grabbing will-change-transform max-md:opacity-0"
-            style={{ width: GRID_SIZE, height: GRID_SIZE }}
+            className="grid-image size-full absolute inset-0 cursor-grab active:cursor-grabbing will-change-transform"
+            style={{ width: IMG_SIZE, height: IMG_SIZE }}
           >
-            <div className="relative size-full bg-bg border p-1">
+            <div className="relative size-full bg-bg rounded-2xl">
               <Image
                 src={item.src}
                 alt={`Grid Image ${item.id}`}
                 fill
-                sizes={`${GRID_SIZE}px`}
-                className="object-cover pointer-events-none select-none"
+                sizes={`${IMG_SIZE}px`}
+                className="object-cover pointer-events-none rounded-2xl select-none"
               />
             </div>
           </div>
