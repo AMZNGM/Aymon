@@ -8,7 +8,7 @@ export default function Home() {
     <>
       {/* <BgGrid /> */}
       <PixelChartGrid />
-      {/* <div className="w-screen h-screen" /> */}
+      <div className="w-screen h-screen" />
       {/* <PixelTV /> */}
       <CornerText />
     </>
