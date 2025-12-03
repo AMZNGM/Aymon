@@ -8,9 +8,9 @@ import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHo
 
 export default function Navbar() {
   return (
-    <header className="md:fixed left-0 w-2/7 max-md:w-screen md:h-screen z-30 px-4 py-18 max-md:py-6">
+    <header className="fixed left-0 w-2/7 max-lg:w-screen lg:h-screen z-30 px-4 py-18 max-lg:py-6">
       <div className="relative size-full flex flex-col justify-start items-center text-center uppercase">
-        <h1 className="text-7xl max-md:text-6xl text-center font-black leading-15 max-md:leading-12 cursor-pointer">
+        <h1 className="text-7xl max-lg:text-6xl text-center font-black leading-15 max-lg:leading-12 cursor-pointer">
           <span className="group relative inline-block">
             <span className="block transition-opacity duration-400 group-hover:opacity-0">
               {personalInfo.firstName}
@@ -26,17 +26,17 @@ export default function Navbar() {
             </Link>
           </span>
 
-          <span className="block text-3xl max-md:text-2xl text-bg/50 font-sec normal-case">Visual Artist</span>
+          <span className="block text-3xl max-lg:text-2xl text-bg/50 font-sec normal-case">Visual Artist</span>
         </h1>
 
         <Image
           src={mainPhotoNoBG}
           alt="Main Image"
           priority
-          className="size-75 object-cover pointer-events-none select-none my-12 max-md:hidden"
+          className="size-75 object-cover pointer-events-none select-none my-12 max-lg:hidden"
         />
 
-        <nav className="flex gap-4 text-[15px] font-medium mt-4 p-2 max-md:hidden">
+        <nav className="flex gap-4 text-[15px] font-medium mt-4 p-2 max-lg:hidden">
           <Link href="/about">
             <VariableFontHoverByRandomLetter label="About" />
           </Link>
@@ -52,13 +52,13 @@ export default function Navbar() {
       </div>
 
       {/* mobile */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <input id="mobile-nav-toggle" type="checkbox" className="peer hidden" />
-        <label htmlFor="mobile-nav-toggle" className="absolute top-4 right-4 p-2 cursor-pointer z-50">
+        <label htmlFor="mobile-nav-toggle" className="absolute top-4 right-4 p-2 cursor-pointer z-101">
           <TextAlignJustify strokeWidth={3} />
         </label>
 
-        <nav className="fixed inset-0 flex flex-col justify-center items-center gap-4 text-5xl font-medium uppercase bg-main px-6 py-2 transition-all duration-300 opacity-0 translate-y-full pointer-events-none peer-checked:opacity-100 peer-checked:translate-y-0 peer-checked:pointer-events-auto">
+        <nav className="fixed inset-0 flex flex-col justify-center items-center gap-4 text-5xl font-medium uppercase bg-main px-6 py-2 transition-all duration-300 opacity-0 translate-y-full pointer-events-none peer-checked:opacity-100 peer-checked:translate-y-0 peer-checked:pointer-events-auto z-100">
           <Link href="/about" className="hover:text-bg/25">
             About
           </Link>
