@@ -10,7 +10,7 @@
   box-sizing: border-box;
 }
 html {
-  scrollbar-color: var(--color-main) transparent;
+  scrollbar-width: none;
 }
 ::selection {
   background: var(--color-main);
