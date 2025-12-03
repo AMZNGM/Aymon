@@ -3,10 +3,9 @@ import GridImages from '@/components/GridImages'
 
 export default function Home() {
   return (
-    <>
+    <main className="w-[75%] ms-auto">
       <RandomImages />
-      <div className="h-[195vh]" />
       <GridImages />
-    </>
+    </main>
   )
 }

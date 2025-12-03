@@ -33,16 +33,16 @@ export default function RandomImages() {
       const images = gsap.utils.toArray('.grid-image')
       images.forEach((img) => {
         gsap.set(img, {
-          x: gsap.utils.random(window.innerHeight * 0.9, window.innerHeight * 0.1) - 280,
-          y: gsap.utils.random(-window.innerHeight * 0.3, window.innerHeight * 0.1) + 80,
+          x: gsap.utils.random(window.innerHeight * 0.9, window.innerHeight * 0.1) - 550,
+          y: gsap.utils.random(-window.innerHeight * 0.3, window.innerHeight * 0.1) + 350,
           rotation: gsap.utils.random(-45, 45),
           scale: gsap.utils.random(0.25, 0.75),
         })
         tl.to(
           img,
           {
-            x: gsap.utils.random(window.innerHeight * 1.2, window.innerHeight * 0.1) - 380,
-            y: gsap.utils.random(-window.innerHeight * 0.5, window.innerHeight * 2.2) + 180,
+            x: gsap.utils.random(window.innerHeight * 1.2, window.innerHeight * 0.1) - 650,
+            y: gsap.utils.random(-window.innerHeight * 0.2, window.innerHeight * 2.2) + 180,
             rotation: gsap.utils.random(-10, 10),
             scale: gsap.utils.random(0.75, 1),
             opacity: 1,
@@ -56,6 +56,7 @@ export default function RandomImages() {
       Draggable.create(images, {
         type: 'x,y',
         inertia: true,
+        bounds: sectionRef.current,
         onDragStart: function () {
           gsap.to(this.target, { scale: 1.1, zIndex: 100, duration: 0.2 })
         },
@@ -68,12 +69,12 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative w-screen min-h-screen">
+    <section ref={sectionRef} className="relative w-full min-h-[280vh]">
       <div ref={gridRef} className="size-full">
         {gridPositions.map((item) => (
           <div
             key={item.id}
-            className="grid-image absolute top-1/2 left-1/2 -translate-1/2 will-change-transform cursor-grab active:cursor-grabbing"
+            className="grid-image absolute top-0 left-1/2 -translate-x-1/2 will-change-transform cursor-grab active:cursor-grabbing"
           >
             <div className="relative w-100 max-md:w-32">
               <Image
