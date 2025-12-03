@@ -1,8 +1,8 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { personalInfo } from '@/data/personal-info'
 import { TextAlignJustify } from 'lucide-react'
-import Text3d from '@/components/ui/text/Text3d'
-import LayeredImage from '@/components/ui/LayeredImage'
+import { mainPhotoNoBG } from '@/data/media-data/media-imports'
 
 export default function Navbar() {
   return (
@@ -22,14 +22,12 @@ export default function Navbar() {
             >
               {personalInfo.nickname}
             </Link>
-
-            <Text3d staggerFrom="random" className="text-bg/50 font-sec">
-              Design
-            </Text3d>
           </span>
+
+          <span className="block text-3xl max-md:text-2xl text-bg/50 font-sec normal-case">Visual Artist</span>
         </h1>
 
-        <LayeredImage />
+        <Image src={mainPhotoNoBG} alt="Main Image" priority className="size-75 object-cover my-12 max-md:hidden" />
 
         <nav className="flex gap-4 text-[15px] font-medium mt-4 max-md:hidden">
           <Link href="/about" className="hover:text-bg/25">
@@ -46,10 +44,6 @@ export default function Navbar() {
         <div className="max-w-70 mt-4 text-sm font-medium leading-4 normal-case max-md:hidden">
           Welcome to my website! Do stick around. Scrolling is encouraged here, it makes things happen.
         </div>
-
-        <Link href="/play" className="hover:text-bg/25 mt-4 max-md:hidden">
-          PLAY!
-        </Link>
       </div>
 
       {/* mobile */}
@@ -65,9 +59,6 @@ export default function Navbar() {
           </Link>
           <Link href="/Work" className="hover:text-bg/25">
             Work
-          </Link>
-          <Link href="/play" className="hover:text-bg/25">
-            PLAY!
           </Link>
           <Link href="/contact" className="hover:text-bg/25">
             Contact
