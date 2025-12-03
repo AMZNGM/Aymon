@@ -1,10 +1,12 @@
-import PixelChartGrid from '@/components/PixelChartGrid'
+import RandomImages from '@/components/RandomImages'
+import GridImages from '@/components/GridImages'
 
 export default function Home() {
   return (
     <>
-      {/* <PixelChartGrid /> */}
-      {/* <div className="h-[220vh]" /> */}
+      <RandomImages />
+      <div className="h-[195vh]" />
+      <GridImages />
     </>
   )
 }

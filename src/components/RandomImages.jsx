@@ -6,10 +6,9 @@ import { gsap, Draggable } from '@/utils/gsapConfig'
 import { useGSAP } from '@gsap/react'
 import { imagesData } from '@/data/media-data/media-imports'
 
-export default function PixelChartGrid() {
+export default function RandomImages() {
   const sectionRef = useRef(null)
   const gridRef = useRef(null)
-  const IMG_SIZE = 250
   const gridPositions = useMemo(() => {
     return imagesData.map((img, i) => ({
       id: i,
@@ -69,7 +68,7 @@ export default function PixelChartGrid() {
   )
 
   return (
-    <section ref={sectionRef} className="relative w-screen h-screen">
+    <section ref={sectionRef} className="relative w-screen min-h-screen">
       <div ref={gridRef} className="size-full">
         {gridPositions.map((item) => (
           <div
