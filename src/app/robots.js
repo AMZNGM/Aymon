@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://ahmedayman.com/sitemap.xml', // Replace with actual domain if known, or remove sitemap line for now
+    sitemap: 'https://aymon.vercel.app/',
   }
 }

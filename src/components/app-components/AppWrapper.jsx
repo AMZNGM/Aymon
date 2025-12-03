@@ -7,7 +7,6 @@ export default function AppWrapper({ children }) {
       <LenisSetup />
       <Navbar />
       {children}
-      {/* <span className="absolute bottom-1 left-2 text-main/40 text-xs uppercase">Made by NGM</span> */}
     </>
   )
 }

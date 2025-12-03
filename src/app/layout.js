@@ -1,5 +1,5 @@
 import './globals.css'
-import { inter, doto, micro5Charted, gambarino, coralPixels } from './fonts'
+import { inter, gambarino } from '@/app/fonts'
 // import LoadingScreen from '@/components/app-components/LoadingScreen'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
 import AppWrapper from '@/components/app-components/AppWrapper'
@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`relative w-screen min-h-screen overflow-x-hidden! bg-text text-bg font-inter scroll-smooth antialiased ${inter.variable} ${doto.variable} ${micro5Charted.variable} ${coralPixels.variable} ${gambarino.variable}`}
+        className={`relative w-screen min-h-screen overflow-x-hidden! bg-text text-bg font-inter scroll-smooth antialiased ${inter.variable} ${gambarino.variable}`}
       >
         {/* <LoadingScreen /> */}
         <ErrorBoundary>

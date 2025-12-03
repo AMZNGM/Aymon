@@ -2,7 +2,6 @@
 
 import { Component } from 'react'
 import MainBtn from '@/components/ui/Buttons/MainBtn'
-import Text3d from '@/components/ui/text/Text3d'
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -45,25 +44,21 @@ export default class ErrorBoundary extends Component {
             </pre>
 
             <div className="border-y-2 py-4">
-              <h1 className="text-2xl font-bold mb-2">
-                <Text3d rotateDirection="top" staggerFrom="center">
-                  &gt;&gt; SYSTEM FAILURE DETECTED &lt;&lt;
-                </Text3d>
-              </h1>
+              <h1 className="text-2xl font-bold mb-2">&gt;&gt; SYSTEM FAILURE DETECTED &lt;&lt;</h1>
             </div>
 
             <div className="space-y-3 mb-6 text-sm">
               <p className="flex items-start">
                 <span className="text-red-500 mr-2">[ERROR]</span>
-                <Text3d as="span">Critical exception encountered in application runtime</Text3d>
+                Critical exception encountered in application runtime
               </p>
               <p className="flex items-start">
                 <span className="text-yellow-500 mr-2">[WARN]</span>
-                <Text3d as="span">State corruption detected. Manual intervention required.</Text3d>
+                State corruption detected. Manual intervention required.
               </p>
               <p className="flex items-start">
                 <span className="text-blue-400 mr-2">[INFO]</span>
-                <Text3d as="span">Press the button below to reinitialize the system...</Text3d>
+                Press the button below to reinitialize the system...
               </p>
             </div>
 

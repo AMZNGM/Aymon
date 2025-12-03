@@ -3,29 +3,16 @@
   --color-main: #005240;
   --color-bg: #030303;
   --color-text: #ffffff;
-
   --font-inter: var(--font-inter);
   --font-sec: var(--font-sec);
-  --font-charted: var(--font-charted);
-  --font-doto: var(--font-doto);
-  --font-pixel: var(--font-pixel);
 }
 * {
   box-sizing: border-box;
 }
 html {
-  scrollbar-width: none;
-  font-family: var(--font-inter);
+  scrollbar-color: var(--color-main) transparent;
 }
 ::selection {
   background: var(--color-main);
   color: var(--color-bg);
-}
-.imgMask {
-  -webkit-mask-image: url(/images/mainPhotoNoBG.webp);
-  mask-image: url(/images/mainPhotoNoBG.webp);
-  -webkit-mask-size: cover;
-  mask-size: cover;
-  -webkit-mask-position: center;
-  mask-position: center;
 }
