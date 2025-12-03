@@ -7,10 +7,13 @@ export default function Home() {
   return (
     <>
       {/* <BgGrid /> */}
-      <PixelChartGrid />
+      {/* <PixelChartGrid /> */}
+      <div className="w-screen h-screen" />
+      <div className="w-screen h-screen" />
+      <div className="w-screen h-screen" />
       <div className="w-screen h-screen" />
       {/* <PixelTV /> */}
-      <CornerText />
+      {/* <CornerText /> */}
     </>
   )
 }

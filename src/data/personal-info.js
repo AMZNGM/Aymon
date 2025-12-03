@@ -1,6 +1,7 @@
 export const personalInfo = {
   title: 'Multidisciplinary Visual Artist',
-  name: 'Ahmed Ayman',
+  firstName: 'Ahmed',
+  lastName: 'Ayman',
   nickname: 'Aymon',
   birthYear: 2003,
   location: 'Cairo, Egypt',

@@ -51,12 +51,18 @@ export default function LayeredImage() {
   })
 
   return (
-    <section ref={sectionRef} className="relative size-50">
+    <section ref={sectionRef} className="relative size-75 my-12 max-md:hidden">
       <Image src={mainPhotoNoBG} alt="Main Image" priority className="size-full object-cover will-change-transform" />
 
       {Array.from({ length: 6 }).map((_, index) => (
         <div key={index} className="imgMask absolute inset-0 will-change-transform">
-          <Image src={mainPhotoNoBG} alt="Mask Image" priority className="size-full object-cover will-change-transform" />
+          <Image
+            src={mainPhotoNoBG}
+            alt="Mask Image"
+            priority
+            placeholder="blur"
+            className="size-full object-cover will-change-transform"
+          />
         </div>
       ))}
     </section>
