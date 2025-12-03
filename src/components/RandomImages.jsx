@@ -1,19 +1,28 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef, useMemo } from 'react'
+import { useRef } from 'react'
 import { gsap, Draggable } from '@/utils/gsapConfig'
 import { useGSAP } from '@gsap/react'
-import { imagesData } from '@/data/media-data/media-imports'
+import {
+  asfour,
+  aymonPortrait,
+  caligula,
+  crow,
+  folk,
+  forcing,
+  haramt,
+  inside,
+  metro,
+  perspective,
+  pigeon,
+  proof,
+  working,
+} from '@/data/media-data/media-imports'
 
 export default function RandomImages() {
   const sectionRef = useRef(null)
-  const gridPositions = useMemo(() => {
-    return imagesData.map((img, i) => ({
-      id: i,
-      src: img,
-    }))
-  }, [])
+  const images = [asfour, aymonPortrait, caligula, crow, folk, forcing, haramt, inside, metro, perspective, pigeon, proof, working]
 
   useGSAP(
     () => {
@@ -22,9 +31,9 @@ export default function RandomImages() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top top',
-          scrub: true,
-          pin: true,
+          start: window.innerWidth > 640 ? 'top top' : '',
+          scrub: window.innerWidth > 640 ? true : false,
+          pin: window.innerWidth > 640 ? true : false,
         },
       })
 
@@ -51,6 +60,7 @@ export default function RandomImages() {
         ).to({}, { duration: 1.1 }, '<')
       })
 
+      if (window.innerWidth < 640) return
       let highestZIndex = 10
       Draggable.create(images, {
         type: 'x,y',
@@ -69,17 +79,18 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative lg:w-[75%] ms-auto lg:z-50">
+    <section ref={sectionRef} className="relative lg:w-[75%] ms-auto overflow-hidden lg:z-50">
       <div className="relative h-screen">
-        {gridPositions.slice(0, 12).map((item) => (
+        {images.map((image, index) => (
           <div
-            key={item.id}
-            className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 max-lg:translate-x-24! max-lg:-translate-y-30! max-sm:translate-x-12! will-change-transform cursor-grab active:cursor-grabbing opacity-0"
+            key={index}
+            className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 max-lg:translate-x-24! max-lg:-translate-y-30! max-sm:translate-x-12! will-change-transform cursor-grab active:cursor-grabbing sm:opacity-0"
           >
             <div className="relative w-100 max-sm:w-55">
               <Image
-                src={item.src}
-                alt={`Grid Image ${item.id + 1}`}
+                src={image}
+                alt={`Random Image`}
+                loading="eager"
                 className="object-cover pointer-events-none select-none rounded-2xl"
               />
             </div>
