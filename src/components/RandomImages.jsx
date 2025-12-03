@@ -22,7 +22,21 @@ import {
 
 export default function RandomImages() {
   const sectionRef = useRef(null)
-  const images = [asfour, aymonPortrait, caligula, crow, folk, forcing, haramt, inside, metro, perspective, pigeon, proof, working]
+  const images = [
+    { src: asfour, width: 800, height: 800, alt: 'Asfour Image' },
+    { src: aymonPortrait, width: 480, height: 640, alt: 'Aymon Portrait' },
+    { src: caligula, width: 800, height: 800, alt: 'Caligula Image' },
+    { src: crow, width: 640, height: 800, alt: 'Crow Image' },
+    { src: folk, width: 640, height: 800, alt: 'Folk Image' },
+    { src: forcing, width: 640, height: 800, alt: 'Forcing Image' },
+    { src: haramt, width: 800, height: 800, alt: 'Haramt Image' },
+    { src: inside, width: 800, height: 800, alt: 'Inside Image' },
+    { src: metro, width: 640, height: 800, alt: 'Metro Image' },
+    { src: perspective, width: 640, height: 640, alt: 'Perspective Image' },
+    { src: pigeon, width: 640, height: 800, alt: 'Pigeon Image' },
+    { src: proof, width: 640, height: 800, alt: 'Proof Image' },
+    { src: working, width: 640, height: 640, alt: 'Working Image' },
+  ]
 
   useGSAP(
     () => {
@@ -88,9 +102,14 @@ export default function RandomImages() {
           >
             <div className="relative w-100 max-sm:w-55">
               <Image
-                src={image}
-                alt={`Random Image`}
-                loading="eager"
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                sizes="220px"
+                priority={index === 0}
+                fetchPriority={index === 0 ? 'high' : 'auto'}
+                loading={index === 0 ? 'eager' : 'lazy'}
                 className="object-cover pointer-events-none select-none rounded-2xl"
               />
             </div>
