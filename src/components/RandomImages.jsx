@@ -23,8 +23,8 @@ import {
 export default function RandomImages() {
   const sectionRef = useRef(null)
   const images = [
-    { src: asfour, width: 800, height: 800, alt: 'Asfour Image' },
     { src: aymonPortrait, width: 480, height: 640, alt: 'Aymon Portrait' },
+    { src: asfour, width: 800, height: 800, alt: 'Asfour Image' },
     { src: caligula, width: 800, height: 800, alt: 'Caligula Image' },
     { src: crow, width: 640, height: 800, alt: 'Crow Image' },
     { src: folk, width: 640, height: 800, alt: 'Folk Image' },
@@ -32,10 +32,10 @@ export default function RandomImages() {
     { src: haramt, width: 800, height: 800, alt: 'Haramt Image' },
     { src: inside, width: 800, height: 800, alt: 'Inside Image' },
     { src: metro, width: 640, height: 800, alt: 'Metro Image' },
-    { src: perspective, width: 640, height: 640, alt: 'Perspective Image' },
+    { src: working, width: 640, height: 640, alt: 'Working Image' },
     { src: pigeon, width: 640, height: 800, alt: 'Pigeon Image' },
     { src: proof, width: 640, height: 800, alt: 'Proof Image' },
-    { src: working, width: 640, height: 640, alt: 'Working Image' },
+    { src: perspective, width: 640, height: 640, alt: 'Perspective Image' },
   ]
 
   useGSAP(
@@ -56,8 +56,8 @@ export default function RandomImages() {
         tl.fromTo(
           img,
           {
-            x: gsap.utils.random(window.innerWidth * 0.35, -window.innerWidth * 0.1),
-            y: gsap.utils.random(window.innerHeight * 0.2, -window.innerHeight * 0.2),
+            // x: gsap.utils.random(window.innerWidth * 0.35, -window.innerWidth * 0.1),
+            // y: gsap.utils.random(window.innerHeight * 0.2, -window.innerHeight * 0.2),
             rotation: gsap.utils.random(-45, 45),
             scale: gsap.utils.random(0.75, 0.8),
             opacity: 1,
@@ -93,7 +93,7 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative lg:w-[75%] ms-auto overflow-hidden lg:z-50">
+    <section ref={sectionRef} className="relative lg:w-[75%] ms-auto lg:z-50">
       <div className="relative h-screen">
         {images.map((image, index) => (
           <div
@@ -116,7 +116,7 @@ export default function RandomImages() {
           </div>
         ))}
       </div>
-      <div className="h-[80vh]" />
+      <div className="h-[80vh] max-sm:h-[70vh]" />
     </section>
   )
 }
