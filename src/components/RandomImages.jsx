@@ -76,7 +76,7 @@ export default function RandomImages() {
       Draggable.create(images, {
         type: 'x,y',
         inertia: true,
-        bounds: window.innerWidth > 1024 ? sectionRef.current : null,
+        bounds: window.innerWidth > 640 ? sectionRef.current : null,
         onDragStart: function () {
           gsap.to(this.target, { zIndex: 100, duration: 0.2 })
         },
@@ -90,12 +90,12 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto overflow-hidden">
+    <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto overflow-hidden lg:z-50">
       <div className="relative h-screen">
         {images.map((image, index) => (
           <div
             key={index}
-            className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 max-lg:translate-x-24! max-lg:-translate-y-45! max-sm:translate-x-12! will-change-transform cursor-grab active:cursor-grabbing sm:opacity-0"
+            className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 max-lg:translate-x-24! max-lg:-translate-y-30! max-sm:translate-x-12! will-change-transform cursor-grab active:cursor-grabbing sm:opacity-0"
           >
             <div className="relative w-100 max-sm:w-55">
               <Image

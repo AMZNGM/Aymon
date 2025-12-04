@@ -40,7 +40,7 @@ export default function GlobalImageModal() {
       }
     }
 
-    document.addEventListener('dblclick', handleDoubleClick)
+    document.addEventListener('click', handleDoubleClick)
     document.addEventListener('touchstart', handleTouchStart)
 
     // escape key
@@ -53,7 +53,7 @@ export default function GlobalImageModal() {
     document.addEventListener('keydown', handleEscape)
 
     return () => {
-      document.removeEventListener('dblclick', handleDoubleClick)
+      document.removeEventListener('click', handleDoubleClick)
       document.removeEventListener('touchstart', handleTouchStart)
       document.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = 'unset'
