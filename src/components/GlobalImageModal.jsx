@@ -18,26 +18,25 @@ export default function GlobalImageModal() {
       }
     }
 
-    // Handle touch for mobile
-    let touchTimeout
+    // Handle touch for mobile - require double touch
+    let lastTouchTime = 0
     const handleTouchStart = (e) => {
       const img = e.target.closest('img')
       if (!img || !img.src) return
 
-      // Clear any existing timeout
-      if (touchTimeout) {
-        clearTimeout(touchTimeout)
-        touchTimeout = null
-        return // This was a double tap, ignore
-      }
+      const currentTime = Date.now()
+      const timeSinceLastTouch = currentTime - lastTouchTime
 
-      // Set timeout for single tap
-      touchTimeout = setTimeout(() => {
+      if (timeSinceLastTouch < 300 && timeSinceLastTouch > 0) {
+        // This is a double touch
         setImageSrc(img.src)
         setIsOpen(true)
         document.body.style.overflow = 'hidden'
-        touchTimeout = null
-      }, 1000)
+        lastTouchTime = 0 // Reset to prevent triple touches
+      } else {
+        // This is a single touch, just record the time
+        lastTouchTime = currentTime
+      }
     }
 
     // Add event listeners
@@ -57,9 +56,6 @@ export default function GlobalImageModal() {
       document.removeEventListener('dblclick', handleDoubleClick)
       document.removeEventListener('touchstart', handleTouchStart)
       document.removeEventListener('keydown', handleEscape)
-      if (touchTimeout) {
-        clearTimeout(touchTimeout)
-      }
       document.body.style.overflow = 'unset'
     }
   }, [])

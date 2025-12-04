@@ -93,7 +93,7 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative lg:w-[75%] ms-auto lg:z-50">
+    <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto overflow-hidden lg:z-50">
       <div className="relative h-screen">
         {images.map((image, index) => (
           <div
