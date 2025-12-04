@@ -8,7 +8,7 @@ export default function GlobalImageModal() {
   const [imageSrc, setImageSrc] = useState('')
 
   useEffect(() => {
-    // Handle double-click on any image
+    // double-click on any image
     const handleDoubleClick = (e) => {
       const img = e.target.closest('img')
       if (img && img.src) {
@@ -18,7 +18,7 @@ export default function GlobalImageModal() {
       }
     }
 
-    // Handle touch for mobile - require double touch
+    // double touch for mobile
     let lastTouchTime = 0
     const handleTouchStart = (e) => {
       const img = e.target.closest('img')
@@ -39,11 +39,10 @@ export default function GlobalImageModal() {
       }
     }
 
-    // Add event listeners
     document.addEventListener('dblclick', handleDoubleClick)
     document.addEventListener('touchstart', handleTouchStart)
 
-    // Handle escape key
+    // escape key
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
         setIsOpen(false)
@@ -68,28 +67,32 @@ export default function GlobalImageModal() {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={closeModal}>
-      <div className="relative w-[90vw] h-[90vh] max-w-[1200px] max-h-[800px]">
+    <div
+      onClick={closeModal}
+      className="fixed inset-0 flex justify-center items-center bg-black/80 backdrop-blur-sm cursor-zoom-out z-9999"
+    >
+      <div className="relative size-[75%] cursor-default">
         <Image
           src={imageSrc}
           alt="Modal Image"
           fill
           sizes="(max-width: 768px) 90vw, 80vw"
-          className="object-contain rounded-lg cursor-zoom-out"
+          className="object-contain rounded-lg"
           onClick={(e) => e.stopPropagation()}
           priority
           unoptimized
         />
-        <button
-          onClick={closeModal}
-          className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-white/20 backdrop-blur-md rounded-full text-white hover:bg-white/30 transition-colors"
-          aria-label="Close modal"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
       </div>
+
+      <button
+        aria-label="Close modal"
+        onClick={closeModal}
+        className="absolute top-4 right-4 size-10 flex justify-center items-center bg-text/20 backdrop-blur-md rounded-full text-text hover:bg-text/30 transition-colors cursor-pointer"
+      >
+        <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
   )
 }
