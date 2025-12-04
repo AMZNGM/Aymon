@@ -27,7 +27,7 @@ export default function GlobalImageModal() {
       const currentTime = Date.now()
       const timeSinceLastTouch = currentTime - lastTouchTime
 
-      if (timeSinceLastTouch < 300 && timeSinceLastTouch > 0) {
+      if (timeSinceLastTouch < 500 && timeSinceLastTouch > 0) {
         // This is a double touch
         setImageSrc(img.src)
         setIsOpen(true)
@@ -67,10 +67,7 @@ export default function GlobalImageModal() {
   if (!isOpen) return null
 
   return (
-    <div
-      onClick={closeModal}
-      className="fixed inset-0 flex justify-center items-center bg-black/80 backdrop-blur-sm cursor-zoom-out z-9999"
-    >
+    <div onClick={closeModal} className="fixed inset-0 flex justify-center items-center bg-black/60 cursor-zoom-out z-9999">
       <div className="relative size-[75%] cursor-default">
         <Image
           src={imageSrc}

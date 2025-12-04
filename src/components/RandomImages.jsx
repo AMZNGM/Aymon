@@ -56,8 +56,6 @@ export default function RandomImages() {
         tl.fromTo(
           img,
           {
-            // x: gsap.utils.random(window.innerWidth * 0.35, -window.innerWidth * 0.1),
-            // y: gsap.utils.random(window.innerHeight * 0.2, -window.innerHeight * 0.2),
             rotation: gsap.utils.random(-45, 45),
             scale: gsap.utils.random(0.75, 0.8),
             opacity: 1,
@@ -74,7 +72,6 @@ export default function RandomImages() {
         ).to({}, { duration: 1.1 }, '<')
       })
 
-      // if (window.innerWidth < 640) return
       let highestZIndex = 10
       Draggable.create(images, {
         type: 'x,y',
