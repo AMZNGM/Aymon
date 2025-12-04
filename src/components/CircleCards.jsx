@@ -86,7 +86,7 @@ export default function CircleCards() {
                 priority={index === 0}
                 fetchPriority={index === 0 ? 'high' : 'auto'}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                className="object-cover pointer-events-none select-none rounded-2xl"
+                className="object-cover select-none rounded-2xl cursor-zoom-in"
               />
             </div>
           </div>

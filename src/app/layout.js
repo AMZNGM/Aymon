@@ -3,6 +3,7 @@ import { inter, gambarino } from '@/app/fonts'
 // import LoadingScreen from '@/components/app-components/LoadingScreen'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
 import AppWrapper from '@/components/app-components/AppWrapper'
+import GlobalImageModal from '@/components/GlobalImageModal'
 
 export const metadata = {
   title: 'Ahmed Ayman',
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
         {/* <LoadingScreen /> */}
         <ErrorBoundary>
           <AppWrapper>{children}</AppWrapper>
+          <GlobalImageModal />
         </ErrorBoundary>
       </body>
     </html>

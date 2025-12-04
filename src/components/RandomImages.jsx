@@ -74,12 +74,12 @@ export default function RandomImages() {
         ).to({}, { duration: 1.1 }, '<')
       })
 
-      if (window.innerWidth < 640) return
+      // if (window.innerWidth < 640) return
       let highestZIndex = 10
       Draggable.create(images, {
         type: 'x,y',
         inertia: true,
-        bounds: sectionRef.current,
+        bounds: window.innerWidth > 640 ? sectionRef.current : null,
         onDragStart: function () {
           gsap.to(this.target, { zIndex: 100, duration: 0.2 })
         },
@@ -110,7 +110,7 @@ export default function RandomImages() {
                 priority={index === 0}
                 fetchPriority={index === 0 ? 'high' : 'auto'}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                className="object-cover pointer-events-none select-none rounded-2xl"
+                className="object-cover select-none rounded-2xl cursor-grab active:cursor-grabbing"
               />
             </div>
           </div>

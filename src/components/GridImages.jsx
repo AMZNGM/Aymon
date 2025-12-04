@@ -22,7 +22,7 @@ export default function GridImages() {
             width={image.width}
             height={image.height}
             sizes="(max-width: 1024px) 50vw, 30vw"
-            className="object-cover pointer-events-none select-none rounded-2xl"
+            className="object-cover select-none rounded-2xl cursor-zoom-in"
           />
         ))}
       </div>
