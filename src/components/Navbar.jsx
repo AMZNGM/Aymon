@@ -8,7 +8,7 @@ import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHo
 
 export default function Navbar() {
   return (
-    <header className="fixed left-0 w-2/7 max-lg:w-screen lg:h-screen max-sm:bg-text z-30 px-4 py-18 max-lg:py-6">
+    <header className="lg:fixed left-0 w-2/7 max-lg:w-screen lg:h-screen z-30 px-4 py-18 max-lg:py-6">
       <div className="relative size-full flex flex-col justify-start items-center text-center uppercase">
         <h1 className="text-7xl max-lg:text-6xl text-center font-black leading-15 max-lg:leading-12 cursor-pointer">
           <span className="group relative inline-block">

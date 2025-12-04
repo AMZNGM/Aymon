@@ -82,7 +82,7 @@ export default function GlobalImageModal() {
 
   return (
     <div onClick={closeModal} className="fixed inset-0 flex justify-center items-center bg-black/60 cursor-zoom-out z-9999">
-      <div className="relative size-[75%] cursor-default overflow-hidden">
+      <div className="relative size-[75%] cursor-default">
         <Image
           src={imageSrc}
           alt="Modal Image"
@@ -125,7 +125,7 @@ export default function GlobalImageModal() {
             e.stopPropagation()
             resetZoom()
           }}
-          className="size-8 flex justify-center items-center text-text hover:bg-text/30 rounded-full transition-colors cursor-pointer text-sm font-medium"
+          className="size-8 flex justify-center items-center text-text hover:bg-text/30 w-fit p-1 rounded-full transition-colors cursor-pointer text-sm font-medium"
         >
           {Math.round(scale * 100)}%
         </button>
