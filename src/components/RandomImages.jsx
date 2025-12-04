@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRef } from 'react'
 import { gsap, Draggable } from '@/utils/gsapConfig'
 import { useGSAP } from '@gsap/react'
+import { motion } from 'framer-motion'
 import {
   asfour,
   aymonPortrait,
@@ -97,7 +98,13 @@ export default function RandomImages() {
             key={index}
             className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 max-lg:translate-x-24! max-lg:-translate-y-30! max-sm:translate-x-12! will-change-transform cursor-grab active:cursor-grabbing sm:opacity-0"
           >
-            <div className="relative w-100 max-sm:w-55">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ duration: 0.5 }}
+              className="relative w-100 max-sm:w-55"
+            >
               <Image
                 src={image.src}
                 alt={image.alt}
@@ -105,11 +112,10 @@ export default function RandomImages() {
                 height={image.height}
                 sizes="220px"
                 priority={index === 0}
-                fetchPriority={index === 0 ? 'high' : 'auto'}
                 loading={index === 0 ? 'eager' : 'lazy'}
                 className="object-cover select-none rounded-2xl cursor-grab active:cursor-grabbing"
               />
-            </div>
+            </motion.div>
           </div>
         ))}
       </div>

@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { personalInfo } from '@/data/personal-info'
 import { TextAlignJustify } from 'lucide-react'
 import { mainPhotoNoBG } from '@/data/media-data/media-imports'
@@ -10,7 +13,14 @@ export default function Navbar() {
   return (
     <header className="fixed left-0 w-2/7 max-lg:w-screen lg:h-screen max-sm:bg-text rounded-b-4xl z-30 px-4 py-18 max-lg:py-6">
       <div className="relative size-full flex flex-col justify-start items-center text-center uppercase">
-        <h1 className="text-7xl max-lg:text-6xl text-center font-black leading-15 max-lg:leading-12 cursor-pointer">
+        <motion.h1
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5 }}
+          drag
+          dragTransition={{ min: 0, max: 0 }}
+          className="text-7xl max-lg:text-6xl text-center font-black leading-15 max-lg:leading-12 cursor-grab active:cursor-grabbing"
+        >
           <span className="group relative inline-block">
             <span className="block transition-opacity duration-400 group-hover:opacity-0">
               {personalInfo.firstName}
@@ -27,27 +37,44 @@ export default function Navbar() {
           </span>
 
           <span className="block text-3xl max-lg:text-2xl text-bg/50 font-sec normal-case">Visual Artist</span>
-        </h1>
+        </motion.h1>
 
-        <Image
-          src={mainPhotoNoBG}
-          alt="Main Image"
-          priority
-          className="size-75 object-cover pointer-events-none select-none my-12 max-lg:hidden"
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          whileTap={{ scale: 0.9 }}
+          whileDrag={{ scale: 2 }}
+          transition={{ duration: 1 }}
+          drag
+          dragTransition={{ min: 0, max: 0 }}
+          className="cursor-grab active:cursor-grabbing"
+        >
+          <Image
+            src={mainPhotoNoBG}
+            alt="Main Image"
+            priority
+            className="size-75 object-cover pointer-events-none select-none my-12 max-lg:hidden"
+          />
+        </motion.div>
 
         <nav className="flex gap-4 text-[15px] font-medium mt-4 p-2 max-lg:hidden">
-          <Link href="/about">
-            <VariableFontHoverByRandomLetter label="About" />
-          </Link>
+          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+            <Link href="/about">
+              <VariableFontHoverByRandomLetter label="About" />
+            </Link>
+          </motion.div>
 
-          <Link href="/Work">
-            <VariableFontHoverByRandomLetter label="Work" />
-          </Link>
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+            <Link href="/Work">
+              <VariableFontHoverByRandomLetter label="Work" />
+            </Link>
+          </motion.div>
 
-          <Link href="/contact">
-            <VariableFontHoverByRandomLetter label="Contact" />
-          </Link>
+          <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+            <Link href="/contact">
+              <VariableFontHoverByRandomLetter label="Contact" />
+            </Link>
+          </motion.div>
         </nav>
       </div>
 

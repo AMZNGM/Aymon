@@ -4,9 +4,10 @@ import Image from 'next/image'
 import { useRef } from 'react'
 import { gsap } from '@/utils/gsapConfig'
 import { useGSAP } from '@gsap/react'
+import { motion } from 'framer-motion'
 import { geo1, geo2, geo3, geo4, geo5 } from '@/data/media-data/media-imports'
 
-export default function CircleCards() {
+export default function GeoProject() {
   const sectionRef = useRef(null)
   const images = [
     { src: geo1, width: 800, height: 1000, alt: 'Geo1 Image' },
@@ -69,14 +70,20 @@ export default function CircleCards() {
   )
 
   return (
-    <section ref={sectionRef} className="relative lg:w-[75%] ms-auto lg:z-50">
+    <section ref={sectionRef} className="relative lg:w-[75%] ms-auto">
       <div className="relative h-screen">
         {images.map((image, index) => (
           <div
             key={index}
             className="gsap-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 will-change-transform cursor-grab active:cursor-grabbing"
           >
-            <div className="relative w-100 max-sm:w-55">
+            <motion.div
+              initial={{ opacity: 0, y: 300 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ duration: 1 }}
+              className="relative w-100 max-sm:w-55"
+            >
               <Image
                 src={image.src}
                 alt={image.alt}
@@ -88,7 +95,7 @@ export default function CircleCards() {
                 loading={index === 0 ? 'eager' : 'lazy'}
                 className="object-cover select-none rounded-2xl cursor-zoom-in"
               />
-            </div>
+            </motion.div>
           </div>
         ))}
       </div>

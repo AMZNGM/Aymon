@@ -1,13 +1,15 @@
 import RandomImages from '@/components/RandomImages'
 import GridImages from '@/components/GridImages'
-import CircleCards from '@/components/CircleCards'
+import GeoProject from '@/components/GeoProject'
+import SelectedWork from '@/components/SelectedWork'
 
 export default function Home() {
   return (
     <>
       <RandomImages />
       <GridImages />
-      <CircleCards />
+      <SelectedWork />
+      <GeoProject />
     </>
   )
 }
