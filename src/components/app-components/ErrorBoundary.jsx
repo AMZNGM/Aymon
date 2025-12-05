@@ -34,12 +34,12 @@ export default class ErrorBoundary extends Component {
           <div className="relative w-full max-w-3xl space-y-4 bg-text border-4 p-8 z-10">
             <pre className="text-xs overflow-x-auto">
               {`
-                ███████╗██████╗ ██████╗  ██████╗ ██████╗     ██╗
-                ██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗    ██║
-                █████╗  ██████╔╝██████╔╝██║   ██║██████╔╝    ██║
-                ██╔══╝  ██╔══██╗██╔══██╗██║   ██║██╔══██╗    ╚═╝
-                ███████╗██║  ██║██║  ██║╚██████╔╝██║  ██║    ██╗
-                ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝
+███████╗██████╗ ██████╗  ██████╗ ██████╗     ██╗
+██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗    ██║
+█████╗  ██████╔╝██████╔╝██║   ██║██████╔╝    ██║
+██╔══╝  ██╔══██╗██╔══██╗██║   ██║██╔══██╗    ╚═╝
+███████╗██║  ██║██║  ██║╚██████╔╝██║  ██║    ██╗
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝
               `}
             </pre>
 
@@ -64,7 +64,10 @@ export default class ErrorBoundary extends Component {
 
             <div className="text-green-400/50 text-xs mb-4">{'═'.repeat(60)}</div>
 
-            <MainBtn onClick={() => window.location.reload()} className="font-mono w-full bg-bg hover:bg-text transition-colors">
+            <MainBtn
+              onClick={() => window.location.reload()}
+              className="font-mono w-full bg-text! md:bg-bg! hover:bg-text! transition-colors"
+            >
               [ REBOOT SYSTEM ]
             </MainBtn>
 

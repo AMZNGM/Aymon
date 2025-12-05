@@ -5,11 +5,11 @@ import GeoProject from '@/components/GeoProject'
 
 export default function Home() {
   return (
-    <>
-      {/* <RandomImages /> */}
+    <main className="overflow-x-hidden">
+      <RandomImages />
       <GridImages />
       <SelectedWork />
       <GeoProject />
-    </>
+    </main>
   )
 }

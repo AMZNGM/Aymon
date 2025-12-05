@@ -5,38 +5,64 @@ import { useRef } from 'react'
 import { gsap, Draggable } from '@/utils/gsapConfig'
 import { useGSAP } from '@gsap/react'
 import { motion } from 'framer-motion'
-import {
-  asfour,
-  aymonPortrait,
-  caligula,
-  crow,
-  folk,
-  forcing,
-  haramt,
-  inside,
-  metro,
-  perspective,
-  pigeon,
-  proof,
-  working,
-} from '@/data/media-data/media-imports'
+import { useIsMobile } from '@/hooks/useIsMobile'
+import asfour from '../../public/images/randomImgs/asfour.webp'
+import aymonPortrait from '../../public/images/randomImgs/aymonPortrait.webp'
+import caligula from '../../public/images/randomImgs/caligula.webp'
+import crow from '../../public/images/randomImgs/crow.webp'
+import folk from '../../public/images/randomImgs/folk.webp'
+import forcing from '../../public/images/randomImgs/forcing.webp'
+import haramt from '../../public/images/randomImgs/haramt.webp'
+import inside from '../../public/images/randomImgs/inside.webp'
+import metro from '../../public/images/randomImgs/metro.webp'
+import perspective from '../../public/images/randomImgs/perspective.webp'
+import pigeon from '../../public/images/randomImgs/pigeon.webp'
+import proof from '../../public/images/randomImgs/proof.webp'
+import working from '../../public/images/randomImgs/working.webp'
+
+const images = [
+  { src: aymonPortrait, alt: 'Aymon Portrait' },
+  { src: asfour, alt: 'Asfour Image' },
+  { src: pigeon, alt: 'Pigeon Image' },
+  { src: crow, alt: 'Crow Image' },
+  { src: folk, alt: 'Folk Image' },
+  { src: forcing, alt: 'Forcing Image' },
+  { src: metro, alt: 'Metro Image' },
+  { src: inside, alt: 'Inside Image' },
+  { src: working, alt: 'Working Image' },
+  { src: caligula, alt: 'Caligula Image' },
+  { src: haramt, alt: 'Haramt Image' },
+  { src: proof, alt: 'Proof Image' },
+  { src: perspective, alt: 'Perspective Image' },
+]
 
 export default function RandomImages() {
   const sectionRef = useRef(null)
-  const images = [
-    { src: aymonPortrait, width: 480, height: 640, alt: 'Aymon Portrait' },
-    { src: asfour, width: 800, height: 800, alt: 'Asfour Image' },
-    { src: caligula, width: 800, height: 800, alt: 'Caligula Image' },
-    { src: crow, width: 640, height: 800, alt: 'Crow Image' },
-    { src: folk, width: 640, height: 800, alt: 'Folk Image' },
-    { src: forcing, width: 640, height: 800, alt: 'Forcing Image' },
-    { src: haramt, width: 800, height: 800, alt: 'Haramt Image' },
-    { src: inside, width: 800, height: 800, alt: 'Inside Image' },
-    { src: metro, width: 640, height: 800, alt: 'Metro Image' },
-    { src: working, width: 640, height: 640, alt: 'Working Image' },
-    { src: pigeon, width: 640, height: 800, alt: 'Pigeon Image' },
-    { src: proof, width: 640, height: 800, alt: 'Proof Image' },
-    { src: perspective, width: 640, height: 640, alt: 'Perspective Image' },
+  const containerRef = useRef(null)
+  const isMobile = useIsMobile()
+
+  const desktopPositions = [
+    { x: 0, y: -160, rotate: -15 },
+    { x: 150, y: -50, rotate: 8 },
+    { x: 520, y: -150, rotate: 5 },
+    { x: 600, y: 180, rotate: -5 },
+    { x: -200, y: 200, rotate: -12 },
+    { x: 0, y: 400, rotate: -15 },
+    { x: 250, y: 250, rotate: 8 },
+    { x: 620, y: 500, rotate: 5 },
+    { x: 120, y: 680, rotate: -5 },
+    { x: -200, y: 700, rotate: 12 },
+    { x: 300, y: 750, rotate: 8 },
+    { x: -50, y: 930, rotate: -18 },
+    { x: 520, y: 1000, rotate: 15 },
+  ]
+
+  const mobilePositions = [
+    { x: '20%', y: -80, rotate: -15 },
+    { x: '90%', y: -50, rotate: 8 },
+    { x: '50%', y: 80, rotate: -6 },
+    { x: '90%', y: 260, rotate: 8 },
+    { x: '20%', y: 240, rotate: -12 },
   ]
 
   useGSAP(
@@ -46,14 +72,16 @@ export default function RandomImages() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: window.innerWidth > 640 ? 'top top' : '',
-          scrub: window.innerWidth > 640 ? true : false,
-          pin: window.innerWidth > 640 ? true : false,
+          start: 'top top',
+          scrub: true,
+          pin: true,
         },
       })
 
       const images = gsap.utils.toArray('.grid-image')
-      images.forEach((img) => {
+      images.forEach((img, index) => {
+        const pos =
+          window.innerWidth <= 1280 ? mobilePositions[index % mobilePositions.length] : desktopPositions[index % desktopPositions.length]
         tl.fromTo(
           img,
           {
@@ -62,14 +90,17 @@ export default function RandomImages() {
             opacity: 1,
           },
           {
-            x: gsap.utils.random(window.innerWidth * 0.35, -window.innerWidth * 0.1),
-            y: gsap.utils.random(window.innerHeight * 0.99, -window.innerHeight * 0.2),
-            rotation: gsap.utils.random(-10, 10),
-            scale: 1,
+            x: pos.x,
+            y: pos.y,
+            rotation: pos.rotate,
+            // x: gsap.utils.random(window.innerWidth * 0.35, -window.innerWidth * 0.1),
+            // y: gsap.utils.random(window.innerHeight * 0.99, -window.innerHeight * 0.2),
+            // rotation: gsap.utils.random(-10, 10),
+            scale: gsap.utils.random(0.75, 1),
             duration: 1,
             ease: 'power2.inOut',
           },
-          0
+          index * 0.08
         ).to({}, { duration: 1.1 }, '<')
       })
 
@@ -77,7 +108,7 @@ export default function RandomImages() {
       Draggable.create(images, {
         type: 'x,y',
         inertia: true,
-        bounds: window.innerWidth > 640 ? sectionRef.current : null,
+        bounds: containerRef.current,
         onDragStart: function () {
           gsap.to(this.target, { zIndex: 100, duration: 0.2 })
         },
@@ -91,35 +122,34 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto overflow-hidden lg:z-50">
-      <div className="relative h-screen">
-        {images.map((image, index) => (
+    <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto lg:z-50">
+      <div ref={containerRef} className="relative h-screen">
+        {(isMobile ? images.slice(0, 5) : images).map((image, index) => (
           <div
             key={index}
-            className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 max-lg:translate-x-24! max-lg:-translate-y-30! max-sm:translate-x-12! will-change-transform cursor-grab active:cursor-grabbing sm:opacity-0"
+            className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 will-change-transform cursor-grab active:cursor-grabbing"
           >
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               whileTap={{ scale: 0.9 }}
               transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
               className="relative w-100 max-sm:w-55"
             >
               <Image
                 src={image.src}
                 alt={image.alt}
-                width={image.width}
-                height={image.height}
-                sizes="220px"
                 priority={index === 0}
-                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 || index === 1 ? 'high' : 'auto'}
+                sizes="(max-width: 1024px) 50vw, 30vw"
                 className="object-cover select-none rounded-2xl cursor-grab active:cursor-grabbing"
               />
             </motion.div>
           </div>
         ))}
       </div>
-      <div className="h-[80vh] max-sm:h-[70vh]" />
+      <div className="h-[75vh] max-xl:hidden" />
     </section>
   )
 }
