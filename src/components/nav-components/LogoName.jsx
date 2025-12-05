@@ -9,7 +9,7 @@ export default function LogoName() {
   const isMobile = useIsMobile()
 
   const nameVariants = {
-    mobile: { opacity: 0 },
+    mobile: { opacity: [1, 0] },
     desktop: { opacity: 1 },
   }
 
