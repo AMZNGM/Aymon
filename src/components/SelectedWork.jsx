@@ -1,56 +1,29 @@
 'use client'
 
-import { useIsMobile } from '@/hooks/useIsMobile'
 import { motion } from 'framer-motion'
 
 export default function SelectedWork() {
-  const isMobile = useIsMobile()
+  const colorVariants = ['#ff4d4d', '#4dff88', '#4dd2ff', '#ff4df2', '#ffe74d']
 
   return (
-    <section className="relative lg:w-[75%] lg:ms-auto z-10">
+    <section className="relative lg:w-[75%] lg:ms-auto px-1">
       <motion.h4
-        initial={{ x: '-100%' }}
-        whileInView={{ x: 0, rotate: -10, y: isMobile ? 150 : 0 }}
-        whileTap={{
-          color: ['#ff4d4d', '#4dff88', '#4dd2ff', '#ff4df2', '#ffe74d'],
-        }}
+        initial={{ y: 100, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        whileHover={{ color: colorVariants }}
         transition={{
-          type: 'spring',
-          bounce: 0.4,
-          duration: 1.2,
+          duration: 1,
           color: {
             duration: 4,
             repeat: Infinity,
             repeatType: 'reverse',
           },
-          y: { duration: 1.2 },
         }}
-        className="text-9xl max-md:text-4xl bg-violet-50 select-none cursor-pointer relative z-10"
+        viewport={{ once: true }}
+        className="text-9xl max-md:text-5xl max-md:text-center font-bold tracking-[-1px]"
       >
         Selected Work
       </motion.h4>
-
-      {/* <motion.h4
-        initial={{ x: '100%' }}
-        whileInView={{ x: 0, rotate: 20, y: isMobile ? 150 : -50 }}
-        whileTap={{
-          color: ['#ff4d4d', '#4dff88', '#4dd2ff', '#ff4df2', '#ffe74d'],
-        }}
-        transition={{
-          type: 'spring',
-          bounce: 0.4,
-          duration: 1.2,
-          color: {
-            duration: 4,
-            repeat: Infinity,
-            repeatType: 'reverse',
-          },
-          y: { duration: 1.2 },
-        }}
-        className="text-9xl max-md:text-4xl text-end bg-emerald-100 select-none cursor-pointer"
-      >
-        Geo Project
-      </motion.h4> */}
     </section>
   )
 }

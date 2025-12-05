@@ -25,7 +25,7 @@ export default function LogoName() {
   }
 
   return (
-    <h1 className="text-7xl max-lg:text-6xl text-center font-black leading-15 max-lg:leading-12 cursor-grab active:cursor-grabbing">
+    <h1 className="text-7xl max-lg:text-6xl text-center font-black leading-15 max-lg:leading-12">
       <span className="group relative inline-block">
         <motion.span
           variants={nameVariants}
