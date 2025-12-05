@@ -21,12 +21,12 @@ export default function GridImages() {
         {images.map((image, index) => (
           <motion.div
             key={index}
-            initial={{ y: 100 }}
-            whileInView={{ y: 0 }}
+            initial={{ y: 100, filter: 'blur(10px)' }}
+            whileInView={{ y: 0, filter: 'blur(0px)' }}
             whileTap={{ scale: 0.9 }}
-            transition={{ duration: 0.8, delay: index * 0.12 }}
+            transition={{ duration: 0.8, delay: index * 0.12, filter: { duration: 0.5 } }}
             viewport={{ once: true, amount: 0.3 }}
-            className="will-change-transform"
+            className="will-change-transform transform-gpu"
           >
             <Image
               src={image.src}
