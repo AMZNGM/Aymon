@@ -6,10 +6,10 @@ import SelectedWork from '@/components/SelectedWork'
 export default function Home() {
   return (
     <>
-      <RandomImages />
-      <GridImages />
-      <SelectedWork />
-      <GeoProject />
+      {/* <RandomImages /> */}
+      {/* <GridImages /> */}
+      {/* <SelectedWork /> */}
+      {/* <GeoProject /> */}
     </>
   )
 }

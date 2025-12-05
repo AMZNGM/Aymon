@@ -12,7 +12,3 @@
 html {
   scrollbar-width: none;
 }
-::selection {
-  background: var(--color-main);
-  color: var(--color-bg);
-}
