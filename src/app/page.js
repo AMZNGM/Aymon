@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       {/* <RandomImages /> */}
-      {/* <GridImages /> */}
+      <GridImages />
       {/* <SelectedWork /> */}
       {/* <GeoProject /> */}
     </>
