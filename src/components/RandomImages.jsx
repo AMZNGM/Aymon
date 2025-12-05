@@ -72,9 +72,9 @@ export default function RandomImages() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top top',
-          scrub: true,
-          pin: true,
+          start: window.innerWidth > 640 ? 'top top' : '',
+          scrub: window.innerWidth > 640 ? true : false,
+          pin: window.innerWidth > 640 ? true : false,
         },
       })
 
