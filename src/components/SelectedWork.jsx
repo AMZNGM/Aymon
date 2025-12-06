@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 export default function SelectedWork() {
   return (
-    <section className="relative w-screen lg:w-[75%] lg:ms-auto py-4 px-1">
+    <section className="relative w-screen lg:w-[75%] lg:ms-auto pt-12 pb-4 px-1">
       <motion.span
         initial={{ y: 100, opacity: 0, filter: 'blur(10px)' }}
         whileInView={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
