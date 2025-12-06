@@ -3,10 +3,10 @@
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-import blitz from '../../public/images/selectedImgs/blitz/blitz1.webp'
+import marwanPablo from '../../public/images/selectedImgs/marwanPablo/halal.webp'
 import geo from '../../public/images/selectedImgs/geo/geo1.webp'
 import menage from '../../public/images/selectedImgs/ghadaAbdelrazikXMenage07/menage.webp'
-import marwanPablo from '../../public/images/selectedImgs/marwanPablo/halal.webp'
+import blitz from '../../public/images/selectedImgs/blitz/blitz1.webp'
 
 const leftColumn = [
   { src: marwanPablo, title: 'Marwan Pablo', tall: true },
