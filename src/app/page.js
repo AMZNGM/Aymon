@@ -6,7 +6,7 @@ import GeoProject from '@/components/GeoProject'
 export default function Home() {
   return (
     <main className="overflow-x-hidden">
-      <RandomImages />
+      {/* <RandomImages /> */}
       <SelectedWork />
       <GridImages />
       <GeoProject />
