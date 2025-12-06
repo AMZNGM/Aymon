@@ -13,7 +13,7 @@ export default function Home() {
 
         <div className="relative w-full h-full">
           <RandomImages />
-          {/* <SelectedWork /> */}
+          <SelectedWork />
           {/* <GeoProject /> */}
         </div>
       </div>
