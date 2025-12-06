@@ -9,7 +9,7 @@ export default function NavLinks() {
   const navLinks = useMemo(() => ['/about', '/work', '/contact'], [])
 
   return (
-    <nav className="flex gap-4 text-[15px] font-medium mt-4 p-2 max-lg:hidden">
+    <nav className="flex justify-center items-center text-center gap-4 text-[15px] font-medium uppercase mt-4 p-2 max-lg:hidden">
       {navLinks.map((link, index) => (
         <motion.div key={index} whileTap={{ scale: 0.9 }} onClick={() => (window.location.href = link)}>
           <Link href={link}>

@@ -58,11 +58,11 @@ export default function RandomImages() {
   ]
 
   const mobilePositions = [
-    { x: '30%', y: -80, rotate: -15 },
-    { x: '65%', y: -50, rotate: 8 },
+    { x: '10%', y: -80, rotate: -15 },
+    { x: '90%', y: -50, rotate: 8 },
     { x: '50%', y: 80, rotate: -6 },
-    { x: '85%', y: 260, rotate: 8 },
-    { x: '30%', y: 240, rotate: -12 },
+    { x: '90%', y: 260, rotate: 8 },
+    { x: '10%', y: 240, rotate: -12 },
   ]
 
   useGSAP(
@@ -81,7 +81,7 @@ export default function RandomImages() {
       const images = gsap.utils.toArray('.grid-image')
       images.forEach((img, index) => {
         const pos =
-          window.innerWidth <= 1280 ? mobilePositions[index % mobilePositions.length] : desktopPositions[index % desktopPositions.length]
+          window.innerWidth <= 1536 ? mobilePositions[index % mobilePositions.length] : desktopPositions[index % desktopPositions.length]
         tl.fromTo(
           img,
           {
@@ -93,7 +93,7 @@ export default function RandomImages() {
             x: pos.x,
             y: pos.y,
             rotation: pos.rotate,
-            scale: gsap.utils.random(0.75, 1),
+            scale: window.innerWidth <= 1280 ? gsap.utils.random(0.5, 0.75) : gsap.utils.random(0.75, 1),
             duration: 1,
             ease: 'power2.inOut',
           },
@@ -119,8 +119,8 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto lg:z-50 overflow-hidden!">
-      <div ref={containerRef} className="relative">
+    <section ref={sectionRef} className="relative bg-text">
+      <div ref={containerRef} className="h-[175vh] max-2xl:h-screen">
         <div className="relative h-screen">
           {(isMobile ? images.slice(0, 5) : images).map((image, index) => (
             <div
@@ -147,7 +147,6 @@ export default function RandomImages() {
             </div>
           ))}
         </div>
-        <div className="h-[75vh] max-xl:hidden" />
       </div>
     </section>
   )

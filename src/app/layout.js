@@ -2,7 +2,7 @@ import './globals.css'
 import { inter, gambarino } from '@/app/fonts'
 // import LoadingScreen from '@/components/app-components/LoadingScreen'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
-import AppWrapper from '@/components/app-components/AppWrapper'
+import LenisSetup from '@/components/app-components/LenisSetup'
 import GlobalImageModal from '@/components/GlobalImageModal'
 
 export const metadata = {
@@ -30,7 +30,8 @@ export default function RootLayout({ children }) {
       >
         {/* <LoadingScreen /> */}
         <ErrorBoundary>
-          <AppWrapper>{children}</AppWrapper>
+          <LenisSetup />
+          {children}
           <GlobalImageModal />
         </ErrorBoundary>
       </body>
