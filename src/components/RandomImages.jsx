@@ -93,9 +93,6 @@ export default function RandomImages() {
             x: pos.x,
             y: pos.y,
             rotation: pos.rotate,
-            // x: gsap.utils.random(window.innerWidth * 0.35, -window.innerWidth * 0.1),
-            // y: gsap.utils.random(window.innerHeight * 0.99, -window.innerHeight * 0.2),
-            // rotation: gsap.utils.random(-10, 10),
             scale: gsap.utils.random(0.75, 1),
             duration: 1,
             ease: 'power2.inOut',
@@ -104,6 +101,7 @@ export default function RandomImages() {
         ).to({}, { duration: 1.1 }, '<')
       })
 
+      if (window.innerWidth < 1024) return
       let highestZIndex = 10
       Draggable.create(images, {
         type: 'x,y',

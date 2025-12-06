@@ -112,7 +112,7 @@ export default function GlobalImageModal() {
             className="relative size-full select-none"
             style={{ scale, cursor: 'grab' }}
             whileTap={{ cursor: 'grabbing' }}
-            drag
+            drag={scale === 1 ? false : true}
             dragConstraints={{ left: -calcConstraint, right: calcConstraint, top: -calcConstraint, bottom: calcConstraint }}
             dragElastic={0.2}
             transition={{ type: 'spring', stiffness: 200, damping: 20 }}

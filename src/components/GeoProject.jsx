@@ -121,7 +121,7 @@ export default function GeoProject() {
         whileInView={{ y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 1 }}
         viewport={{ once: true }}
-        className="absolute top-4 lg:right-4 max-lg:left-1 w-full text-5xl max-md:text-base lg:text-end font-bold uppercase"
+        className="absolute top-4 lg:right-4 max-lg:left-1 w-full text-5xl max-md:text-xl lg:text-end font-bold uppercase"
       >
         #1 {clientsInfo[1].client}
       </motion.span>
