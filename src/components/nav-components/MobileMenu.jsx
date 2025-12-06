@@ -27,7 +27,7 @@ export default function MobileMenu() {
         checked={isMenuOpen}
         onChange={() => setIsMenuOpen(!isMenuOpen)}
       />
-      <label aria-label="Open Menu" htmlFor="mobile-nav-toggle" className="absolute top-4 right-4 p-2 cursor-pointer z-101">
+      <label aria-label="Open Menu" htmlFor="mobile-nav-toggle" className="absolute top-4 right-4 p-2 cursor-pointer z-1001">
         <motion.div whileTap={{ scale: 0.9, rotate: 90 }}>
           <TextAlignJustify strokeWidth={3} />
         </motion.div>
@@ -35,7 +35,7 @@ export default function MobileMenu() {
 
       <nav
         role="navigation"
-        className="fixed inset-0 flex flex-col justify-center items-center gap-4 text-5xl font-medium uppercase bg-main px-6 py-2 transition-all duration-300 opacity-0 translate-y-full pointer-events-none peer-checked:opacity-100 peer-checked:translate-y-0 peer-checked:pointer-events-auto z-100"
+        className="fixed inset-0 flex flex-col justify-center items-center gap-4 text-5xl font-medium uppercase bg-main px-6 py-2 transition-all duration-300 opacity-0 translate-y-full pointer-events-none peer-checked:opacity-100 peer-checked:translate-y-0 peer-checked:pointer-events-auto z-1000"
       >
         {navLinks.map((link, index) => (
           <motion.div key={index} whileTap={{ scale: 0.9 }}>

@@ -123,33 +123,35 @@ export default function RandomImages() {
 
   return (
     <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto lg:z-50">
-      <div ref={containerRef} className="relative h-screen">
-        {(isMobile ? images.slice(0, 5) : images).map((image, index) => (
-          <div
-            key={index}
-            className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 will-change-transform cursor-grab active:cursor-grabbing"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="relative w-100 max-sm:w-55"
+      <div ref={containerRef} className="relative">
+        <div className="relative h-screen">
+          {(isMobile ? images.slice(0, 5) : images).map((image, index) => (
+            <div
+              key={index}
+              className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 will-change-transform cursor-grab active:cursor-grabbing"
             >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                priority={index === 0}
-                fetchPriority={index === 0 || index === 1 ? 'high' : 'auto'}
-                sizes="(max-width: 1024px) 50vw, 30vw"
-                className="object-cover select-none rounded-2xl cursor-grab active:cursor-grabbing"
-              />
-            </motion.div>
-          </div>
-        ))}
+              <motion.div
+                initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="relative w-100 max-sm:w-55"
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  priority={index === 0}
+                  fetchPriority={index === 0 || index === 1 ? 'high' : 'auto'}
+                  sizes="(max-width: 1024px) 50vw, 30vw"
+                  className="object-cover select-none rounded-2xl cursor-grab active:cursor-grabbing"
+                />
+              </motion.div>
+            </div>
+          ))}
+        </div>
+        <div className="h-[75vh] max-xl:hidden" />
       </div>
-      <div className="h-[75vh] max-xl:hidden" />
     </section>
   )
 }

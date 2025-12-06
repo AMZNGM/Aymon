@@ -3,12 +3,14 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import ImageHoverHint from './ImageHoverHint'
+import { Minus, Plus } from 'lucide-react'
+import ImageHoverHint from '@/components/ui/ImageHoverHint'
 
 export default function GlobalImageModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [imageSrc, setImageSrc] = useState('')
   const [scale, setScale] = useState(1)
+  const calcConstraint = scale * 300
 
   useEffect(() => {
     // double-click on any image
@@ -17,7 +19,7 @@ export default function GlobalImageModal() {
       if (img && img.src) {
         setImageSrc(img.src)
         setIsOpen(true)
-        document.body.style.overflow = 'hidden'
+        document.body.classList.add('overflow-hidden')
       }
     }
 
@@ -34,7 +36,7 @@ export default function GlobalImageModal() {
         // This is a double touch
         setImageSrc(img.src)
         setIsOpen(true)
-        document.body.style.overflow = 'hidden'
+        document.body.classList.add('overflow-hidden')
         lastTouchTime = 0 // Reset to prevent triple touches
       } else {
         // This is a single touch, just record the time
@@ -49,6 +51,7 @@ export default function GlobalImageModal() {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
         setIsOpen(false)
+        setScale(1)
         document.body.style.overflow = 'unset'
       }
     }
@@ -62,12 +65,6 @@ export default function GlobalImageModal() {
     }
   }, [])
 
-  const closeModal = () => {
-    setIsOpen(false)
-    setScale(1)
-    document.body.style.overflow = 'unset'
-  }
-
   const zoomIn = () => {
     setScale((prev) => Math.min(prev + 0.25, 3))
   }
@@ -80,6 +77,24 @@ export default function GlobalImageModal() {
     setScale(1)
   }
 
+  const closeModal = () => {
+    setIsOpen(false)
+    setScale(1)
+    document.body.classList.remove('overflow-hidden')
+  }
+
+  const handleImageClick = (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault()
+      zoomIn()
+    }
+
+    if (e.altKey) {
+      e.preventDefault()
+      zoomOut()
+    }
+  }
+
   if (!isOpen) return <ImageHoverHint />
 
   return (
@@ -88,22 +103,35 @@ export default function GlobalImageModal() {
       <div onClick={closeModal} className="fixed inset-0 flex justify-center items-center bg-black/60 cursor-zoom-out z-9999">
         <motion.div
           initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          whileTap={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
           transition={{ duration: 0.3 }}
+          onClick={(e) => e.stopPropagation()}
           className="relative size-[75%] cursor-default"
         >
-          <Image
-            src={imageSrc}
-            alt="Modal Image"
-            fill
-            sizes="(max-width: 768px) 90vw, 80vw"
-            className="object-contain rounded-lg transition-transform duration-300"
-            style={{ transform: `scale(${scale})` }}
-            onClick={(e) => e.stopPropagation()}
-            priority
-            unoptimized
-          />
+          <motion.div
+            className="relative size-full select-none"
+            style={{ scale, cursor: 'grab' }}
+            whileTap={{ cursor: 'grabbing' }}
+            drag
+            dragConstraints={{ left: -calcConstraint, right: calcConstraint, top: -calcConstraint, bottom: calcConstraint }}
+            dragElastic={0.2}
+            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            onClick={handleImageClick}
+            // onDoubleClick={(e) => {
+            //   e.stopPropagation()
+            //   setScale((prev) => (prev === 1 ? 2 : 1))
+            // }}
+          >
+            <Image
+              src={imageSrc}
+              alt="Modal Image"
+              fill
+              sizes="(max-width: 768px) 90vw, 80vw"
+              className="object-contain select-none pointer-events-none transition-transform duration-300 -z-10"
+              priority
+              unoptimized
+            />
+          </motion.div>
         </motion.div>
 
         <button
@@ -123,33 +151,40 @@ export default function GlobalImageModal() {
               e.stopPropagation()
               zoomOut()
             }}
-            className="size-8 flex justify-center items-center text-text hover:bg-text/30 rounded-full transition-colors cursor-pointer"
+            className="group size-8 flex justify-center items-center text-text hover:bg-text/30 rounded-full transition-colors cursor-pointer"
           >
-            <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-            </svg>
+            <Minus size={20} />
+            <span className="size-full flex justify-center items-center absolute top-1/2 right-30 -translate-y-1/2 text-xs opacity-0 group-hover:opacity-100 duration-200">
+              Alt + left click
+            </span>
           </button>
+
           <button
             aria-label="Reset zoom"
             onClick={(e) => {
               e.stopPropagation()
               resetZoom()
             }}
-            className="size-8 flex justify-center items-center text-text hover:bg-text/30 w-fit p-1 rounded-full transition-colors cursor-pointer text-sm font-medium"
+            className="group size-8 flex justify-center items-center text-text hover:bg-text/30 w-fit p-1 rounded-full transition-colors cursor-pointer text-sm font-medium"
           >
             {Math.round(scale * 100)}%
+            <span className="size-full flex justify-center items-center absolute inset-0 -translate-y-10 text-xs opacity-0 group-hover:opacity-100 duration-200">
+              Reset
+            </span>
           </button>
+
           <button
             aria-label="Zoom in"
             onClick={(e) => {
               e.stopPropagation()
               zoomIn()
             }}
-            className="size-8 flex justify-center items-center text-text hover:bg-text/30 rounded-full transition-colors cursor-pointer"
+            className="group size-8 flex justify-center items-center text-text hover:bg-text/30 rounded-full transition-colors cursor-pointer"
           >
-            <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
+            <Plus size={20} />
+            <span className="size-full flex justify-center items-center absolute top-1/2 left-30 -translate-y-1/2 text-xs opacity-0 group-hover:opacity-100 duration-200">
+              Ctrl + left click
+            </span>
           </button>
         </div>
       </div>
