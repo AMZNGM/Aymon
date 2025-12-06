@@ -16,7 +16,7 @@ const images = [
 
 export default function GridImages() {
   return (
-    <section className="relative lg:w-[75%] ms-auto px-1">
+    <section className="relative lg:w-[75%] ms-auto pb-12 px-1">
       <div className="relative w-full grid grid-cols-2 gap-4 px-18 max-sm:p-0">
         {images.map((image, index) => (
           <motion.div

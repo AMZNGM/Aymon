@@ -10,58 +10,30 @@ export default function GlobalImageModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [imageSrc, setImageSrc] = useState('')
   const [scale, setScale] = useState(1)
-  const calcConstraint = scale * 300
+  const calcConstraint = scale * 200
 
   useEffect(() => {
-    // double-click on any image
-    const handleDoubleClick = (e) => {
+    const clickToOpen = (e) => {
       const img = e.target.closest('img')
       if (img && img.src) {
         setImageSrc(img.src)
         setIsOpen(true)
-        document.body.classList.add('overflow-hidden')
       }
     }
+    document.addEventListener('click', clickToOpen)
 
-    // double touch for mobile
-    let lastTouchTime = 0
-    const handleTouchStart = (e) => {
-      const img = e.target.closest('img')
-      if (!img || !img.src) return
-
-      const currentTime = Date.now()
-      const timeSinceLastTouch = currentTime - lastTouchTime
-
-      if (timeSinceLastTouch < 500 && timeSinceLastTouch > 0) {
-        // This is a double touch
-        setImageSrc(img.src)
-        setIsOpen(true)
-        document.body.classList.add('overflow-hidden')
-        lastTouchTime = 0 // Reset to prevent triple touches
-      } else {
-        // This is a single touch, just record the time
-        lastTouchTime = currentTime
-      }
-    }
-
-    document.addEventListener('click', handleDoubleClick)
-    document.addEventListener('touchstart', handleTouchStart)
-
-    // escape key
-    const handleEscape = (e) => {
+    const escapeKey = (e) => {
       if (e.key === 'Escape') {
         setIsOpen(false)
         setScale(1)
         document.body.style.overflow = 'unset'
       }
     }
-    document.addEventListener('keydown', handleEscape)
+    document.addEventListener('keydown', escapeKey)
 
     return () => {
-      document.removeEventListener('click', handleDoubleClick)
-      document.removeEventListener('touchstart', handleTouchStart)
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
+      document.removeEventListener('click', clickToOpen)
+      document.removeEventListener('keydown', escapeKey)
     }
   }, [])
 
@@ -109,18 +81,16 @@ export default function GlobalImageModal() {
           className="relative size-[75%] cursor-default"
         >
           <motion.div
-            className="relative size-full select-none"
-            style={{ scale, cursor: 'grab' }}
-            whileTap={{ cursor: 'grabbing' }}
-            drag={scale === 1 ? false : true}
-            dragConstraints={{ left: -calcConstraint, right: calcConstraint, top: -calcConstraint, bottom: calcConstraint }}
-            dragElastic={0.2}
-            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
             onClick={handleImageClick}
-            // onDoubleClick={(e) => {
-            //   e.stopPropagation()
-            //   setScale((prev) => (prev === 1 ? 2 : 1))
-            // }}
+            animate={{ x: scale === 1 ? 0 : undefined, y: scale === 1 ? 0 : undefined }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            drag={scale === 1 ? false : true}
+            dragElastic={0.2}
+            dragConstraints={{ left: -calcConstraint, right: calcConstraint, top: -calcConstraint + 150, bottom: calcConstraint - 150 }}
+            dragPropagation={false}
+            dragMomentum={false}
+            className="relative size-full select-none cursor-grab active:cursor-grabbing"
+            style={{ scale }}
           >
             <Image
               src={imageSrc}

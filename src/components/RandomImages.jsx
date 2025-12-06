@@ -58,11 +58,11 @@ export default function RandomImages() {
   ]
 
   const mobilePositions = [
-    { x: '20%', y: -80, rotate: -15 },
-    { x: '90%', y: -50, rotate: 8 },
+    { x: '30%', y: -80, rotate: -15 },
+    { x: '65%', y: -50, rotate: 8 },
     { x: '50%', y: 80, rotate: -6 },
-    { x: '90%', y: 260, rotate: 8 },
-    { x: '20%', y: 240, rotate: -12 },
+    { x: '85%', y: 260, rotate: 8 },
+    { x: '30%', y: 240, rotate: -12 },
   ]
 
   useGSAP(
@@ -101,7 +101,6 @@ export default function RandomImages() {
         ).to({}, { duration: 1.1 }, '<')
       })
 
-      if (window.innerWidth < 1024) return
       let highestZIndex = 10
       Draggable.create(images, {
         type: 'x,y',
@@ -120,7 +119,7 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto lg:z-50">
+    <section ref={sectionRef} className="relative w-screen lg:w-[75%] lg:ms-auto lg:z-50 overflow-hidden!">
       <div ref={containerRef} className="relative">
         <div className="relative h-screen">
           {(isMobile ? images.slice(0, 5) : images).map((image, index) => (
