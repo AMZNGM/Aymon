@@ -120,7 +120,7 @@ export default function RandomImages() {
 
   return (
     <section ref={sectionRef} className="relative bg-text">
-      <div ref={containerRef} className="h-[175vh] max-2xl:h-screen">
+      <div ref={containerRef} className="h-[185vh] max-2xl:h-screen">
         <div className="relative h-screen">
           {(isMobile ? images.slice(0, 5) : images).map((image, index) => (
             <div
