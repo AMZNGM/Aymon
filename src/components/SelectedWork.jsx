@@ -1,144 +1,65 @@
 'use client'
 
+import Link from 'next/link'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { motion } from 'framer-motion'
 import marwanPablo from '../../public/images/selectedImgs/marwanPablo/halal.webp'
-import geo from '../../public/images/selectedImgs/geo/geo1.webp'
-import menage from '../../public/images/selectedImgs/ghadaAbdelrazikXMenage07/menage.webp'
+import geo from '../../public/images/selectedImgs/geo/geo1Resize.webp'
+import menage from '../../public/images/selectedImgs/ghadaAbdelrazikXMenage07/menageRezie.webp'
 import blitz from '../../public/images/selectedImgs/blitz/blitz1.webp'
+import clientInfo from '../data/clients-info.json'
 
-const leftColumn = [
-  { src: marwanPablo, title: 'Marwan Pablo', tall: true },
-  { src: geo, title: 'Geo Project', tall: false },
-]
-
-const rightColumn = [
-  { src: menage, title: 'Menage x Ghada', tall: false },
-  { src: blitz, title: 'Blitz', tall: true },
+const projects = [
+  { src: marwanPablo, title: 'marwan-pablo', infoIndex: 0 },
+  { src: geo, title: 'geo-project', infoIndex: 2 },
+  { src: menage, title: 'menage-ghada', infoIndex: 1 },
+  { src: blitz, title: 'blitz', infoIndex: 3 },
 ]
 
 export default function SelectedWork() {
-  const [hoveredIndex, setHoveredIndex] = useState(null)
-
   return (
-    <section className="relative w-full h-full py-12 px-1">
+    <section className="relative w-full h-full overflow-hidden bg-text text-bg py-12 px-1">
       <motion.h2
-        initial={{ y: 100, opacity: 0, filter: 'blur(10px)' }}
-        whileInView={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
+        // initial={{ y: 100, opacity: 0, filter: 'blur(10px)' }}
+        // whileInView={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+        // transition={{ duration: 1 }}
+        // viewport={{ once: true }}
         className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-12"
       >
         Selected Work
       </motion.h2>
 
       <div className="grid lg:grid-cols-2 gap-4">
-        {/* LEFT COLUMN */}
-        <div className="flex flex-col gap-4">
-          {leftColumn.map((item, idx) => {
-            const globalIndex = idx // 0 / 1
-            return (
-              <motion.div
-                key={globalIndex}
-                className={`
-                  relative group overflow-hidden cursor-pointer
-                  transition-all duration-500
-                  ${item.tall ? 'h-[600px]' : 'h-[300px]'}
-                  ${idx === 0 ? 'rounded-full' : 'rounded-3xl'}
-                `}
-                onHoverStart={() => setHoveredIndex(`L${idx}`)}
-                onHoverEnd={() => setHoveredIndex(null)}
-                animate={{
-                  filter:
-                    hoveredIndex !== null && hoveredIndex !== `L${idx}`
-                      ? 'blur(0px)' // no blur ON the hovered item itself
-                      : 'none',
-                  scale: hoveredIndex === `L${idx}` ? 1.03 : 1,
-                }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
+        {projects.map((project, index) => (
+          <Link key={index} href={`/work/${project.title}`}>
+            <motion.div
+              // initial={{ y: 100, filter: 'blur(10px)' }}
+              // whileInView={{ y: 0, filter: 'blur(0px)' }}
+              // transition={{ duration: 0.8, delay: index * 0.12, filter: { duration: 0.5 } }}
+              // viewport={{ once: true, amount: 0.3 }}
+              className={`group relative h-[600px] overflow-hidden cursor-pointer rounded-2xl`}
+            >
+              <Image
+                src={project.src}
+                alt={project.title}
+                priority={index === 0}
+                fetchPriority={index === 0 || index === 1 ? 'high' : 'auto'}
+                sizes="(max-width: 1024px) 50vw, 30vw"
+                className="object-cover w-full h-full rounded-2xl duration-1000 select-none pointer-events-none"
+              />
+
+              {/* <motion.span
+                animate={{ x: [0, 12, -12, 12, 0], y: [100, 12, -12, 12, 100], opacity: [0.5, 1, 1, 0.5] }}
+                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute inset-0 flex justify-center items-center text-text rounded-full text-4xl max-lg:text-xl font-bold uppercase tracking-wide px-2"
               >
-                <Image
-                  src={item.src}
-                  alt={item.title}
-                  className="object-cover w-full h-full rounded-3xl duration-700 group-hover:scale-110 select-none"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
+                {clientInfo[project.infoIndex]?.client}
+              </motion.span> */}
 
-                {/* TITLE OVERLAY */}
-                <AnimatePresence>
-                  {hoveredIndex === `L${idx}` && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20 }}
-                      transition={{ duration: 0.4 }}
-                      className="absolute inset-0 bg-black/40 flex items-center justify-center"
-                    >
-                      <motion.span
-                        animate={{ x: [0, 12, -12, 12, 0] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                        className="text-white text-4xl font-bold uppercase tracking-wide"
-                      >
-                        {item.title}
-                      </motion.span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            )
-          })}
-        </div>
-
-        {/* RIGHT COLUMN */}
-        <div className="flex flex-col gap-4">
-          {rightColumn.map((item, idx) => {
-            const globalIndex = idx // 0 / 1
-            return (
-              <motion.div
-                key={globalIndex}
-                className={`
-                  relative group overflow-hidden rounded-3xl cursor-pointer
-                  transition-all duration-500
-                  ${item.tall ? 'h-[600px]' : 'h-[300px]'}
-                `}
-                onHoverStart={() => setHoveredIndex(`R${idx}`)}
-                onHoverEnd={() => setHoveredIndex(null)}
-                animate={{
-                  scale: hoveredIndex === `R${idx}` ? 1.03 : 1,
-                }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
-              >
-                <Image
-                  src={item.src}
-                  alt={item.title}
-                  className="object-cover w-full h-full rounded-3xl duration-700 group-hover:scale-110 select-none"
-                />
-
-                {/* TITLE */}
-                <AnimatePresence>
-                  {hoveredIndex === `R${idx}` && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20 }}
-                      transition={{ duration: 0.4 }}
-                      className="absolute inset-0 bg-black/40 flex items-center justify-center"
-                    >
-                      <motion.span
-                        animate={{ x: [0, 12, -12, 12, 0] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                        className="text-white text-4xl font-bold uppercase tracking-wide"
-                      >
-                        {item.title}
-                      </motion.span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            )
-          })}
-        </div>
+              {/* <div className="absolute inset-0 bg-bg/40 opacity-0 group-hover:opacity-100 duration-500" /> */}
+            </motion.div>
+          </Link>
+        ))}
       </div>
     </section>
   )
