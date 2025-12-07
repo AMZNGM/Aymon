@@ -5,7 +5,7 @@ import MobileMenu from '@/components/nav-components/MobileMenu'
 
 export default function Navbar() {
   return (
-    <header className="relative lg:h-screen lg:bg-text rounded-b-4xl py-18 max-lg:py-4 px-18 max-lg:px-6 max-xl:px-8 duration-300">
+    <header className="relative lg:h-screen max-lg:bg-text rounded-b-4xl py-18 max-lg:py-4 px-18 max-lg:px-6 max-xl:px-8 duration-300">
       <LogoName />
       <NavImage />
       <NavLinks />
