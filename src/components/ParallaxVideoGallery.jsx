@@ -4,6 +4,12 @@ import { useRef, useEffect } from 'react'
 import * as THREE from 'three'
 import BioText from '@/components/ui/BioText.jsx'
 
+const img1 = '/images/randomImgs/folk.webp'
+const img2 = '/images/randomImgs/forcing.webp'
+const img3 = '/images/randomImgs/inside.webp'
+const img4 = '/images/randomImgs/perspective.webp'
+const img5 = '/images/randomImgs/proof.webp'
+
 const vid1 = '/videos/randomVideos/awarnessUrbnlanes.mp4'
 const vid2 = '/videos/randomVideos/eyes.mp4'
 const vid3 = '/videos/randomVideos/feeling.mp4'
@@ -12,6 +18,7 @@ const vid5 = '/videos/randomVideos/visualCard.mp4'
 const vid6 = '/videos/selectedVideos/marwanPablo.mp4'
 
 const vids = [{ src: vid1 }, { src: vid2 }, { src: vid3 }, { src: vid4 }, { src: vid5 }, { src: vid6 }]
+const imgs = [{ src: img1 }, { src: img2 }, { src: img3 }, { src: img4 }, { src: img5 }]
 
 export default function ParallaxVideoGallery() {
   const headerRef = useRef()
@@ -59,6 +66,8 @@ export default function ParallaxVideoGallery() {
     let targetY = 0
     let lookAtTarget = new THREE.Vector3(0, 0, 0)
 
+    const isMobile = window.innerWidth < 768
+
     function createVideoElement(videoSrc) {
       const video = document.createElement('video')
       video.src = videoSrc
@@ -68,6 +77,15 @@ export default function ParallaxVideoGallery() {
       video.playsInline = true
       video.play().catch((err) => console.log('Video play failed:', err))
       return video
+    }
+
+    function createImageTexture(imgSrc) {
+      const loader = new THREE.TextureLoader()
+      const texture = loader.load(imgSrc)
+      texture.minFilter = THREE.LinearFilter
+      texture.magFilter = THREE.LinearFilter
+      texture.colorSpace = THREE.SRGBColorSpace
+      return texture
     }
 
     function calculateRotation(x, y) {
@@ -96,16 +114,29 @@ export default function ParallaxVideoGallery() {
     }
 
     function createVideoPlane(row, col) {
-      const videoData = vids[Math.floor(Math.random() * vids.length)]
       const geometry = new THREE.PlaneGeometry(params.imageWidth, params.imageHeight)
-      const video = createVideoElement(videoData.src)
-      const videoTexture = new THREE.VideoTexture(video)
-      videoTexture.minFilter = THREE.LinearFilter
-      videoTexture.magFilter = THREE.LinearFilter
-      const material = new THREE.MeshBasicMaterial({
-        map: videoTexture,
-        side: THREE.DoubleSide,
-      })
+      let material
+
+      if (isMobile) {
+        const imgData = imgs[Math.floor(Math.random() * imgs.length)]
+        const texture = createImageTexture(imgData.src)
+        material = new THREE.MeshBasicMaterial({
+          map: texture,
+          side: THREE.DoubleSide,
+        })
+      } else {
+        const videoData = vids[Math.floor(Math.random() * vids.length)]
+        const video = createVideoElement(videoData.src)
+        const videoTexture = new THREE.VideoTexture(video)
+        videoTexture.minFilter = THREE.LinearFilter
+        videoTexture.magFilter = THREE.LinearFilter
+        videoTexture.colorSpace = THREE.SRGBColorSpace
+        material = new THREE.MeshBasicMaterial({
+          map: videoTexture,
+          side: THREE.DoubleSide,
+        })
+      }
+
       const plane = new THREE.Mesh(geometry, material)
       const { x, y, z, rotationX, rotationY } = calculatePosition(row, col)
       plane.position.set(x, y, z)
@@ -126,7 +157,10 @@ export default function ParallaxVideoGallery() {
         z: Math.random() * 0.2 - 0.1,
       }
       plane.userData.phaseOffset = Math.random() * Math.PI * 2
-      plane.userData.video = video
+
+      if (!isMobile) {
+        plane.userData.video = material.map.image
+      }
 
       return plane
     }
