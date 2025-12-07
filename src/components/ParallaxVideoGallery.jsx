@@ -239,7 +239,7 @@ export default function ParallaxVideoGallery() {
   })
 
   return (
-    <section className="relative w-screen h-[300vh] overflow-hidden text-text">
+    <section className="relative w-screen h-[400vh] overflow-hidden text-text">
       <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full"></canvas>
 
       <div ref={headerRef} className="h-full absolute top-1/2 left-1/2 transform-3d text-center z-50">

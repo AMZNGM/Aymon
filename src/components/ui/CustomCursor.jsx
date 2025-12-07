@@ -13,6 +13,8 @@ export default function CustomCursor({
   const particlesRef = useRef([])
   const animationFrameRef = useRef(undefined)
   const cursorsInittedRef = useRef(false)
+  if (typeof window !== 'undefined' && window.innerWidth < 678) return null
+
   class Particle {
     position
     image
