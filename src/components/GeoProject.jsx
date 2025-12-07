@@ -88,7 +88,7 @@ export default function GeoProject() {
   )
 
   return (
-    <section ref={sectionRef} className="relative lg:w-[75%] ms-auto">
+    <section ref={sectionRef} className="relative">
       <div className="relative h-screen max-md:h-[75vh]">
         {images.map((image, index) => (
           <div
@@ -115,16 +115,6 @@ export default function GeoProject() {
           </div>
         ))}
       </div>
-
-      <motion.span
-        initial={{ y: 100, filter: 'blur(10px)' }}
-        whileInView={{ y: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
-        className="absolute top-4 lg:right-4 max-lg:left-1 w-full text-5xl max-md:text-xl lg:text-end font-bold uppercase"
-      >
-        #1 {clientsInfo[1].client}
-      </motion.span>
     </section>
   )
 }

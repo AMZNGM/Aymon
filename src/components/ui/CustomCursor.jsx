@@ -1,5 +1,7 @@
 'use client'
+
 import { useEffect, useRef } from 'react'
+
 const CustomCursor = ({
   element,
   particles = 15,
