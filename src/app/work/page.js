@@ -1,6 +1,4 @@
-'use client'
-
-import SelectedWork from '../../components/SelectedWork'
+import SelectedWork from '@/components/SelectedWork'
 
 export default function Work() {
   return (

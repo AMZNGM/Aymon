@@ -18,7 +18,7 @@ const projects = [
 
 export default function SelectedWork() {
   return (
-    <section className="relative w-full h-full overflow-hidden bg-text text-bg py-12 px-1">
+    <section className="relative w-full h-full overflow-hidden py-12 px-1">
       <motion.h2
         initial={{ y: 100, opacity: 0, filter: 'blur(10px)' }}
         whileInView={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
