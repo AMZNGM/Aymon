@@ -5,14 +5,13 @@ import * as THREE from 'three'
 import BioText from '@/components/ui/BioText.jsx'
 
 const vid1 = '/videos/randomVideos/awarnessUrbnlanes.mp4'
-const vid2 = '/videos/randomVideos/cold.mp4'
-const vid3 = '/videos/randomVideos/eyes.mp4'
-const vid4 = '/videos/randomVideos/feeling.mp4'
-const vid5 = '/videos/randomVideos/plastine.mp4'
-const vid6 = '/videos/randomVideos/visualCard.mp4'
-const vid7 = '/videos/selectedVideos/marwanPablo.mp4'
+const vid2 = '/videos/randomVideos/eyes.mp4'
+const vid3 = '/videos/randomVideos/feeling.mp4'
+const vid4 = '/videos/randomVideos/plastine.mp4'
+const vid5 = '/videos/randomVideos/visualCard.mp4'
+const vid6 = '/videos/selectedVideos/marwanPablo.mp4'
 
-const vids = [{ src: vid1 }, { src: vid2 }, { src: vid3 }, { src: vid4 }, { src: vid5 }, { src: vid6 }, { src: vid7 }]
+const vids = [{ src: vid1 }, { src: vid2 }, { src: vid3 }, { src: vid4 }, { src: vid5 }, { src: vid6 }]
 
 export default function ParallaxVideoGallery() {
   const headerRef = useRef()
@@ -46,7 +45,7 @@ export default function ParallaxVideoGallery() {
       antialias: true,
     })
     renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setClearColor('#000')
+    renderer.setClearColor('#030303')
 
     // Store refs
     sceneRef.current = { scene, camera, renderer, videos: [] }
@@ -158,8 +157,8 @@ export default function ParallaxVideoGallery() {
       mouseX = (event.clientX - window.innerWidth / 2) / (window.innerWidth / 2)
       mouseY = (event.clientY - window.innerHeight / 2) / (window.innerHeight / 2)
 
-      headerRefRotationX = -mouseY * 30
-      headerRefRotationY = -mouseX * 30
+      headerRefRotationX = -mouseY * 10
+      headerRefRotationY = -mouseX * 10
       headerRefTranslateZ = Math.abs(mouseX * mouseY) * 50
     }
 
@@ -240,10 +239,10 @@ export default function ParallaxVideoGallery() {
   })
 
   return (
-    <section className="relative w-screen h-screen overflow-hidden bg-bg text-text">
+    <section className="relative w-screen h-[300vh] overflow-hidden text-text">
       <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full"></canvas>
 
-      <div ref={headerRef} className="fixed top-1/2 left-1/2 -translate-y-1/2 transform-3d text-center z-50 pointer-events-none">
+      <div ref={headerRef} className="h-full absolute top-1/2 left-1/2 transform-3d text-center z-50">
         <BioText />
       </div>
     </section>
