@@ -1,4 +1,4 @@
-import Navbar from '@/components/Navbar'
+import Navbar from '@/components/nav-components/Navbar'
 import RandomImages from '@/components/RandomImages'
 import SelectedWork from '@/components/SelectedWork'
 import GeoProject from '@/components/GeoProject'

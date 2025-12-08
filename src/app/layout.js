@@ -3,9 +3,9 @@ import { inter, gambarino } from '@/app/fonts'
 // import LoadingScreen from '@/components/app-components/LoadingScreen'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
 import LenisSetup from '@/components/app-components/LenisSetup'
-import CustomCursor from '@/components/ui/CustomCursor'
-import InteractiveBackground from '@/components/ui/InteractiveBackground'
-import GlobalImageModal from '@/components/GlobalImageModal'
+import CustomCursor from '@/components/app-components/CustomCursor'
+import InteractiveBackground from '@/components/app-components/InteractiveBackground'
+import GlobalImageModal from '@/components/app-components/GlobalImageModal'
 
 export const metadata = {
   title: 'Ahmed Ayman',
