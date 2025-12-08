@@ -1,22 +1,39 @@
 'use client'
 
 import Link from 'next/link'
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { useMemo } from 'react'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
+import ContactPopup from '@/components/ui/ContactPopup'
 
 export default function NavLinks() {
-  const navLinks = useMemo(() => ['/about', '/work', '/contact'], [])
+  const navLinks = useMemo(() => ['/about', '/work'], [])
+  const [isContactOpen, setIsContactOpen] = useState(false)
+
+  const handleContactClick = (e) => {
+    e.preventDefault()
+    setIsContactOpen(true)
+  }
 
   return (
-    <nav className="flex justify-center items-center text-center gap-4 text-[15px] font-medium uppercase mt-4 p-2 max-lg:hidden">
-      {navLinks.map((link, index) => (
-        <motion.div key={index} whileTap={{ scale: 0.9 }} onClick={() => (window.location.href = link)}>
-          <Link href={link}>
-            <VariableFontHoverByRandomLetter label={link.replace('/', '')} />
+    <>
+      <nav className="flex justify-center items-center text-center gap-4 text-[15px] font-medium uppercase mt-4 p-2 max-lg:hidden">
+        {navLinks.map((link, index) => (
+          <motion.div key={index} whileTap={{ scale: 0.9 }} onClick={() => (window.location.href = link)}>
+            <Link href={link}>
+              <VariableFontHoverByRandomLetter label={link.replace('/', '')} />
+            </Link>
+          </motion.div>
+        ))}
+
+        <motion.div whileTap={{ scale: 0.9 }}>
+          <Link href="/contact" onClick={handleContactClick}>
+            <VariableFontHoverByRandomLetter label="contact" />
           </Link>
         </motion.div>
-      ))}
-    </nav>
+      </nav>
+
+      <ContactPopup isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+    </>
   )
 }

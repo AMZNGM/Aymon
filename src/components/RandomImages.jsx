@@ -110,8 +110,13 @@ export default function RandomImages() {
           gsap.to(this.target, { zIndex: 100, duration: 0.2 })
         },
         onDragEnd: function () {
+          highestZIndex = Math.max(highestZIndex, 100)
           highestZIndex += 1
           gsap.to(this.target, { zIndex: highestZIndex, duration: 0.2 })
+
+          setTimeout(() => {
+            gsap.to(this.target, { zIndex: 1, duration: 0.5 })
+          }, 200)
         },
       })
     },

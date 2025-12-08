@@ -6,8 +6,8 @@ import GeoProject from '@/components/GeoProject'
 export default function Home() {
   return (
     <>
-      <div className="flex max-lg:flex-col justify-between">
-        <div className="sticky max-lg:fixed top-0 left-0 lg:h-screen max-lg:w-full max-lg:z-999">
+      <div className="flex max-lg:flex-col justify-between max-lg:overflow-hidden">
+        <div className="sticky max-lg:fixed top-0 left-0 lg:h-screen max-lg:w-screen max-lg:z-999 z-10">
           <Navbar />
         </div>
 

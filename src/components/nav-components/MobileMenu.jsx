@@ -5,10 +5,17 @@ import { motion } from 'framer-motion'
 import { useMemo, useState, useEffect } from 'react'
 import { TextAlignJustify } from 'lucide-react'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
+import ContactPopup from '@/components/ui/ContactPopup'
 
 export default function MobileMenu() {
-  const navLinks = useMemo(() => ['/about', '/work', '/contact'], [])
+  const navLinks = useMemo(() => ['/about', '/work'], [])
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isContactOpen, setIsContactOpen] = useState(false)
+
+  const handleContactClick = (e) => {
+    e.preventDefault()
+    setIsContactOpen(true)
+  }
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -44,7 +51,15 @@ export default function MobileMenu() {
             </Link>
           </motion.div>
         ))}
+
+        <motion.div whileTap={{ scale: 0.9 }}>
+          <Link href="/contact" onClick={handleContactClick}>
+            <VariableFontHoverByRandomLetter label="contact" />
+          </Link>
+        </motion.div>
       </nav>
+
+      <ContactPopup isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </div>
   )
 }
