@@ -65,10 +65,6 @@ export default function WorkPage({ params }) {
     <div className="min-h-screen bg-white">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }} className="container mx-auto px-6 py-12">
         {/* Back Navigation */}
-        <Link href="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-black transition-colors mb-8">
-          <ArrowLeft className="w-5 h-5" />
-          Back to Work
-        </Link>
 
         {/* Hero Section */}
         <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">

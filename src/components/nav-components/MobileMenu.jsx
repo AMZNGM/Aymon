@@ -7,7 +7,7 @@ import { TextAlignJustify } from 'lucide-react'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 import ContactPopup from '@/components/ui/ContactPopup'
 
-export default function MobileMenu() {
+export default function MobileMenu({ className }) {
   const navLinks = useMemo(() => ['/about', '/work'], [])
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isContactOpen, setIsContactOpen] = useState(false)
@@ -26,7 +26,7 @@ export default function MobileMenu() {
   }, [isMenuOpen])
 
   return (
-    <div className="lg:hidden">
+    <div className={`${className}`}>
       <input
         id="mobile-nav-toggle"
         type="checkbox"

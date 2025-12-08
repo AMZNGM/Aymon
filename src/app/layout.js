@@ -3,6 +3,7 @@ import { inter, gambarino } from '@/app/fonts'
 // import LoadingScreen from '@/components/app-components/LoadingScreen'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
 import LenisSetup from '@/components/app-components/LenisSetup'
+import CustomCursor from '@/components/ui/CustomCursor'
 import InteractiveBackground from '@/components/ui/InteractiveBackground'
 import GlobalImageModal from '@/components/GlobalImageModal'
 
@@ -32,7 +33,8 @@ export default function RootLayout({ children }) {
         {/* <LoadingScreen /> */}
         <ErrorBoundary>
           <LenisSetup />
-          <InteractiveBackground />
+          <CustomCursor />
+          {/* <InteractiveBackground /> */}
           {children}
           <GlobalImageModal />
         </ErrorBoundary>

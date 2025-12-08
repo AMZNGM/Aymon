@@ -1,4 +1,6 @@
-import { Metadata } from 'next'
+import MobileMenu from '@/components/nav-components/MobileMenu'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Work | Aymon',
@@ -6,5 +8,15 @@ export const metadata = {
 }
 
 export default function WorkLayout({ children }) {
-  return <div className="min-h-screen">{children}</div>
+  return (
+    <>
+      <Link href="/" className="fixed top-0 left-0 p-4 z-10">
+        <ArrowLeft className="w-5 h-5" />
+      </Link>
+
+      <MobileMenu className={'sticky top-0 z-10'} />
+
+      {children}
+    </>
+  )
 }
