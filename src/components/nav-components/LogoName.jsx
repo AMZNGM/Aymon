@@ -27,7 +27,7 @@ export default function LogoName() {
 
   return (
     <h1 className="text-7xl max-lg:text-6xl text-center font-black uppercase leading-15 max-lg:leading-12">
-      <motion.span {...useTextClipPath(0, false)} className="group relative inline-block">
+      <motion.span {...useTextClipPath(0, true)} className="group relative inline-block">
         <motion.span
           variants={nameVariants}
           animate={isMobile ? 'mobile' : 'desktop'}
@@ -65,7 +65,7 @@ export default function LogoName() {
       </motion.span>
 
       <motion.span
-        {...useTextClipPath(0, false)}
+        {...useTextClipPath(0, true)}
         className="block text-3xl max-lg:text-2xl text-bg/50 max-sm:text-bg/25 font-sec normal-case"
       >
         Visual Artist

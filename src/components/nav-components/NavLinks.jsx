@@ -19,7 +19,7 @@ export default function NavLinks() {
   return (
     <>
       <motion.nav
-        {...useTextClipPath()}
+        {...useTextClipPath(0, true)}
         className="flex justify-center items-center text-center gap-4 text-[15px] font-medium uppercase mt-4 p-2 max-lg:hidden"
       >
         {navLinks.map((link, index) => (
