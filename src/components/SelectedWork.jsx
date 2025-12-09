@@ -32,8 +32,8 @@ export default function SelectedWork() {
         {projects.map((project, index) => (
           <motion.div
             key={index}
-            initial={{ clipPath: 'inset(0% 0% 100% 0%)' }}
-            whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+            initial={{ opacity: 0, filter: 'blur(10px)' }}
+            whileInView={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.75, delay: index * 0.1, ease: 'easeInOut' }}
             viewport={{ once: true }}
           >

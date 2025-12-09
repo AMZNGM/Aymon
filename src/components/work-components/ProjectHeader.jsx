@@ -1,35 +1,28 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
 
-export default function ProjectHeader({ work }) {
+export default function ProjectHeader({ project }) {
   return (
-    <motion.div
-      initial={{ y: 50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
-      className="space-y-6"
-    >
-      {/* Back Navigation */}
-      <Link href="/work" className="inline-flex items-center gap-2 text-gray-600 hover:text-black transition-colors">
-        <ArrowLeft size={20} />
-        <span>Back to Work</span>
-      </Link>
+    <div className="relative w-1/3 max-md:w-full bg-bg/10 rounded-2xl p-4">
+      <motion.div
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="flex flex-col gap-12"
+      >
+        <div>
+          <h1 className="text-6xl font-sec font-extrabold uppercase">{project.client}</h1>
 
-      {/* Project Title */}
-      <h1 className="text-6xl font-bold">{work.client}</h1>
+          <div className="flex gap-4 text-bg/75 font-mono">
+            <span>{project.year}</span>
+            <span>•</span>
+            <span>{project.category}</span>
+          </div>
+        </div>
 
-      {/* Project Meta */}
-      <div className="flex gap-4 text-gray-500">
-        <span>{work.year}</span>
-        <span>•</span>
-        <span>{work.category}</span>
-      </div>
-
-      {/* Project Description */}
-      <p className="text-lg text-gray-700 leading-relaxed">{work.bio}</p>
-    </motion.div>
+        <p className="text-lg text-bg/75 font-medium leading-[24px] tracking-tighter">{project.bio}</p>
+      </motion.div>
+    </div>
   )
 }

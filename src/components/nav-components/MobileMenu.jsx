@@ -34,7 +34,11 @@ export default function MobileMenu({ className }) {
         checked={isMenuOpen}
         onChange={() => setIsMenuOpen(!isMenuOpen)}
       />
-      <label aria-label="Open Menu" htmlFor="mobile-nav-toggle" className="absolute top-4 right-4 p-2 cursor-pointer z-1001">
+      <label
+        aria-label="Open Menu"
+        htmlFor="mobile-nav-toggle"
+        className="absolute top-4 right-4 p-2 bg-bg/10 rounded-xl cursor-pointer z-1001"
+      >
         <motion.div whileTap={{ scale: 0.9, rotate: 90 }}>
           <TextAlignJustify strokeWidth={3} />
         </motion.div>
