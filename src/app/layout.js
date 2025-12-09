@@ -6,7 +6,7 @@ import LenisSetup from '@/components/app-components/LenisSetup'
 import CustomCursor from '@/components/app-components/CustomCursor'
 import InteractiveBackground from '@/components/app-components/InteractiveBackground'
 import GlobalImageModal from '@/components/app-components/GlobalImageModal'
-import Footer from '@/components/Footer'
+import Footer from '@/components/footer-components/Footer'
 
 export const metadata = {
   title: 'Ahmed Ayman',
