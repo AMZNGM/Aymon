@@ -9,7 +9,7 @@ export default function ProjectImage({ project }) {
       initial={{ opacity: 0, filter: 'blur(8px)' }}
       animate={{ opacity: 1, filter: 'blur(0px)' }}
       transition={{ duration: 0.75 }}
-      className="relative w-2/3 max-md:w-full max-h-[75vh]"
+      className="relative w-2/3 max-lg:w-full max-h-[75vh]"
     >
       <Image
         src={project.image}

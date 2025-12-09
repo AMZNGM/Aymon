@@ -10,7 +10,7 @@ export const metadata = {
 export default function WorkLayout({ children }) {
   return (
     <>
-      <Link href="/" className="fixed top-4 left-4 p-2 z-10 bg-bg/10 rounded-xl">
+      <Link href="/work" className="fixed top-4 left-4 p-2 z-10 bg-bg/10 rounded-xl">
         <ArrowLeft className="w-5 h-5" />
       </Link>
 

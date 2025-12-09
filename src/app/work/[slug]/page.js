@@ -2,7 +2,6 @@ import { use } from 'react'
 import clientInfo from '@/data/clients-info.json'
 import ProjectImage from '@/components/work-components/ProjectImage'
 import ProjectHeader from '@/components/work-components/ProjectHeader'
-import ProjectDetails from '@/components/work-components/ProjectDetails'
 import ProjectProcess from '@/components/work-components/ProjectProcess'
 
 export default function ProjectPage({ params }) {
@@ -25,18 +24,11 @@ export default function ProjectPage({ params }) {
 
   return (
     <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg p-4 pt-18">
-      <div className="flex max-md:flex-col-reverse gap-4">
+      <div className="flex max-lg:flex-col-reverse gap-4">
         <ProjectHeader project={project} />
         <ProjectImage project={project} />
       </div>
-
-      <div className="container mx-auto px-6 py-12 hidden">
-        <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
-          <div className="space-y-8">{/* <ProjectDetails project={project} /> */}</div>
-        </div>
-
-        {/* <ProjectProcess project={project} /> */}
-      </div>
+      {/* <ProjectProcess project={project} /> */}
     </div>
   )
 }
