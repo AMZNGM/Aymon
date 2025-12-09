@@ -23,7 +23,6 @@ export default function SelectedWork() {
         initial={{ y: 100, opacity: 0, filter: 'blur(10px)' }}
         whileInView={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
         transition={{ duration: 1 }}
-        viewport={{ once: true }}
         className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-12"
       >
         Selected Work
@@ -36,7 +35,7 @@ export default function SelectedWork() {
         className="grid lg:grid-cols-2 gap-4"
       >
         {projects.map((project, index) => (
-          <motion.div key={index} initial={{ y: 200 }} whileInView={{ y: 0 }} transition={{ duration: 0.5, delay: index * 0.09 }}>
+          <motion.div key={index} initial={{ y: 0 }} whileInView={{ y: 0 }} transition={{ duration: 0.5, delay: index * 0.09 }}>
             <Link href={`/work/${project.title}`}>
               <div className="group relative h-[600px] rounded-2xl overflow-hidden cursor-pointer">
                 <Image

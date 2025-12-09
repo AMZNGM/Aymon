@@ -1,7 +1,7 @@
 import Navbar from '@/components/nav-components/Navbar'
 import RandomImages from '@/components/RandomImages'
 import SelectedWork from '@/components/SelectedWork'
-import GeoProject from '@/components/GeoProject'
+import VideosSection from '@/components/VideosSection'
 
 export default function Home() {
   return (
@@ -12,9 +12,10 @@ export default function Home() {
         </div>
 
         <div className="relative w-full h-full">
-          <RandomImages />
+          {/* <RandomImages /> */}
+          {/* <SelectedWork /> */}
+          <VideosSection />
           <SelectedWork />
-          {/* <GeoProject /> */}
         </div>
       </div>
     </>
