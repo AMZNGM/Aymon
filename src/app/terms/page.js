@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Navbar from '@/components/nav-components/Navbar'
+import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function TermsOfService() {
   return (
@@ -12,7 +13,7 @@ export default function TermsOfService() {
           <Navbar />
         </div>
 
-        <div className="relative w-full h-full min-h-screen">
+        <div className="relative w-full h-full min-h-screen max-md:mt-30">
           <div className="max-w-4xl mx-auto px-6 py-20">
             <motion.h1
               initial={{ opacity: 0, y: 50 }}
@@ -119,7 +120,7 @@ export default function TermsOfService() {
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.4 }} className="mt-12">
               <Link href="/" className="inline-flex items-center text-lg opacity-80 hover:opacity-100 transition-opacity">
-                ← Back to Home
+                <VariableFontHoverByRandomLetter label="← Back to Home" />
               </Link>
             </motion.div>
           </div>
