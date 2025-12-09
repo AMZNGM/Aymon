@@ -13,9 +13,8 @@ export default function Home() {
 
         <div className="relative w-full h-full">
           {/* <RandomImages /> */}
-          {/* <SelectedWork /> */}
-          <VideosSection />
           <SelectedWork />
+          <VideosSection />
         </div>
       </div>
     </>

@@ -8,6 +8,7 @@ import geo from '../../public/images/selectedImgs/geo/geo1Resize.webp'
 import menage from '../../public/images/selectedImgs/ghadaAbdelrazikXMenage07/menageRezie.webp'
 import blitz from '../../public/images/selectedImgs/blitz/blitz1.webp'
 import clientInfo from '../data/clients-info.json'
+import useTextClipPath from '@/hooks/useTextClipPath'
 
 const projects = [
   { src: marwanPablo, title: 'marwan-pablo', infoIndex: 0 },
@@ -19,23 +20,19 @@ const projects = [
 export default function SelectedWork() {
   return (
     <section className="relative w-full h-full overflow-hidden py-12 px-1">
-      <motion.h2
-        initial={{ y: 100, opacity: 0, filter: 'blur(10px)' }}
-        whileInView={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-        transition={{ duration: 1 }}
-        className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-12"
-      >
+      <motion.h2 {...useTextClipPath()} className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-12">
         Selected Work
       </motion.h2>
 
-      <motion.div
-        initial={{ y: 100, filter: 'blur(10px)' }}
-        whileInView={{ y: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 0.8, filter: { duration: 0.5 } }}
-        className="grid lg:grid-cols-2 gap-4"
-      >
+      <div className="grid lg:grid-cols-2 gap-4">
         {projects.map((project, index) => (
-          <motion.div key={index} initial={{ y: 0 }} whileInView={{ y: 0 }} transition={{ duration: 0.5, delay: index * 0.09 }}>
+          <motion.div
+            key={index}
+            initial={{ clipPath: 'inset(0% 0% 100% 0%)' }}
+            whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+            transition={{ duration: 0.75, delay: index * 0.1, ease: 'easeInOut' }}
+            viewport={{ once: true }}
+          >
             <Link href={`/work/${project.title}`}>
               <div className="group relative h-[600px] rounded-2xl overflow-hidden cursor-pointer">
                 <Image
@@ -44,9 +41,8 @@ export default function SelectedWork() {
                   priority={index === 0}
                   fetchPriority={index === 0 || index === 1 ? 'high' : 'auto'}
                   sizes="(max-width: 1024px) 50vw, 30vw"
-                  className="object-cover w-full h-full rounded-2xl select-none pointer-events-none group-hover:scale-105 duration-400"
+                  className="object-cover w-full h-full rounded-2xl select-none pointer-events-none group-hover:scale-104 duration-400"
                 />
-                <div className="absolute inset-0 bg-bg/40 opacity-0 group-hover:opacity-100 duration-300 pointer-events-none" />
               </div>
 
               <span className="text-bg text-4xl max-lg:text-xl font-bold uppercase tracking-wide">
@@ -55,7 +51,7 @@ export default function SelectedWork() {
             </Link>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   )
 }

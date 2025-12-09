@@ -20,18 +20,8 @@ export default function VideosSection() {
       </div>
 
       {vids.map((vid, index) => (
-        <div key={index} className="sticky inset-0 flex flex-col items-end">
-          <motion.video
-            initial={{ x: index === vids.length - 1 ? 0 : '100%' }}
-            whileInView={{ x: 0 }}
-            transition={{ duration: 0.75, delay: index * 0.1 }}
-            viewport={{ once: true }}
-            loop
-            muted
-            autoPlay
-            src={vid.src}
-            className="object-cover w-120 rounded-2xl"
-          />
+        <div key={index} className="sticky top-0 right-0 flex flex-col items-end">
+          <video loop muted autoPlay src={vid.src} className="object-cover w-120 rounded-2xl" />
         </div>
       ))}
     </section>
