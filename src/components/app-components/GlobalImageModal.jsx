@@ -68,7 +68,7 @@ export default function GlobalImageModal() {
 
   if (!isOpen) return
   return (
-    <div onClick={closeModal} className="fixed inset-0 flex justify-center items-center bg-black/60 cursor-zoom-out z-9999">
+    <div onClick={closeModal} className="fixed inset-0 flex justify-center items-center bg-bg/60 cursor-zoom-out z-9999">
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}

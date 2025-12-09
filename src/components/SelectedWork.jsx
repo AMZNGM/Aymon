@@ -3,12 +3,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import useTextClipPath from '@/hooks/useTextClipPath'
+import ClickEffect from '@/components/ui/effect/ClickEffect'
+import clientInfo from '../data/clients-info.json'
 import marwanPablo from '../../public/images/selectedImgs/marwanPablo/halal.webp'
 import geo from '../../public/images/selectedImgs/geo/geo1Resize.webp'
 import menage from '../../public/images/selectedImgs/ghadaAbdelrazikXMenage07/menageRezie.webp'
 import blitz from '../../public/images/selectedImgs/blitz/blitz1.webp'
-import clientInfo from '../data/clients-info.json'
-import useTextClipPath from '@/hooks/useTextClipPath'
 
 const projects = [
   { src: marwanPablo, title: 'marwan-pablo', infoIndex: 0 },
@@ -37,7 +38,7 @@ export default function SelectedWork() {
             viewport={{ once: true }}
           >
             <Link href={`/work/${project.title}`}>
-              <div className="group relative h-[600px] rounded-2xl overflow-hidden cursor-pointer">
+              <ClickEffect className="group relative h-[600px] rounded-2xl overflow-hidden cursor-pointer">
                 <Image
                   src={project.src}
                   alt={project.title}
@@ -46,7 +47,7 @@ export default function SelectedWork() {
                   sizes="(max-width: 1024px) 50vw, 30vw"
                   className="object-cover w-full h-full rounded-2xl select-none pointer-events-none group-hover:scale-104 duration-400"
                 />
-              </div>
+              </ClickEffect>
 
               <span className="text-bg text-4xl max-lg:text-xl font-bold uppercase tracking-wide">
                 #{index + 1} {` `} {clientInfo[project.infoIndex]?.client}

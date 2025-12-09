@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { XIcon } from 'lucide-react'
+import ClickEffect from '@/components/ui/effect/ClickEffect'
 import personalInfo from '@/data/personal-info.json'
 
 export default function ContactPopup({ isOpen, onClose }) {
@@ -32,7 +34,7 @@ export default function ContactPopup({ isOpen, onClose }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 bg-black/60 flex justify-center items-center z-9999 p-4"
+        className="fixed inset-0 bg-bg/60 flex justify-center items-center z-9999 p-4"
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -45,7 +47,7 @@ export default function ContactPopup({ isOpen, onClose }) {
           <div className="flex justify-between items-start mb-6">
             <h2 className="text-3xl font-bold">Get in Touch</h2>
             <button onClick={onClose} className="text-2xl hover:opacity-70 transition-opacity cursor-pointer" aria-label="Close">
-              ×
+              <XIcon size={18} />
             </button>
           </div>
 
@@ -71,15 +73,11 @@ export default function ContactPopup({ isOpen, onClose }) {
                     : url
 
                 return (
-                  <a
-                    key={platform}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block p-4 border border-text/20 rounded-lg hover:border-text/40 transition-colors"
-                  >
-                    <h4 className="font-semibold">{displayName}</h4>
-                    <p className="text-text/80">{handle}</p>
+                  <a key={platform} href={url} target="_blank" rel="noopener noreferrer" className="block">
+                    <ClickEffect className="block border border-text/20 rounded-lg hover:border-text/40 transition-colors cursor-pointer p-4">
+                      <h4 className="font-semibold">{displayName}</h4>
+                      <p className="text-text/80">{handle}</p>
+                    </ClickEffect>
                   </a>
                 )
               })}
