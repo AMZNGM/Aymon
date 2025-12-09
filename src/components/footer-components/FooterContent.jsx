@@ -1,15 +1,23 @@
 'use client'
 
-import personalInfo from '@/data/personal-info.json'
-import VariableFontHoverByRandomLetter from '../ui/text/VariableFontHoverByRandomLetter'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import personalInfo from '@/data/personal-info.json'
+import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function FooterContent() {
+  const quickLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/work', label: 'Work' },
+    { href: '/about', label: 'About' },
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Service' },
+  ]
+
   return (
-    <div>
-      <div className="flex justify-center items-center h-full w-full">
-        <h4 className="text-[20rem] max-2xl:text-7xl max-xl:text-7xl font-extrabold tracking-[-2px] uppercase">
+    <div className="relative w-full h-full flex flex-col justify-between text-bg/50 capitalize">
+      <div className="h-1/2 max-md:h-80 flex justify-center items-center max-md:items-end">
+        <h4 className="text-[20rem] max-2xl:text-[19rem] max-xl:text-[13rem] max-lg:text-[10rem] max-md:text-9xl max-sm:text-7xl text-bg font-extrabold tracking-[-2px] max-md:mb-4 duration-300">
           <VariableFontHoverByRandomLetter
             label={personalInfo.nickname}
             fromFontVariationSettings="'wght' 900, 'slnt' 0"
@@ -18,84 +26,49 @@ export default function FooterContent() {
           />
         </h4>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="space-y-4"
-            >
-              <h5 className="text-2xl font-bold uppercase">Get in Touch</h5>
-              <p className="text-lg opacity-80">{personalInfo.email}</p>
-              <p className="text-lg opacity-80">{personalInfo.phone}</p>
-              <p className="text-lg opacity-80">{personalInfo.location}</p>
-            </motion.div>
 
-            {/* Quick Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="space-y-4"
-            >
-              <h5 className="text-2xl font-bold uppercase">Quick Links</h5>
-              <nav className="space-y-2">
-                <Link href="/" className="block text-lg opacity-80 hover:opacity-100 transition-opacity">
-                  Home
-                </Link>
-                <Link href="/work" className="block text-lg opacity-80 hover:opacity-100 transition-opacity">
-                  Work
-                </Link>
-                <Link href="/about" className="block text-lg opacity-80 hover:opacity-100 transition-opacity">
-                  About
-                </Link>
-                <Link href="/contact" className="block text-lg opacity-80 hover:opacity-100 transition-opacity">
-                  Contact
-                </Link>
-              </nav>
-            </motion.div>
+      <div className="h-1/2 max-md:h-2/3 px-8 max-md:py-4 max-md:px-14">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="overflow-hidden">
+            <motion.div initial={{ y: '100%' }} whileInView={{ y: 0 }} transition={{ duration: 0.75 }} className="flex justify-end">
+              <p className="w-1/2 flex items-end text-sm opacity-80">{personalInfo.location}</p>
 
-            {/* Social Links */}
+              <div className="w-full space-y-4 text-end">
+                <nav className="space-y-2">
+                  {quickLinks.map((link, index) => (
+                    <Link key={index} href={link.href} className="block text-sm hover:text-bg">
+                      <VariableFontHoverByRandomLetter label={link.label} />
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.hr initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 1 }} className="my-2 opacity-75" />
+
+          <div className="overflow-hidden">
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-4"
+              initial={{ y: '-100%' }}
+              whileInView={{ y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex justify-between max-md:flex-col-reverse"
             >
-              <h5 className="text-2xl font-bold uppercase">Follow</h5>
-              <div className="flex space-x-4">
-                {personalInfo.social?.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg opacity-80 hover:opacity-100 transition-opacity"
-                  >
-                    {social.platform}
+              <p className="text-sm opacity-60 max-md:flex max-md:justify-between max-md:text-end">
+                © {personalInfo.nickname} {new Date().getFullYear()}
+                <span className="block text-xs mt-2 md:mt-0">All rights reserved.</span>
+                <span className="block text-xs mt-2 md:mt-0">Made By NGM</span>
+              </p>
+
+              <div className="h-full flex md:justify-end md:items-end md:text-end justify-between gap-4 pb-4">
+                {Object.entries(personalInfo.socialLinks || {}).map(([platform, url], index) => (
+                  <a key={index} href={url} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-bg">
+                    <VariableFontHoverByRandomLetter label={platform} />
                   </a>
                 ))}
               </div>
             </motion.div>
           </div>
-
-          {/* Bottom Bar */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-12 pt-8 border-t border-current/20"
-          >
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-sm opacity-60">
-                © {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
-              </p>
-              <p className="text-sm opacity-60 mt-2 md:mt-0">Built with passion and creativity</p>
-            </div>
-          </motion.div>
         </div>
       </div>
     </div>
