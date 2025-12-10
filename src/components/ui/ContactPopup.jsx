@@ -44,7 +44,7 @@ export default function ContactPopup({ isOpen, onClose }) {
           onClick={(e) => e.stopPropagation()}
           className="relative w-full max-w-xl max-h-[90vh] bg-bg text-text rounded-2xl overflow-y-auto p-6"
         >
-          <CloseBtn onClick={onClose} />
+          <CloseBtn onClick={onClose} className="z-50" />
 
           <motion.div
             initial={{ opacity: 0, filter: 'blur(10px)' }}
