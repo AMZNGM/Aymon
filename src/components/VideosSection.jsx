@@ -21,7 +21,14 @@ export default function VideosSection() {
 
       {vids.map((vid, index) => (
         <div key={index} className="sticky top-0 right-0 flex flex-col items-end">
-          <video loop muted autoPlay src={vid.src} className="object-cover w-120 rounded-2xl" />
+          <video
+            loop
+            muted
+            autoPlay
+            controls={false}
+            src={vid.src}
+            className="object-cover w-120 rounded-2xl pointer-events-none max-md:mb-2"
+          />
         </div>
       ))}
     </section>

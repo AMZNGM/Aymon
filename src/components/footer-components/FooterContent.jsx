@@ -15,7 +15,7 @@ export default function FooterContent() {
   ]
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between text-bg/50 capitalize">
+    <div className="relative w-full h-full flex flex-col justify-between text-bg/50 capitalize max-md:translate-y-32">
       <div className="h-1/2 max-md:h-80 flex justify-center items-center max-md:items-end">
         <h4 className="text-[20rem] max-2xl:text-[19rem] max-xl:text-[13rem] max-lg:text-[10rem] max-md:text-9xl max-sm:text-7xl text-bg font-extrabold tracking-[-2px] max-md:mb-4 duration-300">
           <VariableFontHoverByRandomLetter
