@@ -31,9 +31,9 @@ export default function NavLinks() {
         ))}
 
         <motion.div whileTap={{ scale: 0.9 }}>
-          <Link href="/contact" onClick={handleContactClick}>
+          <a onClick={handleContactClick}>
             <VariableFontHoverByRandomLetter label="contact" />
-          </Link>
+          </a>
         </motion.div>
       </motion.nav>
 
