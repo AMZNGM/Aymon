@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { SwapyItem, SwapyLayout, SwapySlot } from '@/components/ui/Swapy'
-import SwapArrow from '@/components/Projects-components/SwapArrow'
+import SwapPoints from '@/components/Projects-components/SwapPoints'
 import ProjectImage from '@/components/Projects-components/ProjectImage'
 import ProjectHeader from '@/components/Projects-components/ProjectHeader'
 import ProjectProcess from '@/components/Projects-components/ProjectProcess'
@@ -15,7 +15,7 @@ export default function ProjectHero({ project }) {
   return (
     <>
       <div className="relative w-screen min-h-[88.5vh] overflow-hidden flex justify-center items-end bg-text text-bg p-4 max-md:px-1">
-        <SwapArrow />
+        <SwapPoints />
 
         <div className="max-xl:hidden">
           <SwapyLayout id="swapy" className="flex gap-4">

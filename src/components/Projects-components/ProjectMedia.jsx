@@ -67,8 +67,8 @@ export default function ProjectMedia({ project }) {
       <section className="relative w-screen min-h-screen overflow-hidden rounded-2xl px-4 max-md:px-1">
         <div className="bg-bg/10 rounded-2xl">
           <div className="max-w-7xl mx-auto p-6">
-            <h2 className="text-2xl font-bold text-text mb-4">Project Media</h2>
-            <p className="text-text/60">No media available for this project.</p>
+            <h2 className="text-2xl font-bold mb-4">Project Media</h2>
+            <p className="text-bg/60">No media available for this project.</p>
           </div>
         </div>
       </section>

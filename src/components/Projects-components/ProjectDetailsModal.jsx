@@ -1,14 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useScrollLock } from '@/hooks/useScrollLock'
 import CloseBtn from '@/components/ui/Buttons/CloseBtn'
 
 export default function ProjectDetailsModal({ project, showDetails, setShowDetails }) {
+  useScrollLock(showDetails)
+
   if (!showDetails) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowDetails(false)} />
+      <div className="absolute inset-0 bg-bg/60 backdrop-blur-sm" onClick={() => setShowDetails(false)} />
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

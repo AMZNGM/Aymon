@@ -4,12 +4,15 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Minus, Plus } from 'lucide-react'
+import { useScrollLock } from '@/hooks/useScrollLock'
 
 export default function GlobalImageModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [imageSrc, setImageSrc] = useState('')
   const [scale, setScale] = useState(1)
   const calcConstraint = scale * 200
+
+  useScrollLock(isOpen)
 
   useEffect(() => {
     const clickToOpen = (e) => {
@@ -25,7 +28,6 @@ export default function GlobalImageModal() {
       if (e.key === 'Escape') {
         setIsOpen(false)
         setScale(1)
-        document.body.style.overflow = 'unset'
       }
     }
     document.addEventListener('keydown', escapeKey)
@@ -51,7 +53,6 @@ export default function GlobalImageModal() {
   const closeModal = () => {
     setIsOpen(false)
     setScale(1)
-    document.body.classList.remove('overflow-hidden')
   }
 
   const handleImageClick = (e) => {

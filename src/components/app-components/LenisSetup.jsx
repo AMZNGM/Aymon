@@ -3,16 +3,31 @@
 import { useEffect } from 'react'
 import Lenis from 'lenis'
 
+let lenisInstance = null
+
+export function stopLenis() {
+  if (lenisInstance) {
+    lenisInstance.stop()
+  }
+}
+
+export function startLenis() {
+  if (lenisInstance) {
+    lenisInstance.start()
+  }
+}
+
 export default function LenisSetup() {
   useEffect(() => {
-    const lenis = new Lenis()
+    lenisInstance = new Lenis()
     function raf(time) {
-      lenis.raf(time)
+      lenisInstance.raf(time)
       requestAnimationFrame(raf)
     }
     requestAnimationFrame(raf)
     return () => {
-      lenis.destroy()
+      lenisInstance.destroy()
+      lenisInstance = null
     }
   }, [])
 }

@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion'
 import { Badge } from 'lucide-react'
 
-export default function SwapArrow() {
+export default function SwapPoints() {
   return (
-    <div className="absolute top-12 left-1/2 flex z-10 pointer-events-none max-xl:hidden">
+    <div className="absolute top-8 left-1/2 flex z-10 pointer-events-none max-xl:hidden">
       <motion.div animate={{ x: [0, '-14000%', 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
         <Badge size={10} />
       </motion.div>
