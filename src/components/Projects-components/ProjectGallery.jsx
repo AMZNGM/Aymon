@@ -49,30 +49,32 @@ export default function ProjectGallery({ project }) {
 
             <h3 className="text-2xl max-lg:text-xl font-bold font-sec text-text p-4">Project Gallery</h3>
 
-            <div className="grid grid-cols-4 max-lg:grid-cols-2 gap-4 h-full overflow-y-scroll p-4">
-              {projectImages.map((imageName, index) => (
-                <div key={index} className="group relative aspect-video rounded-lg border border-text/25 overflow-hidden">
-                  <Image
-                    src={imageName || ''}
-                    alt={`${project.client} - Image ${index + 1}`}
-                    fill
-                    sizes="(max-width: 1024px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-103 duration-200 cursor-zoom-in"
-                  />
+            <div className="h-full overflow-y-scroll p-4 pb-20">
+              <div className="grid md:grid-cols-3 gap-4">
+                {projectImages.map((imageName, index) => (
+                  <div key={index} className="group relative aspect-video rounded-lg border border-text/25 overflow-hidden">
+                    <Image
+                      src={imageName || ''}
+                      alt={`${project.client} - Image ${index + 1}`}
+                      fill
+                      sizes="(max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-103 duration-200 cursor-zoom-in"
+                    />
 
-                  <div className="absolute -bottom-10 left-0 p-2 group-hover:bottom-0 duration-300">
-                    <p className="w-fit bg-text/25 text-text text-xs font-medium rounded-lg p-2">
-                      {project.client} - {index + 1}
-                    </p>
-                  </div>
+                    <div className="absolute -bottom-10 left-0 p-2 group-hover:bottom-0 duration-300">
+                      <p className="w-fit bg-text/25 text-text text-xs font-medium rounded-lg p-2">
+                        {project.client} - {index + 1}
+                      </p>
+                    </div>
 
-                  <div className="absolute -bottom-10 right-0 p-2 group-hover:bottom-0 duration-300">
-                    <div className="bg-text/25 rounded-lg p-2">
-                      <Fullscreen size={15} />
+                    <div className="absolute -bottom-10 right-0 p-2 group-hover:bottom-0 duration-300">
+                      <div className="bg-text/25 rounded-lg p-2">
+                        <Fullscreen size={15} />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
