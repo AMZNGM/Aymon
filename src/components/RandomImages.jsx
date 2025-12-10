@@ -101,30 +101,17 @@ export default function RandomImages() {
         ).to({}, { duration: 1.1 }, '<')
       })
 
-      let highestZIndex = 10
       Draggable.create(images, {
         type: 'x,y',
         inertia: true,
         bounds: containerRef.current,
-        onDragStart: function () {
-          gsap.to(this.target, { zIndex: 100, duration: 0.2 })
-        },
-        onDragEnd: function () {
-          highestZIndex = Math.max(highestZIndex, 100)
-          highestZIndex += 1
-          gsap.to(this.target, { zIndex: highestZIndex, duration: 0.2 })
-
-          setTimeout(() => {
-            gsap.to(this.target, { zIndex: 1, duration: 0.5 })
-          }, 200)
-        },
       })
     },
     { scope: sectionRef }
   )
 
   return (
-    <section ref={sectionRef} className="relative">
+    <section ref={sectionRef} className="relative z-0">
       <div ref={containerRef} className="h-[185vh] max-2xl:h-screen">
         <div className="relative h-screen">
           {(isMobile ? images.slice(0, 5) : images).map((image, index) => (
