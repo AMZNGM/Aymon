@@ -4,6 +4,33 @@ import RandomImages from '@/components/RandomImages'
 import SelectedWork from '@/components/SelectedWork'
 import VideosSection from '@/components/VideosSection'
 
+export const metadata = {
+  title: 'Ahmed Ayman | Creative Portfolio',
+  description:
+    'Ahmed Ayman, also known as Aymon, is a multidisciplinary visual artist based in Cairo, Egypt. Explore creative projects in motion graphics, visual art, and design.',
+  keywords: ['Ahmed Ayman', 'Aymon', 'visual artist', 'motion graphics', 'Cairo', 'Egypt', 'creative portfolio', 'digital art'],
+  openGraph: {
+    title: 'Ahmed Ayman | Creative Portfolio',
+    description: 'Multidisciplinary visual artist showcasing innovative creative projects',
+    type: 'website',
+    url: 'https://ahmedayman.com',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Ahmed Ayman Creative Portfolio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ahmed Ayman | Creative Portfolio',
+    description: 'Multidisciplinary visual artist showcasing innovative creative projects',
+    images: ['/images/og-image.jpg'],
+  },
+}
+
 function LoadingSkeleton() {
   return (
     <div className="flex justify-center items-center h-screen">
