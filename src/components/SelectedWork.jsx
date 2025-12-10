@@ -20,10 +20,10 @@ const projects = [
 
 export default function SelectedWork() {
   return (
-    <section className="relative w-full h-full overflow-hidden py-12 px-1">
+    <section className="relative w-full h-full overflow-hidden py-4 px-1">
       <motion.h2
         {...useTextClipPath(0, true)}
-        className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-12"
+        className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-16"
       >
         Selected Work
       </motion.h2>

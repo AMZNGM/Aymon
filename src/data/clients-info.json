@@ -17,7 +17,7 @@
     "year": "2025",
     "category": "Fashion & Lifestyle",
     "details": ["Campaign Photography", "Art Direction", "Fashion Styling", "Brand Collaboration"],
-    "image": "/images/selectedImgs/ghadaAbdelrazikXMenage07/menage.webp",
+    "image": "/images/selectedImgs/ghadaAbdelrazikXMenage07/menageRezie.webp",
     "vidLink": "https://www.instagram.com/p/DRCqCeqDPzU/"
   },
 
@@ -29,7 +29,11 @@
     "year": "2025",
     "category": "Architecture & Design",
     "details": ["3D Visualization", "Concept Development", "Architectural Rendering", "Interactive Presentations"],
-    "image": "/images/selectedImgs/geo/geo1.webp",
+    "image": "/images/selectedImgs/geo/geo1Resize.webp",
+    "image2": "/images/selectedImgs/geo/geo2.webp",
+    "image3": "/images/selectedImgs/geo/geo3.webp",
+    "image4": "/images/selectedImgs/geo/geo4.webp",
+    "image5": "/images/selectedImgs/geo/geo5.webp",
     "vidLink": "https://vimeo.com/1072571026"
   },
   {
@@ -40,6 +44,12 @@
     "year": "2025",
     "category": "Sports & Athletics",
     "details": ["Brand Strategy", "Logo Design", "Marketing Materials", "Digital Campaign"],
-    "image": "/images/selectedImgs/blitz/blitz1.webp"
+    "image": "/images/selectedImgs/blitz/blitz1.webp",
+    "image2": "/images/selectedImgs/blitz/blitz2.webp",
+    "image3": "/images/selectedImgs/blitz/blitz3.webp",
+    "image4": "/images/selectedImgs/blitz/blitz4.webp",
+    "image5": "/images/selectedImgs/blitz/blitz5.webp",
+    "image6": "/images/selectedImgs/blitz/blitz6.webp",
+    "image7": "/images/selectedImgs/blitz/blitz7.webp"
   }
 ]

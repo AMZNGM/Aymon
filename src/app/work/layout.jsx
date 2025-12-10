@@ -1,6 +1,4 @@
-import MobileMenu from '@/components/nav-components/MobileMenu'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import SubNavbar from '@/components/nav-components/SubNavbar'
 
 export const metadata = {
   title: 'Work | Aymon',
@@ -10,12 +8,7 @@ export const metadata = {
 export default function WorkLayout({ children }) {
   return (
     <>
-      <Link href="/work" className="fixed top-4 left-4 p-2 z-10 bg-bg/10 rounded-xl">
-        <ArrowLeft className="w-5 h-5" />
-      </Link>
-
-      <MobileMenu className={'sticky top-0 z-10'} />
-
+      <SubNavbar />
       {children}
     </>
   )
