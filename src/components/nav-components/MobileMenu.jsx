@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useMemo, useState, useEffect } from 'react'
 import { TextAlignJustify } from 'lucide-react'
+import ClickEffect from '@/components/ui/effect/ClickEffect'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 import ContactPopup from '@/components/ui/ContactPopup'
 
@@ -34,14 +35,12 @@ export default function MobileMenu({ className, btnClassName }) {
         checked={isMenuOpen}
         onChange={() => setIsMenuOpen(!isMenuOpen)}
       />
-      <label
-        aria-label="Open Menu"
-        htmlFor="mobile-nav-toggle"
-        className={`absolute top-4 right-4 p-2 bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-1001 ${btnClassName}`}
-      >
-        <motion.div whileTap={{ scale: 0.9, rotate: 90 }}>
-          <TextAlignJustify strokeWidth={3} />
-        </motion.div>
+      <label aria-label="Open Menu" htmlFor="mobile-nav-toggle" className={`absolute top-4 right-4 max-md:right-1 ${btnClassName}`}>
+        <ClickEffect className={`bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-1001 p-2`}>
+          <motion.div whileTap={{ scale: 0.9, rotate: 90 }}>
+            <TextAlignJustify strokeWidth={3} />
+          </motion.div>
+        </ClickEffect>
       </label>
 
       <nav

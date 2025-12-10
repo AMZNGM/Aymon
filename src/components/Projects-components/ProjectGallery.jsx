@@ -2,25 +2,20 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 import ClickEffect from '@/components/ui/effect/ClickEffect'
+import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 const GalleryButton = ({ onOpen }) => {
   return (
-    <button
-      onClick={onOpen}
-      className="flex justify-center items-center rounded-lg bg-bg/10 hover:bg-bg/30 duration-100 cursor-pointer p-3.5"
-    >
-      <ClickEffect className="bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-50 p-2">
-        <VariableFontHoverByRandomLetter label="Gallery" />
+    <button onClick={onOpen}>
+      <ClickEffect className="flex justify-center items-center rounded-lg bg-bg/10 hover:bg-bg/30 duration-100 cursor-pointer p-3.5">
+        <VariableFontHoverByRandomLetter label="GAllERY" />
       </ClickEffect>
     </button>
   )
 }
 
 export default function ProjectGallery({ project }) {
-  const [showGallery, setShowGallery] = useState(false)
-
   const projectImages = [
     project.image,
     project.image2,
@@ -30,7 +25,7 @@ export default function ProjectGallery({ project }) {
     project.image6,
     project.image7,
   ].filter(Boolean)
-
+  const [showGallery, setShowGallery] = useState(false)
   const openGallery = () => setShowGallery(true)
   const closeGallery = () => setShowGallery(false)
 
@@ -47,7 +42,7 @@ export default function ProjectGallery({ project }) {
               closeGallery()
             }}
           />
-          <div className="relative max-w-7xl w-full h-[90vh] max-lg:h-[85vh] bg-bg rounded-2xl p-6 max-lg:p-4 overflow-hidden">
+          <div className="relative max-w-7xl w-full h-[90vh] max-lg:h-[85vh] bg-bg border border-text/25 rounded-2xl p-6 max-lg:p-4 overflow-hidden">
             <button
               onClick={(e) => {
                 e.stopPropagation()

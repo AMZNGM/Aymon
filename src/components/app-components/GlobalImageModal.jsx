@@ -103,7 +103,7 @@ export default function GlobalImageModal() {
       <button
         aria-label="Close modal"
         onClick={closeModal}
-        className="absolute top-4 right-4 size-10 flex justify-center items-center bg-text/20 backdrop-blur-md rounded-full text-text hover:bg-text/30 transition-colors cursor-pointer"
+        className="absolute top-4 right-4 size-10 flex justify-center items-center bg-text/20 backdrop-blur-md rounded-2xl text-text hover:bg-text/30 transition-colors cursor-pointer"
       >
         <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
