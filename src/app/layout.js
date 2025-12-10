@@ -1,5 +1,6 @@
 import './globals.css'
 import { inter, gambarino } from '@/app/fonts'
+import Banner from '@/app/banner'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
 import LenisSetup from '@/components/app-components/LenisSetup'
 import CustomCursor from '@/components/app-components/CustomCursor'
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
         className={`relative w-screen min-h-screen overflow-x-hidden! bg-text text-bg selection:text-bg selection:bg-main font-inter scroll-smooth antialiased ${inter.variable} ${gambarino.variable}`}
       >
         <ErrorBoundary>
+          <Banner />
           <LenisSetup />
           <CustomCursor />
           {children}
