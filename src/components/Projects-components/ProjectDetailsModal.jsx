@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import CloseBtn from '@/components/ui/Buttons/CloseBtn'
 
 export default function ProjectDetailsModal({ project, showDetails, setShowDetails }) {
   if (!showDetails) return null
@@ -14,16 +15,9 @@ export default function ProjectDetailsModal({ project, showDetails, setShowDetai
         exit={{ scale: 0.9, opacity: 0 }}
         className="relative bg-bg text-text border border-text/25 rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-auto"
       >
-        <button
-          onClick={() => setShowDetails(false)}
-          className="absolute top-4 right-4 p-2 hover:bg-text/10 rounded-lg transition-colors cursor-pointer"
-        >
-          <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M18 6L6 18M6 6l12 12" />
-          </svg>
-        </button>
+        <CloseBtn onClick={() => setShowDetails(false)} />
 
-        <h3 className="text-2xl font-bold mb-6">Project Details</h3>
+        <h3 className="text-2xl font-bold font-sec uppercase mb-6">Project Details</h3>
 
         <div className="space-y-6">
           <div className="space-y-2 text-sm">
@@ -39,12 +33,12 @@ export default function ProjectDetailsModal({ project, showDetails, setShowDetai
           <div className="space-y-2 text-sm">
             <h4 className="font-semibold font-mono uppercase tracking-wider mb-4">Project Info</h4>
             <div className="flex justify-between">
-              <span>Scope:</span>
-              <span className="text-text/75">{project.scope}</span>
-            </div>
-            <div className="flex justify-between">
               <span>Year:</span>
               <span className="text-text/75">{project.year}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Scope:</span>
+              <span className="text-text/75">{project.scope}</span>
             </div>
             <div className="flex justify-between">
               <span>Category:</span>
