@@ -50,26 +50,26 @@ export default function ProjectGallery({ project }) {
             <h3 className="text-2xl max-lg:text-xl font-bold font-sec text-text p-4">Project Gallery</h3>
 
             <div className="h-full overflow-y-scroll p-4 pb-20">
-              <div className="grid md:grid-cols-3 gap-4">
+              <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
                 {projectImages.map((imageName, index) => (
-                  <div key={index} className="group relative aspect-video rounded-lg border border-text/25 overflow-hidden">
-                    <Image
-                      src={imageName || ''}
-                      alt={`${project.client} - Image ${index + 1}`}
-                      fill
-                      sizes="(max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-103 duration-200 cursor-zoom-in"
-                    />
-
-                    <div className="absolute -bottom-10 left-0 p-2 group-hover:bottom-0 duration-300">
-                      <p className="w-fit bg-text/25 text-text text-xs font-medium rounded-lg p-2">
-                        {project.client} - {index + 1}
-                      </p>
+                  <div key={index} className="group relative break-inside-avoid rounded-lg border border-text/25 overflow-hidden">
+                    <div className="relative h-48 md:h-56 lg:h-64">
+                      <Image
+                        src={imageName || ''}
+                        alt={`${project.client} - Image ${index + 1}`}
+                        fill
+                        priority={index < 3}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-103 duration-200 cursor-zoom-in"
+                      />
                     </div>
 
-                    <div className="absolute -bottom-10 right-0 p-2 group-hover:bottom-0 duration-300">
-                      <div className="bg-text/25 rounded-lg p-2">
-                        <Fullscreen size={15} />
+                    <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center p-4 translate-y-full group-hover:translate-y-0 duration-300">
+                      <p className="text-white text-sm font-medium mb-2">
+                        {project.client} - {index + 1}
+                      </p>
+                      <div className="w-fit bg-white/20 backdrop-blur-sm rounded-full p-1.5">
+                        <Fullscreen size={14} className="text-white" />
                       </div>
                     </div>
                   </div>
