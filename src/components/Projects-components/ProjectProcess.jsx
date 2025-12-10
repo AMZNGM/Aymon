@@ -26,16 +26,16 @@ export default function ProjectProcess({ project, className }) {
           <div>
             <h3 className="text-lg max-md:text-base font-mono font-semibold mb-2">The Impact</h3>
             <p className="text-sm max-md:text-xs text-bg/75 font-medium leading-[20px] max-md:leading-[18px] tracking-tighter">
-              {project.bio}
+              {project.impact}
             </p>
           </div>
         </div>
 
-        {project.vidLink && (
+        {project.media?.video?.url && (
           <div className="mt-4">
             <h3 className="text-lg max-md:text-base font-mono font-semibold mb-2">Project Video</h3>
             <a
-              href={project.vidLink}
+              href={project.media.video.url}
               target="_blank"
               rel="noopener noreferrer"
               className="max-lg:w-full inline-flex justify-center items-center gap-2 text-sm max-md:text-xs text-main bg-bg/10 hover:bg-bg/25 rounded-2xl duration-200 py-2 px-4"

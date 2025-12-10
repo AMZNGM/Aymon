@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Minus, Plus } from 'lucide-react'
 import { useScrollLock } from '@/hooks/useScrollLock'
+import CloseBtn from '@/components/ui/Buttons/CloseBtn'
 
 export default function GlobalImageModal() {
   const [isOpen, setIsOpen] = useState(false)
@@ -69,7 +70,10 @@ export default function GlobalImageModal() {
 
   if (!isOpen) return
   return (
-    <div onClick={closeModal} className="fixed inset-0 flex justify-center items-center bg-bg/60 cursor-zoom-out z-9999">
+    <div
+      onClick={closeModal}
+      className="fixed inset-0 flex justify-center items-center bg-bg/60 text-text backdrop-blur-sm cursor-zoom-out z-9999"
+    >
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -101,15 +105,7 @@ export default function GlobalImageModal() {
         </motion.div>
       </motion.div>
 
-      <button
-        aria-label="Close modal"
-        onClick={closeModal}
-        className="absolute top-4 right-4 size-10 flex justify-center items-center bg-text/20 backdrop-blur-md rounded-2xl text-text hover:bg-text/30 transition-colors cursor-pointer"
-      >
-        <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+      <CloseBtn onClick={closeModal} />
 
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 bg-text/20 backdrop-blur-md rounded-full p-2">
         <button

@@ -14,17 +14,19 @@ export default function ProjectHeader({ project, className, onShowDetails }) {
       >
         <div className="flex flex-col gap-8 max-md:gap-6">
           <div>
-            <h1 className="text-4xl max-md:text-2xl font-sec font-extrabold uppercase">{project.client}</h1>
+            <h1 className="text-5xl max-md:text-3xl font-sec font-extrabold">{project.client}</h1>
 
-            <div className="flex gap-4 text-bg/75 font-mono text-sm max-md:text-xs">
+            <div className="flex gap-4 text-bg/75 font-mono text-sm max-md:text-xs mt-8">
               <span>{project.year}</span>
               <span>•</span>
               <span>{project.category}</span>
+              <span>•</span>
+              <span className="capitalize">{project.status}</span>
             </div>
           </div>
 
           <p className="text-base max-md:text-sm text-bg/75 font-medium leading-[22px] max-md:leading-[20px] tracking-tighter">
-            {project.bio}
+            {project.description?.detailed}
           </p>
         </div>
 

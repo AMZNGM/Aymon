@@ -13,7 +13,7 @@ export default function ProjectImage({ project, className }) {
         className={`relative w-full h-full overflow-hidden rounded-2xl ${className}`}
       >
         <Image
-          src={project.image}
+          src={project.media.primary}
           alt={project.client}
           priority
           width={1024}

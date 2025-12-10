@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { motion, useScroll } from 'motion/react'
+import { motion } from 'motion/react'
 import { useScrollLock } from '@/hooks/useScrollLock'
 import { Fullscreen } from 'lucide-react'
 import CloseBtn from '@/components/ui/Buttons/CloseBtn'
@@ -10,17 +10,10 @@ import ClickEffect from '@/components/ui/effect/ClickEffect'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function ProjectGallery({ project }) {
-  const { scrollXProgress } = useScroll()
-
   const [showGallery, setShowGallery] = useState(false)
-  const projectImages = Object.keys(project)
-    .filter((key) => key.startsWith('image') && key !== 'image')
-    .map((key) => project[key])
-    .filter(Boolean)
-
+  const projectImages = project.media.gallery || []
   const openGallery = () => setShowGallery(true)
   const closeGallery = () => setShowGallery(false)
-
   useScrollLock(showGallery)
 
   return (
@@ -56,7 +49,7 @@ export default function ProjectGallery({ project }) {
 
             <h3 className="text-2xl max-lg:text-xl font-bold font-sec text-text p-4">Project Gallery</h3>
 
-            <div className="grid grid-cols-4 max-lg:grid-cols-2 gap-4 overflow-auto p-4">
+            <div className="grid grid-cols-4 max-lg:grid-cols-2 gap-4 h-full overflow-y-scroll p-4">
               {projectImages.map((imageName, index) => (
                 <div key={index} className="group relative aspect-video rounded-lg border border-text/25 overflow-hidden">
                   <Image
