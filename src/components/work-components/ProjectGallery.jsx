@@ -3,24 +3,23 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
-import { SwapyItem, SwapyLayout, SwapySlot } from '@/components/ui/Swapy'
-import GlobalImageModal from '@/components/app-components/GlobalImageModal'
+import ClickEffect from '@/components/ui/effect/ClickEffect'
 
 const GalleryButton = ({ onOpen }) => {
   return (
     <button
       onClick={onOpen}
-      className="flex justify-center items-center bg-bg/10 hover:bg-bg/30 rounded-lg duration-100 text-main cursor-pointer p-3.5"
+      className="flex justify-center items-center rounded-lg bg-bg/10 hover:bg-bg/30 duration-100 cursor-pointer p-3.5"
     >
-      <VariableFontHoverByRandomLetter label="Gallery" />
+      <ClickEffect className="bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-50 p-2">
+        <VariableFontHoverByRandomLetter label="Gallery" />
+      </ClickEffect>
     </button>
   )
 }
 
 export default function ProjectGallery({ project }) {
   const [showGallery, setShowGallery] = useState(false)
-  const [showImageModal, setShowImageModal] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
 
   const projectImages = [
     project.image,
@@ -31,18 +30,6 @@ export default function ProjectGallery({ project }) {
     project.image6,
     project.image7,
   ].filter(Boolean)
-
-  const handleImageOpen = (imageSrc) => {
-    console.log('Opening image:', imageSrc)
-    setSelectedImage(imageSrc)
-    setShowGallery(false)
-    setShowImageModal(true)
-  }
-
-  const closeImageModal = () => {
-    setShowImageModal(false)
-    setSelectedImage(null)
-  }
 
   const openGallery = () => setShowGallery(true)
   const closeGallery = () => setShowGallery(false)
@@ -76,63 +63,35 @@ export default function ProjectGallery({ project }) {
             <h3 className="text-2xl max-lg:text-xl font-bold mb-6 text-text">Project Gallery</h3>
 
             <div className="h-[calc(90vh-120px)] max-lg:h-[calc(85vh-100px)] overflow-y-auto">
-              <SwapyLayout id="gallery-swapy" className="grid grid-cols-3 max-lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 max-lg:grid-cols-2 gap-4">
                 {projectImages.map((imageName, index) => (
-                  <SwapySlot key={`slot-${index}`} id={`gallery-slot-${index}`} className="aspect-video">
-                    <SwapyItem
-                      key={`item-${index}`}
-                      id={`gallery-item-${index}`}
-                      data-swapy-handle
-                      className="h-full cursor-grab active:cursor-grabbing"
-                    >
-                      <div
-                        className="relative w-full h-full rounded-lg overflow-hidden bg-text/5 group cursor-pointer"
-                        onDoubleClick={(e) => {
-                          e.stopPropagation()
-                          e.preventDefault()
-                          handleImageOpen(imageName)
-                        }}
-                      >
-                        <Image
-                          src={imageName || ''}
-                          alt={`${project.client} - Image ${index + 1}`}
-                          fill
-                          className="object-cover transition-transform duration-200 group-hover:scale-105"
-                          sizes="(max-width: 1024px) 50vw, 33vw"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200" />
-                        <div className="absolute bottom-0 left-0 right-0 p-2 bg-linear-to-t from-black/60 to-transparent">
-                          <p className="text-white text-xs font-medium">
-                            {project.client} - {index + 1}
-                          </p>
-                        </div>
-                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <div className="bg-white/90 rounded-full p-1">
-                            <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-                            </svg>
-                          </div>
-                        </div>
+                  <div key={index} className="relative aspect-video rounded-lg overflow-hidden bg-text/5 group">
+                    <Image
+                      src={imageName || ''}
+                      alt={`${project.client} - Image ${index + 1}`}
+                      fill
+                      className="object-cover transition-transform duration-200 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 p-2 bg-linear-to-t from-black/60 to-transparent">
+                      <p className="text-white text-xs font-medium">
+                        {project.client} - {index + 1}
+                      </p>
+                    </div>
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <div className="bg-white/90 rounded-full p-1">
+                        <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                        </svg>
                       </div>
-                    </SwapyItem>
-                  </SwapySlot>
+                    </div>
+                  </div>
                 ))}
-              </SwapyLayout>
-            </div>
-
-            <div className="mt-4 flex justify-center">
-              <p className="text-text/50 text-sm">Drag to reorder • Double-click to open • Scroll to see more</p>
+              </div>
             </div>
           </div>
         </div>
       )}
-
-      <GlobalImageModal
-        isOpen={showImageModal}
-        onClose={closeImageModal}
-        imageSrc={selectedImage}
-        alt={project?.client || 'Project image'}
-      />
     </>
   )
 }

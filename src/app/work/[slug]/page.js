@@ -5,12 +5,9 @@ import ProjectImage from '@/components/work-components/ProjectImage'
 import ProjectHeader from '@/components/work-components/ProjectHeader'
 import ProjectProcess from '@/components/work-components/ProjectProcess'
 import ProjectGallery from '@/components/work-components/ProjectGallery'
-import { ArrowLeft, Link } from 'lucide-react'
-import MobileMenu from '@/components/nav-components/MobileMenu'
 
 export default function ProjectPage({ params }) {
   const { slug } = use(params)
-
   const project = clientInfo.find(
     (_, index) =>
       (slug === 'marwan-pablo' && index === 0) ||
@@ -55,7 +52,7 @@ export default function ProjectPage({ params }) {
         </SwapyLayout>
       </div>
 
-      <div className="xl:hidden flex flex-col gap-4">
+      <div className="xl:hidden flex flex-col gap-4 mt-26">
         <ProjectImage project={project} className={'cursor-pointer'} />
         <ProjectGallery project={project} />
         <ProjectHeader project={project} />
