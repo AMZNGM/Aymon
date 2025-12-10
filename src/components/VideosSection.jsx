@@ -25,6 +25,8 @@ export default function VideosSection() {
             loop
             muted
             autoPlay
+            playsInline
+            webkit-playsinline="true"
             controls={false}
             src={vid.src}
             className="object-cover w-120 rounded-2xl pointer-events-none max-md:mb-2"
