@@ -32,7 +32,14 @@ export default function ProjectMedia({ project }) {
       <div className="bg-bg/10 text-bg rounded-2xl">
         <div className="max-w-7xl mx-auto p-6">
           <div className="space-y-4">
-            <h3 className="text-lg font-bold font-sec mb-4">See more about: {project.title}</h3>
+            <motion.h3
+              initial={{ opacity: 0, filter: 'blur(8px)' }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 0.75, delay: 0.3 }}
+              className="text-lg font-bold font-sec mb-4"
+            >
+              See more about: {project.title}
+            </motion.h3>
 
             {mediaItems.map((item, index) => (
               <div key={index}>
@@ -40,7 +47,7 @@ export default function ProjectMedia({ project }) {
                   <motion.div
                     initial={{ opacity: 0, filter: 'blur(8px)' }}
                     whileInView={{ opacity: 1, filter: 'blur(0px)' }}
-                    transition={{ duration: 0.75 }}
+                    transition={{ duration: 0.75, delay: 0.5 }}
                     viewport={{ once: true }}
                     className="relative aspect-video rounded-2xl overflow-hidden bg-text/10"
                   >
@@ -60,7 +67,7 @@ export default function ProjectMedia({ project }) {
               <motion.div
                 initial={{ opacity: 0, filter: 'blur(8px)' }}
                 whileInView={{ opacity: 1, filter: 'blur(0px)' }}
-                transition={{ duration: 0.75 }}
+                transition={{ duration: 0.75, delay: 0.5 }}
                 viewport={{ once: true }}
               >
                 <h3 className="text-lg font-semibold capitalize mb-4">{project.media.video?.type}</h3>

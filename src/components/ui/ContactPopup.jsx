@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { XIcon } from 'lucide-react'
+import CloseBtn from '@/components/ui/Buttons/CloseBtn'
 import ClickEffect from '@/components/ui/effect/ClickEffect'
 import personalInfo from '@/data/personal-info.json'
 
@@ -42,25 +42,27 @@ export default function ContactPopup({ isOpen, onClose }) {
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: 'spring', damping: 20 }}
           onClick={(e) => e.stopPropagation()}
-          className="w-full max-w-xl max-h-[90vh] bg-bg text-text rounded-2xl overflow-y-auto p-8"
+          className="relative w-full max-w-xl max-h-[90vh] bg-bg text-text rounded-2xl overflow-y-auto p-6"
         >
-          <div className="flex justify-between items-start mb-6">
-            <h2 className="text-3xl font-bold">Get in Touch</h2>
-            <button onClick={onClose} className="text-2xl hover:opacity-70 transition-opacity cursor-pointer" aria-label="Close">
-              <XIcon size={18} />
-            </button>
-          </div>
+          <CloseBtn onClick={onClose} />
 
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, filter: 'blur(10px)' }}
+            whileInView={{ opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.75 }}
+            className="space-y-6"
+          >
+            <h2 className="text-3xl font-bold font-sec mb-4">Get in Touch</h2>
+
             <div>
-              <h3 className="text-xl font-semibold mb-2">Let&apos;s Connect</h3>
-              <p className="text-text/80">
+              <h3 className="text-xl font-semibold font-mono mb-2">Let&apos;s Connect</h3>
+              <p className="text-text/80 font-mono tracking-[10.5px]">
                 I&apos;m always interested in hearing about new projects and opportunities. Whether you have a question or just want to say
                 hi, feel free to reach out!
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 font-mono tracking-widest">
               {Object.entries(personalInfo.socialLinks).map(([platform, url]) => {
                 const displayName = platform.charAt(0).toUpperCase() + platform.slice(1)
                 const handle =
@@ -82,7 +84,7 @@ export default function ContactPopup({ isOpen, onClose }) {
                 )
               })}
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       </motion.div>
     </AnimatePresence>

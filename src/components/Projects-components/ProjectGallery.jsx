@@ -19,7 +19,7 @@ export default function ProjectGallery({ project }) {
   return (
     <>
       <button onClick={openGallery}>
-        <ClickEffect className="flex justify-center items-center rounded-lg bg-bg/10 hover:bg-bg/30 duration-100 cursor-pointer p-3.5 z-0">
+        <ClickEffect className="flex justify-center items-center rounded-lg text-main bg-bg/10 hover:bg-bg/30 duration-100 cursor-pointer p-3.5 z-0">
           <VariableFontHoverByRandomLetter label="GAllERY" />
         </ClickEffect>
       </button>
@@ -35,8 +35,8 @@ export default function ProjectGallery({ project }) {
           />
 
           <motion.div
-            initial={{ scale: 0, x: '100%', y: '100%' }}
-            animate={{ scale: 1, x: 0, y: 0 }}
+            initial={{ scale: 0, opacity: 0, filter: 'blur(10px)' }}
+            animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.3 }}
             className="relative max-w-7xl w-full h-[90vh] max-lg:h-[85vh] bg-bg text-text border border-text/25 rounded-2xl overflow-hidden"
           >

@@ -13,8 +13,8 @@ export default function ProjectDetailsModal({ project, showDetails, setShowDetai
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-bg/60 backdrop-blur-sm" onClick={() => setShowDetails(false)} />
       <motion.div
-        initial={{ opacity: 0, x: '-100%', y: '100%' }}
-        animate={{ opacity: 1, x: 0, y: 0 }}
+        initial={{ scale: 0, opacity: 0, filter: 'blur(10px)' }}
+        animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
         transition={{ duration: 0.3 }}
         className="relative bg-bg text-text border border-text/25 rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-scroll"
       >
