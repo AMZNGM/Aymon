@@ -29,7 +29,7 @@ export const metadata = {
 
 export default function Work() {
   return (
-    <main className="md:w-[96.2vw]">
+    <main className="max-md:pe-12 pe-18">
       <SelectedWork />
     </main>
   )
