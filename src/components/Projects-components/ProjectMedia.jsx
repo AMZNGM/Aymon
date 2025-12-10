@@ -19,7 +19,9 @@ export default function ProjectMedia({ project }) {
     })
   }
 
-  const hasVideoLink = (project.media?.video?.url && project.media.video.type === 'youtube') || project.media.video.type === 'vimeo'
+  const hasVideoLink =
+    (project.media?.video?.url && project.media.video.type === 'youtube') ||
+    (project.media?.video?.url && project.media.video.type === 'vimeo')
 
   if (mediaItems.length === 0 && !hasVideoLink) {
     return <section className="relative w-screen h-[15vh]"></section>
