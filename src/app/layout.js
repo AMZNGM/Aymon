@@ -30,9 +30,10 @@ export default function RootLayout({ children }) {
       <body
         className={`relative w-screen min-h-screen overflow-x-hidden! bg-text text-bg selection:text-bg selection:bg-main font-inter scroll-smooth antialiased ${inter.variable} ${gambarino.variable}`}
       >
+        <LenisSetup />
+
         <ErrorBoundary>
           <Banner />
-          <LenisSetup />
           <CustomCursor />
           {children}
           <FooterWrapper />
