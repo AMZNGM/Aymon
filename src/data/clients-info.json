@@ -110,6 +110,7 @@
     "media": {
       "primary": "/images/selectedImgs/geo/geo1Resize.webp",
       "gallery": [
+        "/images/selectedImgs/geo/geo1Resize.webp",
         "/images/selectedImgs/geo/geo2.webp",
         "/images/selectedImgs/geo/geo3.webp",
         "/images/selectedImgs/geo/geo4.webp",
@@ -153,6 +154,7 @@
     "media": {
       "primary": "/images/selectedImgs/blitz/blitz1.webp",
       "gallery": [
+        "/images/selectedImgs/blitz/blitz1.webp",
         "/images/selectedImgs/blitz/blitz2.webp",
         "/images/selectedImgs/blitz/blitz3.webp",
         "/images/selectedImgs/blitz/blitz4.webp",

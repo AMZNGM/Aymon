@@ -79,7 +79,7 @@ export default function ProjectMedia({ project }) {
                       alt={item.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      className="object-contain cursor-zoom-in"
+                      className="object-contain rounded-2xl cursor-zoom-in"
                     />
                   </motion.div>
                 )}
