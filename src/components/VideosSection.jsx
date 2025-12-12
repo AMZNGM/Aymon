@@ -1,33 +1,57 @@
-const vids = [
-  { src: '/videos/randomVideos/eyes.mp4', alt: 'video 1' },
-  { src: '/videos/randomVideos/feeling.mp4', alt: 'video 2' },
-  { src: '/videos/randomVideos/visualCard.mp4', alt: 'video 3' },
-  { src: '/videos/randomVideos/awarnessUrbnlanes.mp4', alt: 'video 4' },
-  { src: '/videos/randomVideos/cold.mp4', alt: 'video 5' },
-  { src: '/videos/randomVideos/plastine.mp4', alt: 'video 6' },
+'use client'
+
+import { motion } from 'motion/react'
+
+const projects = [
+  {
+    img: '/videos/randomVideos/visualCard.mp4',
+    title: 'Visual Card',
+  },
+  {
+    img: '/videos/randomVideos/cold.mp4',
+    title: 'Cold',
+  },
+  {
+    img: '/videos/randomVideos/feeling.mp4',
+    title: 'Feeling',
+  },
+  {
+    img: '/videos/randomVideos/eyes.mp4',
+    title: 'Eyes',
+  },
+  {
+    img: '/videos/randomVideos/awarnessUrbnlanes.mp4',
+    title: 'Awarness Urbnlanes',
+  },
+  {
+    img: '/videos/randomVideos/plastine.mp4',
+    title: 'Plastine',
+  },
 ]
 
 export default function VideosSection() {
   return (
-    <section className="relative w-full h-full py-12 px-1">
-      <hr className="text-bg/50 mb-24" />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {vids.map((vid, index) => (
-          <div key={index} className="flex justify-center">
-            <video
-              loop
-              muted
-              autoPlay
-              playsInline
-              webkit-playsinline="true"
-              controls={false}
-              src={vid.src}
-              className="object-cover w-full border border-bg/25 rounded-2xl pointer-events-none"
-            />
-          </div>
-        ))}
-      </div>
-    </section>
+    <div className="reltive columns-1 sm:columns-2 lg:columns-3 gap-4 py-12 pe-1 max-md:px-1">
+      {projects.map((project, index) => (
+        <motion.article
+          key={index}
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: 'easeOut' }}
+          viewport={{ once: true }}
+          className="mb-4 break-inside-avoid"
+        >
+          <video
+            loop
+            muted
+            autoPlay
+            playsInline
+            controls={false}
+            src={project.img}
+            className="w-full h-auto rounded-2xl border border-bg/25 pointer-events-none"
+          />
+        </motion.article>
+      ))}
+    </div>
   )
 }

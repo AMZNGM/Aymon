@@ -64,6 +64,7 @@ export default function Home() {
             <SelectedWork />
           </Suspense>
           <Suspense fallback={<LoadingSkeleton />}>
+            <hr />
             <VideosSection />
           </Suspense>
         </div>
