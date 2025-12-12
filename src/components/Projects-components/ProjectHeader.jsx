@@ -32,7 +32,7 @@ export default function ProjectHeader({ project, className, onShowDetails }) {
 
         <button
           onClick={onShowDetails}
-          className="w-full py-2 px-4 bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 text-main/75 font-medium cursor-pointer"
+          className="w-full py-2 px-4 bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 text-bg/75 font-medium cursor-pointer"
         >
           <VariableFontHoverByRandomLetter label="Show More Details" />
         </button>

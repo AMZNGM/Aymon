@@ -6,7 +6,6 @@ import SwapPoints from '@/components/Projects-components/SwapPoints'
 import ProjectHeader from '@/components/Projects-components/ProjectHeader'
 import ProjectImage from '@/components/Projects-components/ProjectImage'
 import ProjectProcess from '@/components/Projects-components/ProjectProcess'
-import ProjectGallery from '@/components/Projects-components/ProjectGallery'
 import ProjectDetailsModal from '@/components/Projects-components/ProjectDetailsModal'
 
 export default function ProjectHero({ project }) {
@@ -36,16 +35,11 @@ export default function ProjectHero({ project }) {
                 <ProjectProcess project={project} className={'xl:h-[80vh]'} />
               </SwapyItem>
             </SwapySlot>
-
-            <div className="flex-0 flex justify-end items-end">
-              <ProjectGallery project={project} />
-            </div>
           </SwapyLayout>
         </div>
 
         <div className="xl:hidden flex flex-col gap-4 mt-26">
           <ProjectImage project={project} className={'cursor-pointer'} />
-          <ProjectGallery project={project} />
           <ProjectHeader project={project} onShowDetails={() => setShowDetails(true)} />
           <ProjectProcess project={project} />
         </div>

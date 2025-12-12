@@ -38,7 +38,7 @@ export default function ProjectProcess({ project, className }) {
               href={project.media.video.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="max-lg:w-full inline-flex justify-center items-center gap-2 text-sm max-md:text-xs text-main bg-bg/10 hover:bg-bg/25 rounded-2xl duration-200 py-2 px-4"
+              className="max-lg:w-full inline-flex justify-center items-center gap-2 text-sm max-md:text-xs text-bg bg-bg/10 hover:bg-bg/25 rounded-2xl duration-200 py-2 px-4"
             >
               <VariableFontHoverByRandomLetter label="View Project Video" />
               <SquareArrowOutUpRight size={14} />
