@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 import useTextClipPath from '@/hooks/useTextClipPath'
 import ContactPopup from '@/components/ui/ContactPopup'
+import personalInfo from '@/data/personal-info.json'
 
 export default function NavLinks() {
   const navLinks = useMemo(() => ['/about', '/work'], [])
@@ -36,6 +37,8 @@ export default function NavLinks() {
           </button>
         </motion.div>
       </motion.nav>
+
+      <p className="text-sm text-center font-black uppercase mt-4">{personalInfo.slogan}</p>
 
       <ContactPopup isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </>
