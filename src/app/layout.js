@@ -3,6 +3,7 @@ import { inter, gambarino } from '@/app/fonts'
 import Banner from '@/app/banner'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
 import LenisSetup from '@/components/app-components/LenisSetup'
+import ScrollToTop from '@/components/app-components/ScrollToTop'
 // import CustomCursor from '@/components/app-components/CustomCursor'
 import GlobalImageModal from '@/components/app-components/GlobalImageModal'
 import FooterWrapper from '@/components/footer-components/FooterWrapper'
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
         <ErrorBoundary>
           <Banner />
           {/* <CustomCursor /> */}
+          <ScrollToTop />
           {children}
           <FooterWrapper />
           <GlobalImageModal />
