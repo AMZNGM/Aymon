@@ -44,7 +44,7 @@ export default function SelectedWork() {
               <ClickEffect className="group relative h-[600px] rounded-2xl overflow-hidden cursor-pointer">
                 <Image
                   src={project.src}
-                  alt={project.title}
+                  alt={clientInfo[project.infoIndex]?.client}
                   priority={index === 0}
                   fetchPriority={index === 0 || index === 1 ? 'high' : 'auto'}
                   width={100}
@@ -55,7 +55,7 @@ export default function SelectedWork() {
               </ClickEffect>
 
               <span className="text-bg text-4xl max-lg:text-xl font-bold uppercase tracking-wide">
-                #{index + 1} {` `} {clientInfo[project.infoIndex]?.client}
+                {clientInfo[project.infoIndex]?.client}
               </span>
             </Link>
           </motion.div>
