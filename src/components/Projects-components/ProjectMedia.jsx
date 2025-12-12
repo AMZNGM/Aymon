@@ -28,7 +28,7 @@ export default function ProjectMedia({ project }) {
   }
 
   return (
-    <section className="relative w-screen min-h-screen overflow-hidden rounded-2xl pb-12 px-4 max-md:px-1 max-md:ps-1 max-md:pe-14">
+    <section className="relative w-full min-h-screen overflow-hidden rounded-2xl py-12 ps-4 max-md:ps-1">
       <div className="bg-bg/10 text-bg rounded-2xl">
         <div className="max-w-7xl mx-auto p-6">
           <div className="space-y-4">
@@ -36,32 +36,10 @@ export default function ProjectMedia({ project }) {
               initial={{ opacity: 0, filter: 'blur(8px)' }}
               whileInView={{ opacity: 1, filter: 'blur(0px)' }}
               transition={{ duration: 0.75, delay: 0.3 }}
-              className="text-lg font-bold font-sec mb-4"
+              className="text-lg font-bold mb-4"
             >
               See more about: {project.title}
             </motion.h3>
-
-            {mediaItems.map((item, index) => (
-              <div key={index}>
-                {item.type === 'image' && (
-                  <motion.div
-                    initial={{ opacity: 0, filter: 'blur(8px)' }}
-                    whileInView={{ opacity: 1, filter: 'blur(0px)' }}
-                    transition={{ duration: 0.75, delay: 0.5 }}
-                    viewport={{ once: true }}
-                    className="relative aspect-video rounded-2xl overflow-hidden bg-text/10"
-                  >
-                    <Image
-                      src={item.src}
-                      alt={item.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      className="object-cover cursor-zoom-in"
-                    />
-                  </motion.div>
-                )}
-              </div>
-            ))}
 
             {hasVideoLink && (
               <motion.div
@@ -85,6 +63,28 @@ export default function ProjectMedia({ project }) {
                 </div>
               </motion.div>
             )}
+
+            {mediaItems.map((item, index) => (
+              <div key={index}>
+                {item.type === 'image' && (
+                  <motion.div
+                    initial={{ opacity: 0, filter: 'blur(8px)' }}
+                    whileInView={{ opacity: 1, filter: 'blur(0px)' }}
+                    transition={{ duration: 0.75, delay: 0.5 }}
+                    viewport={{ once: true }}
+                    className="relative aspect-video rounded-2xl overflow-hidden bg-text/10"
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                      className="object-contain cursor-zoom-in"
+                    />
+                  </motion.div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

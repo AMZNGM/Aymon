@@ -13,7 +13,7 @@ export default function ProjectHero({ project }) {
 
   return (
     <>
-      <div className="relative w-screen min-h-[88.5vh] overflow-hidden flex justify-center items-end bg-text text-bg p-4 pe-4 max-md:ps-1 max-md:pe-14">
+      <div className="relative w-full min-h-[88.5vh] overflow-hidden flex justify-center items-end bg-text text-bg ps-4 max-md:ps-1">
         <SwapPoints />
 
         <div className="max-xl:hidden">

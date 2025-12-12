@@ -54,15 +54,7 @@ export default function ContactPopup({ isOpen, onClose }) {
           >
             <h2 className="text-3xl font-bold font-sec mb-4">Get in Touch</h2>
 
-            <div>
-              <h3 className="text-xl font-semibold font-mono mb-2">Let&apos;s Connect</h3>
-              <p className="text-text/80 font-mono tracking-[10.5px]">
-                I&apos;m always interested in hearing about new projects and opportunities. Whether you have a question or just want to say
-                hi, feel free to reach out!
-              </p>
-            </div>
-
-            <div className="space-y-4 font-mono tracking-widest">
+            <div className="space-y-4">
               {Object.entries(personalInfo.socialLinks).map(([platform, url]) => {
                 const displayName = platform.charAt(0).toUpperCase() + platform.slice(1)
                 const handle =
