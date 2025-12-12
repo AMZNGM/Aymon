@@ -1,9 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Navbar from '@/components/nav-components/Navbar'
-import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function PrivacyPolicy() {
   return (
@@ -13,100 +11,112 @@ export default function PrivacyPolicy() {
           <Navbar />
         </div>
 
-        <div className="relative w-full h-full min-h-screen max-md:mt-30">
-          <div className="max-w-4xl mx-auto px-6 py-20">
-            <motion.h1
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-6xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-12"
-            >
-              Privacy Policy
-            </motion.h1>
+        <div className="relative w-full h-full min-h-screen max-md:mt-56">
+          <section className="relative w-full min-h-screen overflow-hidden rounded-2xl py-12 pe-12 ps-4 max-md:ps-1">
+            <div className="bg-bg/10 text-bg rounded-2xl">
+              <div className="max-w-7xl mx-auto p-6">
+                <motion.h1
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-16"
+                >
+                  Privacy Policy
+                </motion.h1>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-8 text-lg leading-relaxed"
-            >
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Information We Collect</h2>
-                <p className="opacity-80">
-                  We collect information you provide directly to us, such as when you contact us through our website, subscribe to our
-                  newsletter, or use our services. This may include your name, email address, phone number, and any other information you
-                  choose to provide.
-                </p>
-              </section>
+                <div className="space-y-16 max-w-4xl">
+                  <motion.section
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="space-y-8"
+                  >
+                    <div className="space-y-6">
+                      <h2 className="text-3xl max-md:text-2xl font-bold tracking-tighter">Our Commitment to Your Privacy</h2>
+                      <p className="text-lg max-md:text-base text-bg/80 leading-relaxed">
+                        Don&apos;t worry &ndash; I&apos;m not spying on you. I&apos;m too busy creating visuals, fixing keyframes, and
+                        fighting with After Effects.
+                      </p>
+                    </div>
 
-              <section>
-                <h2 className="text-3xl font-bold mb-4">How We Use Your Information</h2>
-                <p className="opacity-80">
-                  We use the information we collect to provide, maintain, and improve our services, process transactions, send you technical
-                  notices and support messages, and communicate with you about products, services, and promotional offers.
-                </p>
-              </section>
+                    <div className="grid md:grid-cols-2 gap-8">
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        className="bg-bg/5 rounded-2xl p-6 space-y-4 border border-bg/10"
+                      >
+                        <h3 className="text-xl max-md:text-lg font-semibold text-main">What We Actually Collect</h3>
+                        <ul className="space-y-3 text-bg/70">
+                          <li className="flex items-start">
+                            <span className="text-main mr-2">•</span>
+                            <span>Basic analytics to see if anyone visits this website</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-main mr-2">•</span>
+                            <span>Absolutely zero personal secrets</span>
+                          </li>
+                        </ul>
+                      </motion.div>
 
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Information Sharing</h2>
-                <p className="opacity-80">
-                  We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as
-                  described in this privacy policy. We may share your information with trusted service providers who assist us in operating
-                  our website.
-                </p>
-              </section>
+                      <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        className="bg-bg/5 rounded-2xl p-6 space-y-4 border border-bg/10"
+                      >
+                        <h3 className="text-xl max-md:text-lg font-semibold text-main">What We Don&apos;t Collect</h3>
+                        <ul className="space-y-3 text-bg/70">
+                          <li className="flex items-start">
+                            <span className="text-main mr-2">•</span>
+                            <span>Your battery percentage</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-main mr-2">•</span>
+                            <span>Your FBI file</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-main mr-2">•</span>
+                            <span>Anything embarrassing in your camera roll (promise)</span>
+                          </li>
+                        </ul>
+                      </motion.div>
+                    </div>
+                  </motion.section>
 
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Data Security</h2>
-                <p className="opacity-80">
-                  We implement appropriate security measures to protect your personal information against unauthorized access, alteration,
-                  disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
-                </p>
-              </section>
+                  <motion.section
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    className="space-y-8"
+                  >
+                    <div className="bg-bg/5 rounded-2xl p-6 border border-bg/10">
+                      <h3 className="text-xl max-md:text-lg font-semibold text-main mb-4">Cookies & Technologies</h3>
+                      <p className="text-bg/70 leading-relaxed">
+                        Yes, the digital ones. They&apos;re just here to help the website run smoother, not to stalk you.
+                      </p>
+                    </div>
 
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Cookies</h2>
-                <p className="opacity-80">
-                  Our website may use cookies to enhance your experience. Cookies are small files stored on your device that help us analyze
-                  website traffic and improve our services. You can choose to disable cookies through your browser settings.
-                </p>
-              </section>
+                    <div className="bg-bg/5 rounded-2xl p-6 border border-bg/10">
+                      <h3 className="text-xl max-md:text-lg font-semibold text-main mb-4">By using this website :</h3>
+                      <p className="text-bg/70 leading-relaxed">You agree that you&apos;re awesome. That&apos;s it.</p>
+                    </div>
 
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Your Rights</h2>
-                <p className="opacity-80">
-                  You have the right to access, update, or delete your personal information. You may also opt out of receiving
-                  communications from us at any time by contacting us directly.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Changes to This Policy</h2>
-                <p className="opacity-80">
-                  We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this
-                  page and updating the &quot;Last Updated&quot; date.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-                <p className="opacity-80">
-                  If you have any questions about this Privacy Policy, please contact us through our website or via the information provided
-                  in the footer.
-                </p>
-              </section>
-
-              <div className="mt-12 pt-8 border-t border-current/20">
-                <p className="text-sm opacity-60">Last Updated: {new Date().toLocaleDateString()}</p>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.8, delay: 0.6 }}
+                      className="pt-8 border-t border-bg/20"
+                    >
+                      <p className="text-sm text-bg/50 text-center">
+                        Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      </p>
+                    </motion.div>
+                  </motion.section>
+                </div>
               </div>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.4 }} className="mt-12">
-              <Link href="/" className="inline-flex items-center text-lg opacity-80 hover:opacity-100 transition-opacity">
-                <VariableFontHoverByRandomLetter label="← Back to Home" />
-              </Link>
-            </motion.div>
-          </div>
+            </div>
+          </section>
         </div>
       </div>
     </>

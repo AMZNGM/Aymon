@@ -11,7 +11,6 @@ export default function FooterContent() {
     { href: '/work', label: 'Work' },
     { href: '/about', label: 'About' },
     { href: '/privacy', label: 'Privacy Policy' },
-    { href: '/terms', label: 'Terms of Service' },
   ]
 
   return (
