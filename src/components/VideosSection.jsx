@@ -46,6 +46,7 @@ export default function VideosSection() {
             muted
             autoPlay
             playsInline
+            webkit-playsinline="true"
             controls={false}
             src={project.img}
             className="w-full h-auto rounded-2xl border border-bg/25 pointer-events-none"
