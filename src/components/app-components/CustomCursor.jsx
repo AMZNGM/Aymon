@@ -54,7 +54,7 @@ export default function CustomCursor() {
   }, [])
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50" suppressHydrationWarning>
+    <div className="pointer-events-none fixed inset-0 z-50 max-sm:hidden" suppressHydrationWarning>
       <div
         className="absolute rounded-full bg-black "
         style={{
