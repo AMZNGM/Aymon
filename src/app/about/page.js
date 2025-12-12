@@ -1,4 +1,4 @@
-import ParallaxVideoGallery from '@/components/ParallaxVideoGallery'
+import AboutText from '@/components/AboutText'
 
 export const metadata = {
   title: 'About | Ahmed Ayman',
@@ -29,8 +29,8 @@ export const metadata = {
 
 export default function About() {
   return (
-    <>
-      <ParallaxVideoGallery />
-    </>
+    <main className="max-md:pe-13 md:pe-18">
+      <AboutText />
+    </main>
   )
 }
