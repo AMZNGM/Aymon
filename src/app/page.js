@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import Navbar from '@/components/nav-components/Navbar'
+import Slogun from '@/components/ui/Slogun'
 import RandomImages from '@/components/RandomImages'
 import SelectedWork from '@/components/SelectedWork'
 import VideosSection from '@/components/VideosSection'
@@ -53,6 +54,9 @@ export default function Home() {
         </div>
 
         <div className="relative w-full h-full">
+          <Suspense fallback={<LoadingSkeleton />}>
+            <Slogun />
+          </Suspense>
           <Suspense fallback={<LoadingSkeleton />}>
             <RandomImages />
           </Suspense>
