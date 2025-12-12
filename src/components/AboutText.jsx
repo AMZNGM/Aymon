@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import useTextClipPath from '@/hooks/useTextClipPath'
 import personalInfo from '@/data/personal-info.json'
+import WordMagnet from '@/components/ui/text/WordMagnet'
+import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function AboutText() {
   return (
@@ -36,7 +38,8 @@ export default function AboutText() {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <p className="text-lg max-md:text-base text-bg/60 leading-relaxed">{personalInfo.bio}</p>
+            <WordMagnet text={personalInfo.bio} className="text-lg max-md:text-base text-bg/60 leading-relaxed" />
+            {/* <p className="text-lg max-md:text-base text-bg/60 leading-relaxed">{personalInfo.bio}</p> */}
           </motion.div>
 
           <motion.div
@@ -58,27 +61,27 @@ export default function AboutText() {
           >
             <a
               href={personalInfo.socialLinks.linkedin}
-              className="text-lg max-md:text-base text-bg hover:text-main transition-colors duration-200 underline"
+              className="text-lg max-md:text-base text-bg transition-colors duration-200 underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              LinkedIn
+              <VariableFontHoverByRandomLetter label={'LinkedIn'} />
             </a>
             <a
               href={personalInfo.socialLinks.instagram}
-              className="text-lg max-md:text-base text-bg hover:text-main transition-colors duration-200 underline"
+              className="text-lg max-md:text-base text-bg transition-colors duration-200 underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Instagram
+              <VariableFontHoverByRandomLetter label={'Instagram'} />
             </a>
             <a
               href={personalInfo.socialLinks.behance}
-              className="text-lg max-md:text-base text-bg hover:text-main transition-colors duration-200 underline"
+              className="text-lg max-md:text-base text-bg transition-colors duration-200 underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Behance
+              <VariableFontHoverByRandomLetter label={'Behance'} />
             </a>
           </motion.div>
         </div>
