@@ -12,7 +12,7 @@ export default function AboutText() {
           {...useTextClipPath(0, true)}
           className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-16"
         >
-          About AYMON
+          About
         </motion.h2>
 
         <div className="space-y-12 max-w-4xl">
@@ -46,9 +46,6 @@ export default function AboutText() {
             viewport={{ once: true }}
             className="space-y-2"
           >
-            <p className="text-lg max-md:text-base text-bg/60">
-              Born {personalInfo.birthYear} • Based in {personalInfo.location}
-            </p>
             <p className="text-lg max-md:text-base text-bg/60 italic">&ldquo;{personalInfo.slogan}&rdquo;</p>
           </motion.div>
 

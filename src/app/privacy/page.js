@@ -46,14 +46,14 @@ export default function PrivacyPolicy() {
                         transition={{ duration: 0.8, delay: 0.3 }}
                         className="bg-bg/5 rounded-2xl p-6 space-y-4 border border-bg/10"
                       >
-                        <h3 className="text-xl max-md:text-lg font-semibold text-main">What We Actually Collect</h3>
+                        <h3 className="text-xl max-md:text-lg font-semibold">What We Actually Collect</h3>
                         <ul className="space-y-3 text-bg/70">
                           <li className="flex items-start">
-                            <span className="text-main mr-2">•</span>
+                            <span className="mr-2">•</span>
                             <span>Basic analytics to see if anyone visits this website</span>
                           </li>
                           <li className="flex items-start">
-                            <span className="text-main mr-2">•</span>
+                            <span className="mr-2">•</span>
                             <span>Absolutely zero personal secrets</span>
                           </li>
                         </ul>
@@ -65,18 +65,18 @@ export default function PrivacyPolicy() {
                         transition={{ duration: 0.8, delay: 0.4 }}
                         className="bg-bg/5 rounded-2xl p-6 space-y-4 border border-bg/10"
                       >
-                        <h3 className="text-xl max-md:text-lg font-semibold text-main">What We Don&apos;t Collect</h3>
+                        <h3 className="text-xl max-md:text-lg font-semibold ">What We Don&apos;t Collect</h3>
                         <ul className="space-y-3 text-bg/70">
                           <li className="flex items-start">
-                            <span className="text-main mr-2">•</span>
+                            <span className="mr-2">•</span>
                             <span>Your battery percentage</span>
                           </li>
                           <li className="flex items-start">
-                            <span className="text-main mr-2">•</span>
+                            <span className="mr-2">•</span>
                             <span>Your FBI file</span>
                           </li>
                           <li className="flex items-start">
-                            <span className="text-main mr-2">•</span>
+                            <span className="mr-2">•</span>
                             <span>Anything embarrassing in your camera roll (promise)</span>
                           </li>
                         </ul>
@@ -91,14 +91,14 @@ export default function PrivacyPolicy() {
                     className="space-y-8"
                   >
                     <div className="bg-bg/5 rounded-2xl p-6 border border-bg/10">
-                      <h3 className="text-xl max-md:text-lg font-semibold text-main mb-4">Cookies & Technologies</h3>
+                      <h3 className="text-xl max-md:text-lg font-semibold mb-4">Cookies & Technologies</h3>
                       <p className="text-bg/70 leading-relaxed">
                         Yes, the digital ones. They&apos;re just here to help the website run smoother, not to stalk you.
                       </p>
                     </div>
 
                     <div className="bg-bg/5 rounded-2xl p-6 border border-bg/10">
-                      <h3 className="text-xl max-md:text-lg font-semibold text-main mb-4">By using this website :</h3>
+                      <h3 className="text-xl max-md:text-lg font-semibold mb-4">By using this website :</h3>
                       <p className="text-bg/70 leading-relaxed">You agree that you&apos;re awesome. That&apos;s it.</p>
                     </div>
 
@@ -108,7 +108,7 @@ export default function PrivacyPolicy() {
                       transition={{ duration: 0.8, delay: 0.6 }}
                       className="pt-8 border-t border-bg/20"
                     >
-                      <p className="text-sm text-bg/50 text-center">
+                      <p className="text-sm text-bg/50">
                         Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                       </p>
                     </motion.div>
