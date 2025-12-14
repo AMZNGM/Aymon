@@ -16,7 +16,7 @@ export default function ProjectDetailsModal({ project, showDetails, setShowDetai
         initial={{ scale: 0, opacity: 0, filter: 'blur(10px)' }}
         animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
         transition={{ duration: 0.3 }}
-        className="relative bg-bg text-text border border-text/25 rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-scroll"
+        className="relative bg-bg text-text border border-text/25 rounded-2xl p-6 max-w-6xl w-full max-h-[80vh] overflow-y-scroll"
       >
         <CloseBtn onClick={() => setShowDetails(false)} />
 
