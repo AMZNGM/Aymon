@@ -26,7 +26,7 @@ export default function SelectedWork() {
     <section className="relative w-full h-full overflow-hidden pt-4 px-1 pb-12">
       <motion.h2
         {...useTextClipPath(0, true)}
-        className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-16"
+        className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-16 max-md:mt-14 max-md:mb-6"
       >
         Selected Work
       </motion.h2>

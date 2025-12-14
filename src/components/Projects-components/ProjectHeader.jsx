@@ -5,7 +5,7 @@ import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHo
 
 export default function ProjectHeader({ project, className, onShowDetails }) {
   return (
-    <div className={`relative overflow-hidden bg-bg/10 rounded-2xl p-4 ${className}`}>
+    <div className={`relative overflow-hidden bg-bg/10 rounded-2xl p-4 md:p-6 ${className}`}>
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

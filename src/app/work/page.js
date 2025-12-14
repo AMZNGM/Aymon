@@ -29,7 +29,7 @@ export const metadata = {
 
 export default function Work() {
   return (
-    <main className="max-md:pe-13 md:pe-18">
+    <main className="md:pe-18">
       <SelectedWork />
     </main>
   )

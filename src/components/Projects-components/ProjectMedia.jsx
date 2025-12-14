@@ -28,7 +28,7 @@ export default function ProjectMedia({ project }) {
   }
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden rounded-2xl py-12 ps-4 max-md:ps-1">
+    <section className="relative w-full min-h-screen overflow-hidden rounded-2xl py-12 px-4 max-md:px-1">
       <div className="bg-bg/10 text-bg rounded-2xl">
         <div className="max-w-7xl mx-auto p-6">
           <div className="space-y-4">

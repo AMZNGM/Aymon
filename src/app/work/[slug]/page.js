@@ -65,7 +65,7 @@ export default function ProjectPage({ params }) {
   }
 
   return (
-    <main className="max-md:pe-13 md:pe-18">
+    <main className="md:pe-18">
       <ProjectHero project={project} />
       <ProjectMedia project={project} />
     </main>
