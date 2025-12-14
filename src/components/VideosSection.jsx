@@ -8,24 +8,48 @@ const projects = [
     title: 'Visual Card',
   },
   {
+    img: '/videos/randomVideos/plastine.mp4',
+    title: 'Plastine',
+  },
+  {
     img: '/videos/randomVideos/cold.mp4',
     title: 'Cold',
+  },
+  {
+    img: '/videos/randomVideos/K8.mp4',
+    title: 'K8',
   },
   {
     img: '/videos/randomVideos/feeling.mp4',
     title: 'Feeling',
   },
   {
+    img: '/videos/randomVideos/Green.mp4',
+    title: 'Green',
+  },
+  {
     img: '/videos/randomVideos/eyes.mp4',
     title: 'Eyes',
   },
   {
-    img: '/videos/randomVideos/awarnessUrbnlanes.mp4',
-    title: 'Awarness Urbnlanes',
+    img: '/videos/randomVideos/H1.mp4',
+    title: 'H1',
   },
   {
-    img: '/videos/randomVideos/plastine.mp4',
-    title: 'Plastine',
+    img: '/videos/randomVideos/LR.mp4',
+    title: 'LR',
+  },
+  {
+    img: '/videos/randomVideos/O6.mp4',
+    title: 'O6',
+  },
+  {
+    img: '/videos/randomVideos/P2.mp4',
+    title: 'P2',
+  },
+  {
+    img: '/videos/randomVideos/awarnessUrbnlanes.mp4',
+    title: 'Awarness Urbnlanes',
   },
 ]
 
