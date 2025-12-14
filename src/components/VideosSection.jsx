@@ -39,10 +39,10 @@ const projects = [
     img: '/videos/randomVideos/LR.mp4',
     title: 'LR',
   },
-  {
-    img: '/videos/randomVideos/O6.mp4',
-    title: 'O6',
-  },
+  // {
+  //   img: '/videos/randomVideos/O6.mp4',
+  //   title: 'O6',
+  // },
   {
     img: '/videos/randomVideos/P2.mp4',
     title: 'P2',
