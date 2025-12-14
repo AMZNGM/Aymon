@@ -2,10 +2,21 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import personalInfo from '@/data/personal-info.json'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function FooterContent() {
+  const [currentTime, setCurrentTime] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
   const quickLinks = [
     { href: '/', label: 'Home' },
     { href: '/work', label: 'Work' },
@@ -32,7 +43,12 @@ export default function FooterContent() {
             <motion.div initial={{ y: '100%' }} whileInView={{ y: 0 }} transition={{ duration: 0.75 }} className="flex justify-end">
               <p className="w-1/2 flex items-end text-sm opacity-80">
                 {personalInfo.location} •{' '}
-                {new Date().toLocaleTimeString('en-US', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit' })}
+                {currentTime.toLocaleTimeString('en-US', {
+                  timeZone: 'Africa/Cairo',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                })}
               </p>
 
               <div className="w-full space-y-4 text-end">
