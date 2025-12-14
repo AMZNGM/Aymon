@@ -30,7 +30,10 @@ export default function FooterContent() {
         <div className="w-full max-w-7xl mx-auto">
           <div className="overflow-hidden">
             <motion.div initial={{ y: '100%' }} whileInView={{ y: 0 }} transition={{ duration: 0.75 }} className="flex justify-end">
-              <p className="w-1/2 flex items-end text-sm opacity-80">{personalInfo.location}</p>
+              <p className="w-1/2 flex items-end text-sm opacity-80">
+                {personalInfo.location} •{' '}
+                {new Date().toLocaleTimeString('en-US', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit' })}
+              </p>
 
               <div className="w-full space-y-4 text-end">
                 <nav className="space-y-2">
@@ -56,7 +59,6 @@ export default function FooterContent() {
               <p className="text-sm opacity-60 max-md:flex max-md:justify-between max-md:text-end">
                 © {personalInfo.nickname} {new Date().getFullYear()}
                 <span className="block text-xs mt-2 md:mt-0">All rights reserved.</span>
-                {/* <span className="block text-xs mt-2 md:mt-0">Made By NGM</span> */}
               </p>
 
               <div className="h-full flex md:justify-end md:items-end md:text-end justify-between gap-4 pb-4">
