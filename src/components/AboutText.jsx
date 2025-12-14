@@ -8,7 +8,7 @@ import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHo
 
 export default function AboutText() {
   return (
-    <section className="relative w-screen min-h-screen overflow-hidden flex justify-center items-center py-12 px-4 max-xl:ps-1 max-xl:pe-14">
+    <section className="relative w-screen min-h-screen overflow-hidden flex justify-center items-center py-12 px-4 max-md:py-18 max-xl:px-1">
       <div className="max-w-7xl mx-auto bg-bg/10 text-bg rounded-2xl p-6">
         <motion.h2
           {...useTextClipPath(0, true)}
