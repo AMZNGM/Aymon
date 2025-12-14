@@ -79,7 +79,7 @@ export default function RandomImages() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: window.innerWidth > 640 ? 'top top' : '',
-          scrub: window.innerWidth > 640 ? true : false,
+          scrub: window.innerWidth > 640 ? 1 : false,
           pin: window.innerWidth > 640 ? true : false,
         },
       })
@@ -104,7 +104,7 @@ export default function RandomImages() {
             ease: 'power2.inOut',
           },
           index * 0.08
-        ).to({}, { duration: 1.1 }, '<')
+        )
       })
 
       Draggable.create(images, {
