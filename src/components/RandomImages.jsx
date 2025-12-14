@@ -63,6 +63,12 @@ export default function RandomImages() {
     { x: '50%', y: 80, rotate: -6 },
     { x: '90%', y: 260, rotate: 8 },
     { x: '10%', y: 240, rotate: -12 },
+
+    { x: '20%', y: -200, rotate: -20 },
+    { x: '80%', y: -100, rotate: 10 },
+    { x: '50%', y: 50, rotate: -15 },
+    { x: '80%', y: 200, rotate: 10 },
+    { x: '20%', y: 180, rotate: -12 },
   ]
 
   useGSAP(
@@ -114,7 +120,7 @@ export default function RandomImages() {
     <section ref={sectionRef} className="relative z-0">
       <div ref={containerRef} className="h-[185vh] max-2xl:h-screen">
         <div className="relative h-screen">
-          {(isMobile ? images.slice(0, 5) : images).map((image, index) => (
+          {(isMobile ? images.slice(0, 10) : images).map((image, index) => (
             <div
               key={index}
               className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 will-change-transform cursor-grab active:cursor-grabbing"
