@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://aymon.vercel.app/',
+    sitemap: 'https://aymon.work/',
   }
 }

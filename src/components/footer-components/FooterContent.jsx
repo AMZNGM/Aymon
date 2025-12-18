@@ -75,7 +75,6 @@ export default function FooterContent() {
               <p className="text-sm opacity-60 max-md:flex max-md:justify-between max-md:text-end">
                 © {personalInfo.nickname} {new Date().getFullYear()}
                 <span className="block text-xs mt-2 md:mt-0">All rights reserved.</span>
-                <span className="block text-xs mt-2 md:mt-0">All rights reserved.</span>
               </p>
 
               <div className="h-full flex md:justify-end md:items-end md:text-end justify-between gap-4 pb-4">
