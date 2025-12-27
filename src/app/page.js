@@ -14,10 +14,10 @@ export const metadata = {
     title: 'Ahmed Ayman | Creative Portfolio',
     description: 'Multidisciplinary visual artist showcasing innovative creative projects',
     type: 'website',
-    url: 'https://ahmedayman.com',
+    url: 'https://www.aymon.work/',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/mainPhoto.webp',
         width: 1200,
         height: 630,
         alt: 'Ahmed Ayman Creative Portfolio',
@@ -28,7 +28,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Ahmed Ayman | Creative Portfolio',
     description: 'Multidisciplinary visual artist showcasing innovative creative projects',
-    images: ['/images/og-image.jpg'],
+    images: ['/images/mainPhoto.webp'],
   },
 }
 

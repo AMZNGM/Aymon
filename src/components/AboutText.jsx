@@ -1,12 +1,41 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { getAboutContent } from '@/lib/getAbout'
 import useTextClipPath from '@/hooks/useTextClipPath'
-import personalInfo from '@/data/personal-info.json'
 import WordMagnet from '@/components/ui/text/WordMagnet'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function AboutText() {
+  const [aboutContent, setAboutContent] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchContent() {
+      try {
+        const content = await getAboutContent()
+        setAboutContent(content)
+      } catch (error) {
+        console.error('Error fetching about content:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchContent()
+  }, [])
+
+  if (loading || !aboutContent) {
+    return (
+      <section className="relative w-screen min-h-screen overflow-hidden flex justify-center items-center py-12 px-4 max-md:py-18 max-xl:px-1">
+        <div className="max-w-7xl mx-auto bg-bg/10 text-bg rounded-2xl p-6">
+          <div className="text-center">Loading...</div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="relative w-screen min-h-screen overflow-hidden flex justify-center items-center py-12 px-4 max-md:py-18 max-xl:px-1">
       <div className="max-w-7xl mx-auto bg-bg/10 text-bg rounded-2xl p-6">
@@ -14,7 +43,7 @@ export default function AboutText() {
           {...useTextClipPath(0, true)}
           className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-16"
         >
-          About
+          {aboutContent.title}
         </motion.h2>
 
         <div className="space-y-12 max-w-4xl">
@@ -26,9 +55,9 @@ export default function AboutText() {
             className="space-y-4"
           >
             <h3 className="text-4xl max-md:text-2xl font-bold tracking-tighter">
-              {personalInfo.firstName} {personalInfo.lastName}
+              {aboutContent.firstName} {aboutContent.lastName}
             </h3>
-            <p className="text-xl max-md:text-lg text-bg/75">{personalInfo.title}</p>
+            <p className="text-xl max-md:text-lg text-bg/75">{aboutContent.position || 'Multidisciplinary Visual Artist'}</p>
           </motion.div>
 
           <motion.div
@@ -38,8 +67,7 @@ export default function AboutText() {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <WordMagnet text={personalInfo.bio} className="text-lg max-md:text-base text-bg/60 leading-relaxed" />
-            {/* <p className="text-lg max-md:text-base text-bg/60 leading-relaxed">{personalInfo.bio}</p> */}
+            <WordMagnet text={aboutContent.bio} className="text-lg max-md:text-base text-bg/60 leading-relaxed" />
           </motion.div>
 
           <motion.div
@@ -49,7 +77,7 @@ export default function AboutText() {
             viewport={{ once: true }}
             className="space-y-2"
           >
-            <p className="text-lg max-md:text-base text-bg/60 italic">&ldquo;{personalInfo.slogan}&rdquo;</p>
+            <p className="text-lg max-md:text-base text-bg/60 italic">&ldquo;{aboutContent.slogan}&rdquo;</p>
           </motion.div>
 
           <motion.div
@@ -60,7 +88,7 @@ export default function AboutText() {
             className="flex flex-wrap gap-4 pt-8"
           >
             <a
-              href={personalInfo.socialLinks.linkedin}
+              href={aboutContent.socialLinks.linkedin}
               className="text-lg max-md:text-base text-bg transition-colors duration-200 underline"
               target="_blank"
               rel="noopener noreferrer"
@@ -68,7 +96,7 @@ export default function AboutText() {
               <VariableFontHoverByRandomLetter label={'LinkedIn'} />
             </a>
             <a
-              href={personalInfo.socialLinks.instagram}
+              href={aboutContent.socialLinks.instagram}
               className="text-lg max-md:text-base text-bg transition-colors duration-200 underline"
               target="_blank"
               rel="noopener noreferrer"
@@ -76,7 +104,7 @@ export default function AboutText() {
               <VariableFontHoverByRandomLetter label={'Instagram'} />
             </a>
             <a
-              href={personalInfo.socialLinks.behance}
+              href={aboutContent.socialLinks.behance}
               className="text-lg max-md:text-base text-bg transition-colors duration-200 underline"
               target="_blank"
               rel="noopener noreferrer"

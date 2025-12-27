@@ -138,6 +138,7 @@ export default function RandomImages() {
                   alt={image.alt}
                   priority={index === 0}
                   fetchPriority={index === 0 || index === 1 ? 'high' : 'auto'}
+                  loading="eager"
                   sizes="(max-width: 1024px) 50vw, 30vw"
                   className="object-cover select-none rounded-2xl cursor-grab active:cursor-grabbing"
                 />

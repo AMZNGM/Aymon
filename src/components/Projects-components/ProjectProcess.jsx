@@ -6,12 +6,12 @@ import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHo
 
 export default function ProjectProcess({ project, className }) {
   return (
-    <div className={`relative overflow-hidden bg-bg/10 rounded-2xl p-4 ${className}`}>
+    <div className={`relative bg-bg/10 rounded-2xl p-4 ${className}`}>
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="flex flex-col justify-between h-full gap-4 overflow-auto"
+        className="flex flex-col justify-between h-full gap-4 overflow-y-scroll"
       >
         <h2 className="text-3xl max-md:text-2xl font-sec font-bold uppercase">Process & Approach</h2>
 

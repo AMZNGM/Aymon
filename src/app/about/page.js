@@ -9,10 +9,10 @@ export const metadata = {
     title: 'About | Ahmed Ayman',
     description: 'Discover the creative journey and artistic vision of Ahmed Ayman',
     type: 'website',
-    url: 'https://ahmedayman.com/about',
+    url: 'https://www.aymon.work/about',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/mainPhoto.webp',
         width: 1200,
         height: 630,
         alt: 'About Ahmed Ayman',
@@ -23,7 +23,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'About | Ahmed Ayman',
     description: 'Discover the creative journey and artistic vision of Ahmed Ayman',
-    images: ['/images/og-image.jpg'],
+    images: ['/images/mainPhoto.webp'],
   },
 }
 

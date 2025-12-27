@@ -1,17 +1,19 @@
 import { use } from 'react'
-import clientInfo from '@/data/clients-info.json'
+import { getProjects } from '@/lib/getProjects'
 import ProjectHero from '@/components/Projects-components/ProjectHero'
 import ProjectMedia from '@/components/Projects-components/ProjectMedia'
 
 export async function generateStaticParams() {
-  return clientInfo.map((project) => ({
+  const projects = await getProjects()
+  return projects.map((project) => ({
     slug: project.slug,
   }))
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
-  const project = clientInfo.find((project) => project.slug === slug)
+  const projects = await getProjects()
+  const project = projects.find((project) => project.slug === slug)
 
   if (!project) {
     return {
@@ -54,9 +56,19 @@ export async function generateMetadata({ params }) {
 
 export default function ProjectPage({ params }) {
   const { slug } = use(params)
-  const project = clientInfo.find((project) => project.slug === slug)
+  const projects = use(getProjects())
+  const project = projects.find((project) => project.slug === slug)
 
-  if (!project) {
+  const serializedProject = project
+    ? {
+        ...project,
+        createdAt: project.createdAt?.toDate?.() || new Date(),
+        updatedAt: project.updatedAt?.toDate?.() || new Date(),
+        expiresAt: project.expiresAt?.toDate?.() || new Date(),
+      }
+    : null
+
+  if (!serializedProject) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <h1 className="text-4xl font-bold">Project not found</h1>
@@ -66,8 +78,8 @@ export default function ProjectPage({ params }) {
 
   return (
     <main className="md:pe-18">
-      <ProjectHero project={project} />
-      <ProjectMedia project={project} />
+      <ProjectHero project={serializedProject} />
+      <ProjectMedia project={serializedProject} />
     </main>
   )
 }

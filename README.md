@@ -14,7 +14,7 @@ Web app for Ahmed Ayman
 
 ## Tech Stack
 
-- Next.js 16 - React 19 - Gsap - Framer motion - ThreeJS - Swapy - Tailwind CSS - Lenis - Lucide Icons
+- Next.js 16 - React 19 - Gsap - Framer motion - Swapy - Tailwind CSS - Lenis - Lucide Icons - Firebase
 
 ## Getting Started
 

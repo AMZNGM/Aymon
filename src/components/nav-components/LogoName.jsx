@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import useTextClipPath from '@/hooks/useTextClipPath'
-import personalInfo from '@/data/personal-info.json'
 
 export default function LogoName() {
   const isMobile = useIsMobile()
@@ -13,7 +12,6 @@ export default function LogoName() {
     mobile: { opacity: [1, 0] },
     desktop: { opacity: 1 },
   }
-
   const colorNameVariants = {
     mobile: {
       opacity: [0, 1],
@@ -39,9 +37,9 @@ export default function LogoName() {
           }}
         >
           <span className="block transition-opacity duration-400 group-hover:opacity-0">
-            {personalInfo.firstName}
+            Ahmed
             <br />
-            {personalInfo.lastName}
+            Aymen
           </span>
         </motion.span>
 
@@ -59,7 +57,7 @@ export default function LogoName() {
             href="/"
             className="absolute inset-0 flex justify-center items-center lg:opacity-0 transition-opacity duration-400 group-hover:opacity-100"
           >
-            {personalInfo.nickname}
+            Aymon
           </Link>
         </motion.span>
       </motion.span>
