@@ -2,6 +2,11 @@ import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
 export async function getProjects() {
+  if (!db) {
+    console.warn('Firebase not initialized, returning empty projects array')
+    return []
+  }
+
   const snapshot = await getDocs(collection(db, 'projects'))
   const projects = snapshot.docs.map((doc) => ({
     id: doc.id,
