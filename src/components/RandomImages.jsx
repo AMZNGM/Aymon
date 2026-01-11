@@ -12,9 +12,7 @@ import caligula from '../../public/images/randomImgs/caligula.webp'
 import crow from '../../public/images/randomImgs/crow.webp'
 import folk from '../../public/images/randomImgs/folk.webp'
 import forcing from '../../public/images/randomImgs/forcing.webp'
-import haramt from '../../public/images/randomImgs/haramt.webp'
 import inside from '../../public/images/randomImgs/inside.webp'
-import metro from '../../public/images/randomImgs/metro.webp'
 import perspective from '../../public/images/randomImgs/perspective.webp'
 import pigeon from '../../public/images/randomImgs/pigeon.webp'
 import proof from '../../public/images/randomImgs/proof.webp'
@@ -27,11 +25,9 @@ const images = [
   { src: crow, alt: 'Crow Image' },
   { src: folk, alt: 'Folk Image' },
   { src: forcing, alt: 'Forcing Image' },
-  { src: metro, alt: 'Metro Image' },
   { src: inside, alt: 'Inside Image' },
   { src: working, alt: 'Working Image' },
   { src: caligula, alt: 'Caligula Image' },
-  { src: haramt, alt: 'Haramt Image' },
   { src: proof, alt: 'Proof Image' },
   { src: perspective, alt: 'Perspective Image' },
 ]
@@ -47,12 +43,10 @@ export default function RandomImages() {
     { x: 520, y: -150, rotate: 5 },
     { x: 600, y: 180, rotate: -5 },
     { x: -200, y: 200, rotate: -12 },
-    { x: 0, y: 400, rotate: -15 },
     { x: 250, y: 250, rotate: 8 },
     { x: 620, y: 500, rotate: 5 },
     { x: 120, y: 680, rotate: -5 },
     { x: -200, y: 700, rotate: 12 },
-    { x: 300, y: 750, rotate: 8 },
     { x: -50, y: 930, rotate: -18 },
     { x: 520, y: 1000, rotate: 15 },
   ]
@@ -63,8 +57,6 @@ export default function RandomImages() {
     { x: '50%', y: 80, rotate: -6 },
     { x: '90%', y: 260, rotate: 8 },
     { x: '10%', y: 240, rotate: -12 },
-
-    { x: '20%', y: -200, rotate: -20 },
     { x: '80%', y: -100, rotate: 10 },
     { x: '50%', y: 50, rotate: -15 },
     { x: '80%', y: 200, rotate: 10 },
