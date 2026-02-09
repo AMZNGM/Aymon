@@ -71,6 +71,7 @@ export default function AdminPanel() {
     try {
       const projectsQuery = query(collection(db, 'projects'), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(projectsQuery)
+
       const projects = querySnapshot.docs.map((doc) => ({
         firestoreId: doc.id,
         ...doc.data(),
@@ -969,8 +970,8 @@ export default function AdminPanel() {
                         ? 'Saving...'
                         : 'Adding Project...'
                       : editingProjectId
-                      ? 'Update Project'
-                      : 'Add Project'}
+                        ? 'Update Project'
+                        : 'Add Project'}
                   </button>
                   {editingProjectId && (
                     <button
@@ -989,9 +990,10 @@ export default function AdminPanel() {
             <div className="bg-bg/10 rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-4">Existing Projects ({projects.length})</h2>
               <p className="text-xs opacity-60 mb-2">Drag and drop to reorder projects</p>
-              <div id="projects-container" className="space-y-4 max-h-96 overflow-y-auto">
+
+              <div id="projects-container" className="space-y-4">
                 {projects.length === 0 ? (
-                  <p className="text-center opacity-60">No projects yet</p>
+                  <p className="text-center opacity-60 p-4">No projects yet</p>
                 ) : (
                   projects.map((project, index) => (
                     <div
@@ -1001,7 +1003,7 @@ export default function AdminPanel() {
                       onDragOver={projectDragOver}
                       onDrop={(e) => projectDrop(e, index)}
                       onDragEnd={projectDragEnd}
-                      className="bg-bg/20 rounded-lg p-4 cursor-move opacity-90 hover:opacity-100 transition-opacity"
+                      className="bg-bg/20 rounded-lg p-4 cursor-grab active:cursor-grabbing opacity-90 hover:opacity-100 transition-opacity"
                     >
                       <div className="flex justify-between items-start">
                         <div className="flex-1">

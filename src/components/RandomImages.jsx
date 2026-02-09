@@ -19,6 +19,7 @@ import proof from '../../public/images/randomImgs/proof.webp'
 import working from '../../public/images/randomImgs/working.webp'
 
 const images = [
+  { src: perspective, alt: 'Perspective Image' },
   { src: aymonPortrait, alt: 'Aymon Portrait' },
   { src: asfour, alt: 'Asfour Image' },
   { src: pigeon, alt: 'Pigeon Image' },
@@ -29,7 +30,6 @@ const images = [
   { src: working, alt: 'Working Image' },
   { src: caligula, alt: 'Caligula Image' },
   { src: proof, alt: 'Proof Image' },
-  { src: perspective, alt: 'Perspective Image' },
 ]
 
 export default function RandomImages() {
@@ -109,13 +109,13 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="relative z-0">
+    <section ref={sectionRef} className="z-0 relative">
       <div ref={containerRef} className="h-[185vh] max-2xl:h-screen">
         <div className="relative h-screen">
           {(isMobile ? images.slice(0, 10) : images).map((image, index) => (
             <div
               key={index}
-              className="grid-image absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 will-change-transform cursor-grab active:cursor-grabbing"
+              className="top-1/2 right-1/2 absolute grid-image -translate-y-1/2 translate-x-1/2 cursor-grab active:cursor-grabbing will-change-transform"
             >
               <motion.div
                 initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
@@ -132,7 +132,7 @@ export default function RandomImages() {
                   fetchPriority={index === 0 || index === 1 ? 'high' : 'auto'}
                   loading="eager"
                   sizes="(max-width: 1024px) 50vw, 30vw"
-                  className="object-cover select-none rounded-2xl cursor-grab active:cursor-grabbing"
+                  className="object-cover rounded-2xl cursor-grab active:cursor-grabbing select-none"
                 />
               </motion.div>
             </div>
