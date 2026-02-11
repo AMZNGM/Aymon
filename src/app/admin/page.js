@@ -489,6 +489,19 @@ export default function AdminPanel() {
 
   return (
     <ProtectedRoute>
+      {/* Loading Overlay */}
+      {projectSubmitting && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-bg/80 backdrop-blur-sm">
+          <div className="bg-text text-bg rounded-2xl p-8 max-w-md w-full mx-4 text-center">
+            <div className="mb-4">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-bg/20 border-t-main"></div>
+            </div>
+            <h3 className="text-xl font-bold mb-2">Uploading Project...</h3>
+            <p className="text-sm opacity-75">Please do not close this window</p>
+          </div>
+        </div>
+      )}
+
       <div className="relativce w-screen min-h-screen overflow-hidden bg-text text-bg py-8 px-1">
         <div className="max-w-6xl mx-auto">
           <div className="flex max-md:flex-col justify-between items-center mb-8 max-md:gap-8">

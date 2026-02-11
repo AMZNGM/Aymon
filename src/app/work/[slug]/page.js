@@ -54,6 +54,8 @@ export async function generateMetadata({ params }) {
   }
 }
 
+export const revalidate = 0
+
 export default function ProjectPage({ params }) {
   const { slug } = use(params)
   const projects = use(getProjects())
