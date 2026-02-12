@@ -60,7 +60,7 @@ export default function MobileMenu({ className, btnClassName }) {
         ))}
 
         <motion.div whileTap={{ scale: 0.9 }}>
-          <button onClick={handleContactClick}>
+          <button onClick={handleContactClick} className="cursor-pointer">
             <VariableFontHoverByRandomLetter label="contact" className="uppercase" />
           </button>
         </motion.div>
