@@ -47,7 +47,7 @@ export default function AboutContent() {
                 rel="noopener noreferrer"
                 className="text-bg max-md:text-base text-lg underline transition-colors duration-200"
               >
-                <VariableFontHoverByRandomLetter label={key} />
+                <VariableFontHoverByRandomLetter label={key === 'behance' ? `Béhance` : key.charAt(0).toUpperCase() + key.slice(1)} />
               </a>
             ))}
           </AnimIn>
