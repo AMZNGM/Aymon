@@ -36,21 +36,29 @@ export default function ProjectDetailsModal({ project, showDetails, setShowDetai
 
           <h3 className="font-bold text-text text-lg mb-4">Services Provided</h3>
           <div className="gap-3 grid grid-cols-2">
-            {project.services?.map((service, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-main rounded-full"></div>
-                <span className="text-text/75 text-sm">{service}</span>
-              </div>
-            ))}
+            {Array.isArray(project.services) ? (
+              project.services.map((service, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-main rounded-full"></div>
+                  <span className="text-text/75 text-sm">{service}</span>
+                </div>
+              ))
+            ) : (
+              <span className="col-span-2 text-text/75 text-sm">No services listed</span>
+            )}
           </div>
 
           <h3 className="font-bold text-text text-lg mb-4">Technologies Used</h3>
           <div className="flex flex-wrap gap-2">
-            {project.technologies?.map((tech, index) => (
-              <span key={index} className="bg-text/10 rounded-lg font-mono text-text/60 text-xs px-3 py-1">
-                {tech}
-              </span>
-            ))}
+            {Array.isArray(project.technologies) ? (
+              project.technologies.map((tech, index) => (
+                <span key={index} className="bg-text/10 rounded-lg font-mono text-text/60 text-xs px-3 py-1">
+                  {tech}
+                </span>
+              ))
+            ) : (
+              <span className="text-text/75 text-sm">No technologies listed</span>
+            )}
           </div>
 
           <h3 className="font-bold text-text text-lg mb-4">Description</h3>

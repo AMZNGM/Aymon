@@ -118,8 +118,8 @@ export function useAdmin() {
           process: projectForm.process,
           impact: projectForm.impact,
           description: projectForm.description,
-          services: projectForm.services,
-          technologies: projectForm.technologies,
+          services: Array.isArray(projectForm.services) ? projectForm.services : [],
+          technologies: Array.isArray(projectForm.technologies) ? projectForm.technologies : [],
           seo: projectForm.seo,
           metadata: projectForm.metadata,
           media: {
@@ -162,8 +162,8 @@ export function useAdmin() {
           process: projectForm.process,
           impact: projectForm.impact,
           description: projectForm.description,
-          services: projectForm.services,
-          technologies: projectForm.technologies,
+          services: Array.isArray(projectForm.services) ? projectForm.services : [],
+          technologies: Array.isArray(projectForm.technologies) ? projectForm.technologies : [],
           seo: projectForm.seo,
           metadata: projectForm.metadata,
           media: {
