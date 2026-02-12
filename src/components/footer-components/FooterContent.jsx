@@ -108,7 +108,9 @@ export default function FooterContent() {
               <div className="h-full flex justify-between md:justify-end md:items-end gap-4 md:text-end pb-4">
                 {Object.entries(aboutContent.socialLinks || {}).map(([platform, url], index) => (
                   <a key={index} href={url} target="_blank" rel="noopener noreferrer" className="hover:text-bg text-sm">
-                    <VariableFontHoverByRandomLetter label={platform} />
+                    <VariableFontHoverByRandomLetter
+                      label={platform === 'behance' ? `Béhance` : platform.charAt(0).toUpperCase() + platform.slice(1)}
+                    />
                   </a>
                 ))}
               </div>
