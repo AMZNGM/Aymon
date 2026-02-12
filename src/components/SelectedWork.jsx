@@ -68,7 +68,7 @@ export default function SelectedWork() {
                 />
               </RippleEffect>
 
-              <span className="font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase line-clamp-1 leading-8 xl:leading-10 tracking-wide">
+              <span className="font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase leading-8 xl:leading-10 tracking-wide">
                 {project.title}
               </span>
             </Link>
