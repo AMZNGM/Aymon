@@ -3,8 +3,8 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
+import AnimText from '@/components/ui/unstyled/AnimText'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
-import useTextClipPath from '@/hooks/useTextClipPath'
 import ContactPopup from '@/components/ui/ContactPopup'
 
 export default function NavLinks() {
@@ -18,10 +18,7 @@ export default function NavLinks() {
 
   return (
     <>
-      <motion.nav
-        {...useTextClipPath(0, true)}
-        className="flex justify-center items-center text-center gap-4 text-[15px] font-medium uppercase mt-4 p-2 max-lg:hidden"
-      >
+      <AnimText className="max-lg:hidden flex justify-center items-center gap-4 font-medium text-[15px] text-center uppercase mt-4 p-2">
         {navLinks.map((link, index) => (
           <motion.div key={index} whileTap={{ scale: 0.9 }} onClick={() => (window.location.href = link)}>
             <Link href={link}>
@@ -35,7 +32,7 @@ export default function NavLinks() {
             <VariableFontHoverByRandomLetter label="contact" />
           </button>
         </motion.div>
-      </motion.nav>
+      </AnimText>
 
       <ContactPopup isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </>

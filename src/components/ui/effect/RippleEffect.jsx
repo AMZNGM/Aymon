@@ -2,7 +2,7 @@
 
 import { memo, useEffect, useRef, useState } from 'react'
 
-export default memo(function ClickEffect({ children, className = '', ...props }) {
+export default memo(function RippleEffect({ children, className = '', ...props }) {
   const elementRef = useRef(null)
   const [isClient, setIsClient] = useState(false)
 

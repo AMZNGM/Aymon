@@ -1,51 +1,33 @@
 'use client'
 
-import { useEffect } from 'react'
 import Lenis from 'lenis'
+import { useEffect, useRef } from 'react'
 
-let lenisInstance = null
-let rafId = null
+export default function ScrollProvider({ children }) {
+  const lenisRef = useRef(null)
 
-export function stopLenis() {
-  if (lenisInstance) {
-    if (rafId) {
-      cancelAnimationFrame(rafId)
-      rafId = null
-    }
-    lenisInstance.destroy()
-    lenisInstance = null
-  }
-}
-
-export function startLenis() {
-  if (lenisInstance) {
-    lenisInstance.start()
-  } else {
-    lenisInstance = new Lenis()
-    function raf(time) {
-      lenisInstance.raf(time)
-      rafId = requestAnimationFrame(raf)
-    }
-    rafId = requestAnimationFrame(raf)
-  }
-}
-
-export default function LenisSetup() {
   useEffect(() => {
-    lenisInstance = new Lenis()
+    const lenis = new Lenis({
+      smooth: true,
+      lerp: 0.1, // smoothness (0.05 = very smooth)
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
+    })
+
+    lenisRef.current = lenis
+
     function raf(time) {
-      lenisInstance.raf(time)
-      rafId = requestAnimationFrame(raf)
+      lenis.raf(time)
+      requestAnimationFrame(raf)
     }
-    rafId = requestAnimationFrame(raf)
+
+    requestAnimationFrame(raf)
 
     return () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId)
-        rafId = null
-      }
-      lenisInstance.destroy()
-      lenisInstance = null
+      lenis.destroy()
+      lenisRef.current = null
     }
   }, [])
+
+  return <>{children}</>
 }

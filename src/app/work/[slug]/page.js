@@ -1,7 +1,14 @@
-import { use } from 'react'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+import { notFound } from 'next/navigation'
+import { metadataGenerators } from '@/seo/seo-helpers'
 import { getProjects } from '@/lib/getProjects'
-import ProjectHero from '@/components/Projects-components/ProjectHero'
-import ProjectMedia from '@/components/Projects-components/ProjectMedia'
+import { generateWorkSEO } from '@/seo/seo.config'
+import LoadingOverlay from '@/components/shared/LoadingOverlay'
+
+import SubNavbar from '@/components/nav-components/SubNavbar'
+const ProjectHero = dynamic(() => import('@/components/Projects-components/ProjectHero'))
+const ProjectMedia = dynamic(() => import('@/components/Projects-components/ProjectMedia'))
 
 export async function generateStaticParams() {
   const projects = await getProjects()
@@ -13,75 +20,63 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const projects = await getProjects()
-  const project = projects.find((project) => project.slug === slug)
+  const project = projects.find((p) => p.slug === slug)
 
   if (!project) {
-    return {
-      title: 'Project Not Found',
-      description: 'The requested project could not be found.',
-    }
+    return metadataGenerators.notFound()
   }
 
-  return {
-    title: `${project.title} | ${project.client}`,
-    description: project.seo?.description || project.description?.short,
-    keywords: project.seo?.keywords?.join(', ') || `${project.client}, ${project.category}, ${project.year}`,
-    openGraph: {
-      title: project.title,
+  return metadataGenerators.works({
+    title: generateWorkSEO({
+      name: project.title,
+      tagline: project.client,
       description: project.seo?.description || project.description?.short,
-      images: [
-        {
-          url: project.media?.primary,
-          alt: `${project.title} - ${project.client}`,
-          width: 1200,
-          height: 630,
-        },
-      ],
-      type: 'article',
-      publishedTime: `${project.year}-01-01`,
-      authors: [project.client],
-      tags: project.seo?.keywords || [project.category, project.client],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: project.title,
+      location: project.location,
+    }).title,
+    description: generateWorkSEO({
+      name: project.title,
+      tagline: project.client,
       description: project.seo?.description || project.description?.short,
-      images: [project.media?.primary],
-    },
+      location: project.location,
+    }).description,
+    keywords: generateWorkSEO({
+      name: project.title,
+      tagline: project.client,
+      description: project.seo?.description || project.description?.short,
+      location: project.location,
+    }).keywords,
     alternates: {
-      canonical: `/work/${slug}`,
+      languages: {
+        en: `/work/${slug}`,
+        ar: `/work/${slug}`,
+      },
     },
-  }
+  })
 }
 
 export const revalidate = 0
 
-export default function ProjectPage({ params }) {
-  const { slug } = use(params)
-  const projects = use(getProjects())
-  const project = projects.find((project) => project.slug === slug)
+export default async function ProjectPage({ params }) {
+  const { slug } = await params
+  const projects = await getProjects()
+  const project = projects.find((p) => p.slug === slug)
 
-  const serializedProject = project
-    ? {
-        ...project,
-        createdAt: project.createdAt?.toDate?.() || new Date(),
-        updatedAt: project.updatedAt?.toDate?.() || new Date(),
-        expiresAt: project.expiresAt?.toDate?.() || new Date(),
-      }
-    : null
+  if (!project) {
+    notFound()
+  }
 
-  if (!serializedProject) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-bold">Project not found</h1>
-      </div>
-    )
+  const serializedProject = {
+    ...project,
+    createdAt: project.createdAt?.toDate?.() || new Date(),
+    updatedAt: project.updatedAt?.toDate?.() || new Date(),
+    expiresAt: project.expiresAt?.toDate?.() || new Date(),
   }
 
   return (
-    <main className="md:pe-18">
+    <Suspense fallback={<LoadingOverlay />}>
+      <SubNavbar />
       <ProjectHero project={serializedProject} />
       <ProjectMedia project={serializedProject} />
-    </main>
+    </Suspense>
   )
 }

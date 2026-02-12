@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
-import useTextClipPath from '@/hooks/useTextClipPath'
+import AnimText from '@/components/ui/unstyled/AnimText'
 
 export default function LogoName() {
   const isMobile = useIsMobile()
@@ -12,6 +12,7 @@ export default function LogoName() {
     mobile: { opacity: [1, 0] },
     desktop: { opacity: 1 },
   }
+
   const colorNameVariants = {
     mobile: {
       opacity: [0, 1],
@@ -24,8 +25,8 @@ export default function LogoName() {
   }
 
   return (
-    <h1 className="text-7xl max-lg:text-6xl text-center font-black uppercase leading-15 max-lg:leading-12">
-      <motion.span {...useTextClipPath(0, true)} className="group relative inline-block">
+    <h1 className="font-black max-lg:text-6xl text-7xl text-center uppercase leading-15 max-lg:leading-12">
+      <AnimText className="group inline-block relative">
         <motion.span
           variants={nameVariants}
           animate={isMobile ? 'mobile' : 'desktop'}
@@ -36,7 +37,7 @@ export default function LogoName() {
             ease: 'easeInOut',
           }}
         >
-          <span className="block transition-opacity duration-400 group-hover:opacity-0">
+          <span className="block group-hover:opacity-0 transition-opacity duration-400">
             Ahmed
             <br />
             Aymen
@@ -55,19 +56,14 @@ export default function LogoName() {
         >
           <Link
             href="/"
-            className="absolute inset-0 flex justify-center items-center lg:opacity-0 transition-opacity duration-400 group-hover:opacity-100"
+            className="absolute inset-0 flex justify-center items-center lg:opacity-0 group-hover:opacity-100 transition-opacity duration-400"
           >
             Aymon
           </Link>
         </motion.span>
-      </motion.span>
+      </AnimText>
 
-      <motion.span
-        {...useTextClipPath(0, true)}
-        className="block text-3xl max-lg:text-2xl text-bg/50 max-sm:text-bg/25 font-sec normal-case"
-      >
-        Visual Artist
-      </motion.span>
+      <AnimText className="block font-sec text-bg/50 max-sm:text-bg/25 max-lg:text-2xl text-3xl normal-case">Visual Artist</AnimText>
     </h1>
   )
 }

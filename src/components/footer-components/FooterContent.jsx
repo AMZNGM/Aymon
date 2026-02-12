@@ -44,8 +44,8 @@ export default function FooterContent() {
 
   if (loading || !aboutContent) {
     return (
-      <section className="relative w-screen min-h-screen overflow-hidden flex justify-center items-center py-12 px-4 max-md:py-18 max-xl:px-1">
-        <div className="max-w-7xl mx-auto bg-bg/10 text-bg rounded-2xl p-6">
+      <section className="relative w-dvw min-h-dvh overflow-hidden flex justify-center items-center px-4 max-xl:px-1 py-12 max-md:py-18">
+        <div className="max-w-7xl bg-bg/10 rounded-2xl text-bg mx-auto p-6">
           <div className="text-center">Loading...</div>
         </div>
       </section>
@@ -55,7 +55,7 @@ export default function FooterContent() {
   return (
     <div className="relative w-full h-full flex flex-col justify-between text-bg/50 capitalize max-md:translate-y-32">
       <div className="h-1/2 max-md:h-80 flex justify-center items-center max-md:items-end">
-        <h4 className="text-[20rem] max-2xl:text-[19rem] max-xl:text-[13rem] max-lg:text-[10rem] max-md:text-9xl max-sm:text-7xl text-bg font-extrabold tracking-[-2px] max-md:mb-4 duration-300">
+        <h4 className="font-extrabold text-[20rem] text-bg max-lg:text-[10rem] max-2xl:text-[19rem] max-xl:text-[13rem] max-sm:text-7xl max-md:text-9xl tracking-[-2px] duration-300 max-md:mb-4">
           <VariableFontHoverByRandomLetter
             label={aboutContent.nickname}
             fromFontVariationSettings="'wght' 900, 'slnt' 0"
@@ -65,11 +65,11 @@ export default function FooterContent() {
         </h4>
       </div>
 
-      <div className="h-1/2 max-md:h-2/3 px-8 max-md:py-4 max-md:px-14">
+      <div className="h-1/2 max-md:h-2/3 px-8 max-md:px-14 max-md:py-4">
         <div className="w-full max-w-7xl mx-auto">
           <div className="overflow-hidden">
             <motion.div initial={{ y: '100%' }} whileInView={{ y: 0 }} transition={{ duration: 0.75 }} className="flex justify-end">
-              <p className="w-1/2 flex items-end text-sm opacity-80">
+              <p className="w-1/2 flex items-end opacity-80 text-sm">
                 {aboutContent.location} •{' '}
                 {currentTime.toLocaleTimeString('en-US', {
                   timeZone: 'Africa/Cairo',
@@ -82,7 +82,7 @@ export default function FooterContent() {
               <div className="w-full space-y-4 text-end">
                 <nav className="space-y-2">
                   {quickLinks.map((link, index) => (
-                    <Link key={index} href={link.href} className="block text-sm hover:text-bg">
+                    <Link key={index} href={link.href} className="block hover:text-bg text-sm">
                       <VariableFontHoverByRandomLetter label={link.label} />
                     </Link>
                   ))}
@@ -91,23 +91,23 @@ export default function FooterContent() {
             </motion.div>
           </div>
 
-          <motion.hr initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 1 }} className="my-2 opacity-75" />
+          <motion.hr initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 1 }} className="opacity-75 my-2" />
 
           <div className="overflow-hidden">
             <motion.div
               initial={{ y: '-100%' }}
               whileInView={{ y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex justify-between max-md:flex-col-reverse"
+              className="flex max-md:flex-col-reverse justify-between"
             >
-              <p className="text-sm opacity-60 max-md:flex max-md:justify-between max-md:text-end">
+              <p className="max-md:flex max-md:justify-between opacity-60 text-sm max-md:text-end">
                 © {aboutContent.nickname} {new Date().getFullYear()}
                 <span className="block text-xs mt-2 md:mt-0">All rights reserved.</span>
               </p>
 
-              <div className="h-full flex md:justify-end md:items-end md:text-end justify-between gap-4 pb-4">
+              <div className="h-full flex justify-between md:justify-end md:items-end gap-4 md:text-end pb-4">
                 {Object.entries(aboutContent.socialLinks || {}).map(([platform, url], index) => (
-                  <a key={index} href={url} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-bg">
+                  <a key={index} href={url} target="_blank" rel="noopener noreferrer" className="hover:text-bg text-sm">
                     <VariableFontHoverByRandomLetter label={platform} />
                   </a>
                 ))}

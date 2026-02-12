@@ -68,87 +68,67 @@ export default function Login() {
   }
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-text text-bg">
-      <div className="w-full h-full flex flex-col justify-center items-center">
-        <h2 className="text-3xl text-center font-extrabold">Admin Login</h2>
-        <p className="text-sm text-center opacity-75 mt-2 mb-8">Sign in to manage your portfolio data</p>
+    <div className="relative w-dvw h-dvh overflow-hidden bg-text text-bg flex flex-col justify-center items-center">
+      {!user ? (
+        <form onSubmit={handleEmailSignIn} className="w-full max-w-sm space-y-4">
+          {error && (
+            <div className="bg-red-600/20 rounded-md border border-red-600 text-red-400 px-4 py-3 text-sm w-full h-fit text-wrap whitespace-pre-wrap">
+              {error}
+            </div>
+          )}
 
-        {!user ? (
-          <form onSubmit={handleEmailSignIn} className="w-full max-w-sm space-y-4">
-            {error && (
-              <div className="bg-red-600/20 rounded-md border border-red-600 text-red-400 px-4 py-3 text-sm w-full h-fit text-wrap whitespace-pre-wrap">
-                {error}
-              </div>
-            )}
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email Address
+          {Object.entries(formData).map(([name, value]) => (
+            <div key={name}>
+              <label htmlFor={name} className="block text-sm font-medium mb-2">
+                {name.charAt(0).toUpperCase() + name.slice(1)}
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
+                id={name}
+                name={name}
+                type={name === 'password' ? 'password' : 'text'}
+                autoComplete={name === 'email' ? 'email' : 'current-password'}
                 required
-                value={formData.email}
+                value={value}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 bg-bg/20 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main text-bg placeholder-bg/50"
-                placeholder="admin@example.com"
+                placeholder={name === 'email' ? 'admin@example.com' : '••••••••'}
               />
             </div>
+          ))}
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-2">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={formData.password}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 bg-bg/20 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main text-bg placeholder-bg/50"
-                placeholder="••••••••"
-              />
-            </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-text bg-main hover:bg-main/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+          >
+            {loading ? 'Signing in...' : 'Sign In'}
+          </button>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-text bg-main hover:bg-main/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
-            >
-              {loading ? 'Signing in...' : 'Sign In'}
-            </button>
-
-            <div className="text-center">
-              <Link href="/" className="text-sm opacity-80 hover:opacity-100 transition-opacity">
-                ← Back to portfolio
-              </Link>
-            </div>
-          </form>
-        ) : (
-          <div className="space-y-4">
-            <div className="text-center">
-              <p className="text-sm opacity-80">Signed in as:</p>
-              <p className="font-medium">{user.email}</p>
-            </div>
-
-            <button
-              onClick={handleSignOut}
-              className="w-full flex justify-center py-2 px-4 border border-main text-sm font-medium rounded-md text-main hover:bg-main hover:text-text transition-all"
-            >
-              Sign Out
-            </button>
-
-            <Link href="/admin" className="block w-full text-center py-2 px-4 bg-main text-text rounded-md hover:bg-main/90 transition-all">
-              Go to Admin Panel
+          <button className="text-center">
+            <Link href="/" className="text-sm opacity-80 hover:opacity-100 transition-opacity">
+              ← Back to portfolio
             </Link>
+          </button>
+        </form>
+      ) : (
+        <div className="space-y-4">
+          <div className="text-center">
+            <p className="text-sm opacity-80">Signed in as:</p>
+            <p className="font-medium">{user.email}</p>
           </div>
-        )}
-      </div>
+
+          <button
+            onClick={handleSignOut}
+            className="w-full flex justify-center py-2 px-4 border border-main text-sm font-medium rounded-md text-main hover:bg-main hover:text-text transition-all"
+          >
+            Sign Out
+          </button>
+
+          <Link href="/admin" className="block w-full text-center py-2 px-4 bg-main text-text rounded-md hover:bg-main/90 transition-all">
+            Go to Admin Panel
+          </Link>
+        </div>
+      )}
     </div>
   )
 }

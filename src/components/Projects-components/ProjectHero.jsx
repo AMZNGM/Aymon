@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import { SwapyItem, SwapyLayout, SwapySlot } from '@/components/ui/Swapy'
-import SwapPoints from '@/components/Projects-components/SwapPoints'
+import SwapPoints from '@/components/ui/SwapPoints'
 import ProjectHeader from '@/components/Projects-components/ProjectHeader'
 import ProjectImage from '@/components/Projects-components/ProjectImage'
 import ProjectProcess from '@/components/Projects-components/ProjectProcess'
@@ -13,7 +14,7 @@ export default function ProjectHero({ project }) {
 
   return (
     <>
-      <div className="relative w-full min-h-[88.5vh] overflow-hidden flex justify-center items-end bg-text text-bg px-4 max-md:px-1">
+      <div className="relative w-full min-h-[88.5vh] overflow-hidden flex justify-center items-end bg-text text-bg px-4 max-md:px-1 md:pe-22">
         <SwapPoints />
 
         <div className="max-xl:hidden">
@@ -45,7 +46,9 @@ export default function ProjectHero({ project }) {
         </div>
       </div>
 
-      <ProjectDetailsModal project={project} showDetails={showDetails} setShowDetails={setShowDetails} />
+      <AnimatePresence>
+        {showDetails && <ProjectDetailsModal project={project} showDetails={showDetails} setShowDetails={setShowDetails} />}
+      </AnimatePresence>
     </>
   )
 }

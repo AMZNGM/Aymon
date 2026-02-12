@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Home } from 'lucide-react'
-import ClickEffect from '@/components/ui/effect/ClickEffect'
+import RippleEffect from '@/components/ui/effect/RippleEffect'
 
 export default function BackBtn() {
   const router = useRouter()
@@ -21,17 +21,17 @@ export default function BackBtn() {
       <button
         onClick={handleBack}
         aria-label="Go back to previous page"
-        className="absolute top-16 right-2 max-md:top-4 max-md:right-12 backdrop-blur-sm"
+        className="top-16 max-md:top-4 right-2 max-md:right-12 absolute backdrop-blur-sm"
       >
-        <ClickEffect className="bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-50 p-2">
+        <RippleEffect className="z-50 bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 p-2 cursor-pointer">
           <ArrowLeft strokeWidth={2.5} />
-        </ClickEffect>
+        </RippleEffect>
       </button>
 
-      <Link href={'/'} aria-label="Go home" className="absolute top-28 right-2 max-md:top-4 max-md:right-23 backdrop-blur-sm">
-        <ClickEffect className="bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-50 p-2">
+      <Link href={'/'} aria-label="Go home" className="top-28 max-md:top-4 right-2 max-md:right-23 absolute backdrop-blur-sm">
+        <RippleEffect className="z-50 bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 p-2 cursor-pointer">
           <Home strokeWidth={2.5} />
-        </ClickEffect>
+        </RippleEffect>
       </Link>
     </>
   )

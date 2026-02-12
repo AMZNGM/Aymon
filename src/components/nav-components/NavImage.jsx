@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import useTextClipPath from '@/hooks/useTextClipPath'
+import AnimText from '@/components/ui/unstyled/AnimText'
 import mainPhotoNoBG from '../../../public/images/mainPhoto2.webp'
 
 export default function NavImage() {
@@ -15,9 +15,9 @@ export default function NavImage() {
       transition={{ duration: 0.5 }}
       className="cursor-grab active:cursor-grabbing"
     >
-      <motion.div {...useTextClipPath(0, true)} className="max-lg:hidden inline-block relative overflow-hidden rounded-2xl my-12">
+      <AnimText className="max-lg:hidden inline-block relative overflow-hidden rounded-2xl my-12">
         <Image src={mainPhotoNoBG} alt="Main Image" priority className="w-75 h-75 object-cover pointer-events-none select-none" />
-      </motion.div>
+      </AnimText>
     </motion.div>
   )
 }

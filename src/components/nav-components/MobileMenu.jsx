@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useMemo, useState, useEffect } from 'react'
 import { TextAlignJustify } from 'lucide-react'
-import ClickEffect from '@/components/ui/effect/ClickEffect'
+import RippleEffect from '@/components/ui/effect/RippleEffect'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 import ContactPopup from '@/components/ui/ContactPopup'
 
@@ -40,16 +40,16 @@ export default function MobileMenu({ className, btnClassName }) {
         htmlFor="mobile-nav-toggle"
         className={`absolute top-4 right-2 max-md:right-1 backdrop-blur-sm z-1001 ${btnClassName}`}
       >
-        <ClickEffect className={`bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-1001 p-2`}>
+        <RippleEffect className={`bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-1001 p-2`}>
           <motion.div whileTap={{ scale: 0.9, rotate: 90 }}>
             <TextAlignJustify strokeWidth={3} />
           </motion.div>
-        </ClickEffect>
+        </RippleEffect>
       </label>
 
       <nav
         role="navigation"
-        className="fixed inset-0 flex flex-col justify-center items-center gap-4 text-5xl font-medium uppercase bg-main px-6 py-2 transition-all duration-300 opacity-0 translate-y-full pointer-events-none peer-checked:opacity-100 peer-checked:translate-y-0 peer-checked:pointer-events-auto z-1000"
+        className="z-1000 fixed inset-0 flex flex-col justify-center items-center gap-4 bg-main opacity-0 peer-checked:opacity-100 font-medium text-5xl uppercase transition-all translate-y-full peer-checked:translate-y-0 duration-300 px-6 py-2 pointer-events-none peer-checked:pointer-events-auto"
       >
         {navLinks.map((link, index) => (
           <motion.div key={index} whileTap={{ scale: 0.9 }}>

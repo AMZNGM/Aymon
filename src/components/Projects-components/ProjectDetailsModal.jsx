@@ -1,25 +1,33 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useScrollLock } from '@/hooks/useScrollLock'
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import CloseBtn from '@/components/ui/Buttons/CloseBtn'
 
 export default function ProjectDetailsModal({ project, showDetails, setShowDetails }) {
-  useScrollLock(showDetails)
-
-  if (!showDetails) return null
+  useBodyScrollLock(showDetails)
+  useKeyboardShortcuts({ onEscape: () => setShowDetails(false) })
 
   return (
     <div className="z-50 fixed inset-0 flex justify-center items-center p-4">
-      <div className="absolute inset-0 bg-bg/60 backdrop-blur-sm" onClick={() => setShowDetails(false)} />
+      <div
+        onClick={() => setShowDetails(false)}
+        onWheel={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
+        className="absolute inset-0 bg-bg/60 backdrop-blur-sm"
+      />
       <motion.div
+        onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
         initial={{ scale: 0, opacity: 0, filter: 'blur(10px)' }}
         animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+        exit={{ scale: 0, opacity: 0, filter: 'blur(10px)' }}
         transition={{ duration: 0.3 }}
         className="relative w-full max-w-6xl max-h-[80vh] overflow-y-scroll bg-bg border border-text/25 rounded-2xl text-text p-6"
       >
         <CloseBtn onClick={() => setShowDetails(false)} />
-
         <h3 className="font-sec font-bold text-2xl uppercase mb-6">Project Details</h3>
 
         <div className="space-y-6">
@@ -50,22 +58,12 @@ export default function ProjectDetailsModal({ project, showDetails, setShowDetai
 
           <h3 className="font-bold text-text text-lg mb-4">Metadata</h3>
           <div className="gap-4 grid grid-cols-2 text-sm">
-            <div>
-              <span className="text-text/50">Duration:</span>
-              <span className="text-text/75 ml-2">{project.metadata?.duration}</span>
-            </div>
-            <div>
-              <span className="text-text/50">Team Size:</span>
-              <span className="text-text/75 ml-2">{project.metadata?.team_size} people</span>
-            </div>
-            <div>
-              <span className="text-text/50">Location:</span>
-              <span className="text-text/75 ml-2">{project.metadata?.client_location}</span>
-            </div>
-            <div>
-              <span className="text-text/50">Type:</span>
-              <span className="text-text/75 capitalize ml-2">{project.metadata?.project_type}</span>
-            </div>
+            {Object.entries(project.metadata || {}).map(([key, value]) => (
+              <div key={key}>
+                <span className="text-text/50">{key.replace(/_/g, ' ')}:</span>
+                <span className="text-text/75 ml-2">{value}</span>
+              </div>
+            ))}
           </div>
         </div>
       </motion.div>

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Minus, Plus } from 'lucide-react'
-import { useScrollLock } from '@/hooks/useScrollLock'
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
 import CloseBtn from '@/components/ui/Buttons/CloseBtn'
 
 export default function GlobalImageModal() {
@@ -12,8 +12,6 @@ export default function GlobalImageModal() {
   const [imageSrc, setImageSrc] = useState('')
   const [scale, setScale] = useState(1)
   const calcConstraint = scale * 200
-
-  useScrollLock(isOpen)
 
   useEffect(() => {
     const clickToOpen = (e) => {
@@ -68,11 +66,16 @@ export default function GlobalImageModal() {
     }
   }
 
+  useBodyScrollLock(isOpen)
+
   if (!isOpen) return
+
   return (
     <div
       onClick={closeModal}
-      className="fixed inset-0 flex justify-center items-center bg-bg/60 text-text backdrop-blur-sm cursor-zoom-out z-9999"
+      onWheel={(e) => e.stopPropagation()}
+      onTouchMove={(e) => e.stopPropagation()}
+      className="z-9999 fixed inset-0 flex justify-center items-center bg-bg/60 backdrop-blur-sm text-text cursor-zoom-out"
     >
       <motion.div
         initial={{ scale: 0 }}
@@ -90,7 +93,7 @@ export default function GlobalImageModal() {
           dragConstraints={{ left: -calcConstraint, right: calcConstraint, top: -calcConstraint + 150, bottom: calcConstraint - 150 }}
           dragPropagation={false}
           dragMomentum={false}
-          className="relative size-full select-none cursor-grab active:cursor-grabbing"
+          className="relative size-full cursor-grab active:cursor-grabbing select-none"
           style={{ scale }}
         >
           <Image
@@ -98,7 +101,7 @@ export default function GlobalImageModal() {
             alt="Modal Image"
             fill
             sizes="(max-width: 768px) 90vw, 80vw"
-            className="object-contain select-none pointer-events-none transition-transform duration-300 -z-10"
+            className="-z-10 object-contain transition-transform duration-300 pointer-events-none select-none"
             priority
             unoptimized
           />
@@ -107,17 +110,17 @@ export default function GlobalImageModal() {
 
       <CloseBtn onClick={closeModal} />
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 bg-text/20 backdrop-blur-md rounded-full p-2">
+      <div className="bottom-4 left-1/2 absolute flex gap-2 bg-text/20 backdrop-blur-md rounded-full -translate-x-1/2 p-2 transform">
         <button
           aria-label="Zoom out"
           onClick={(e) => {
             e.stopPropagation()
             zoomOut()
           }}
-          className="group size-8 flex justify-center items-center text-text hover:bg-text/30 rounded-full transition-colors cursor-pointer"
+          className="group size-8 flex justify-center items-center hover:bg-text/30 rounded-full text-text transition-colors cursor-pointer"
         >
           <Minus size={20} />
-          <span className="size-full flex justify-center items-center absolute top-1/2 right-30 -translate-y-1/2 text-xs opacity-0 group-hover:opacity-100 duration-200">
+          <span className="top-1/2 right-30 absolute size-full flex justify-center items-center opacity-0 group-hover:opacity-100 text-xs -translate-y-1/2 duration-200">
             Alt + left click
           </span>
         </button>
@@ -128,10 +131,10 @@ export default function GlobalImageModal() {
             e.stopPropagation()
             resetZoom()
           }}
-          className="group size-8 flex justify-center items-center text-text hover:bg-text/30 w-fit p-1 rounded-full transition-colors cursor-pointer text-sm font-medium"
+          className="group w-fit size-8 flex justify-center items-center hover:bg-text/30 rounded-full font-medium text-text text-sm transition-colors p-1 cursor-pointer"
         >
           {Math.round(scale * 100)}%
-          <span className="size-full flex justify-center items-center absolute inset-0 -translate-y-10 text-xs opacity-0 group-hover:opacity-100 duration-200">
+          <span className="absolute inset-0 size-full flex justify-center items-center opacity-0 group-hover:opacity-100 text-xs -translate-y-10 duration-200">
             Reset
           </span>
         </button>
@@ -142,10 +145,10 @@ export default function GlobalImageModal() {
             e.stopPropagation()
             zoomIn()
           }}
-          className="group size-8 flex justify-center items-center text-text hover:bg-text/30 rounded-full transition-colors cursor-pointer"
+          className="group size-8 flex justify-center items-center hover:bg-text/30 rounded-full text-text transition-colors cursor-pointer"
         >
           <Plus size={20} />
-          <span className="size-full flex justify-center items-center absolute top-1/2 left-30 -translate-y-1/2 text-xs opacity-0 group-hover:opacity-100 duration-200">
+          <span className="top-1/2 left-30 absolute size-full flex justify-center items-center opacity-0 group-hover:opacity-100 text-xs -translate-y-1/2 duration-200">
             Ctrl + left click
           </span>
         </button>

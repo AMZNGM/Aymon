@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`relative w-screen min-h-screen overflow-x-hidden! bg-text text-bg selection:text-bg selection:bg-main font-inter scroll-smooth antialiased ${inter.variable} ${gambarino.variable}`}
+        className={`relative w-full h-full overflow-x-hidden! bg-text text-bg selection:text-bg selection:bg-main font-inter scroll-smooth antialiased ${inter.variable} ${gambarino.variable}`}
       >
         <LenisSetup />
 

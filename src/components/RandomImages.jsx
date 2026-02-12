@@ -6,6 +6,7 @@ import { gsap, Draggable } from '@/utils/gsapConfig'
 import { useGSAP } from '@gsap/react'
 import { motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
+
 import asfour from '../../public/images/randomImgs/asfour.webp'
 import aymonPortrait from '../../public/images/randomImgs/aymonPortrait.webp'
 import caligula from '../../public/images/randomImgs/caligula.webp'
@@ -110,8 +111,8 @@ export default function RandomImages() {
 
   return (
     <section ref={sectionRef} className="z-0 relative">
-      <div ref={containerRef} className="h-[185vh] max-2xl:h-screen">
-        <div className="relative h-screen">
+      <div ref={containerRef} className="h-[185vh] max-2xl:h-dvh">
+        <div className="relative h-dvh">
           {(isMobile ? images.slice(0, 10) : images).map((image, index) => (
             <div
               key={index}

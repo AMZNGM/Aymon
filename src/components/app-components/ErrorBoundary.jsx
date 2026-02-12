@@ -1,7 +1,6 @@
 'use client'
 
 import { Component } from 'react'
-import MainBtn from '@/components/ui/Buttons/MainBtn'
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -20,8 +19,8 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="relative w-screen h-screen overflow-hidden flex items-center justify-center bg-text text-bg font-mono">
-          <div className="absolute inset-0 opacity-50 text-xs leading-tight overflow-hidden pointer-events-none select-none">
+        <div className="relative w-dvw h-dvh overflow-hidden flex justify-center items-center bg-text font-mono text-bg">
+          <div className="absolute inset-0 overflow-hidden opacity-50 text-xs leading-tight pointer-events-none select-none">
             {Array.from({ length: 30 }).map((_, i) => (
               <div key={i}>
                 {Array.from({ length: 500 })
@@ -31,8 +30,8 @@ export default class ErrorBoundary extends Component {
             ))}
           </div>
 
-          <div className="relative w-full max-w-3xl space-y-4 bg-text border-4 p-8 z-10">
-            <pre className="text-xs overflow-x-auto">
+          <div className="z-10 relative w-full max-w-3xl space-y-4 bg-text border-4 p-8">
+            <pre className="overflow-x-auto text-xs">
               {`
 ███████╗██████╗ ██████╗  ██████╗ ██████╗     ██╗
 ██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗    ██║
@@ -44,10 +43,10 @@ export default class ErrorBoundary extends Component {
             </pre>
 
             <div className="border-y-2 py-4">
-              <h1 className="text-2xl font-bold mb-2">&gt;&gt; SYSTEM FAILURE DETECTED &lt;&lt;</h1>
+              <h1 className="font-bold text-2xl mb-2">&gt;&gt; SYSTEM FAILURE DETECTED &lt;&lt;</h1>
             </div>
 
-            <div className="space-y-3 mb-6 text-sm">
+            <div className="space-y-3 text-sm mb-6">
               <p className="flex items-start">
                 <span className="text-red-500 mr-2">[ERROR]</span>
                 Critical exception encountered in application runtime
@@ -64,16 +63,16 @@ export default class ErrorBoundary extends Component {
 
             <div className="text-green-400/50 text-xs mb-4">{'═'.repeat(60)}</div>
 
-            <MainBtn
+            <button
               onClick={() => window.location.reload()}
-              className="font-mono w-full bg-text! md:bg-bg! hover:bg-text! transition-colors"
+              className="w-full hover:bg-bg hover:text-text transition-colors cursor-pointer"
             >
               [ REBOOT SYSTEM ]
-            </MainBtn>
+            </button>
 
-            <div className="text-main text-xs mt-4 text-center">{'═ '.repeat(60)}</div>
+            <div className="text-main text-xs text-center mt-4">{'═ '.repeat(60)}</div>
 
-            <div className="mt-4 flex items-center text-sm">
+            <div className="flex items-center text-sm mt-4">
               <span className="mr-2">$</span>
               <span className="animate-ping">|</span>
             </div>

@@ -1,21 +1,14 @@
-'use client'
-
-import { motion } from 'motion/react'
+import AnimIn from '@/components/ui/unstyled/AnimIn'
 
 export default function Slogun() {
   return (
-    <motion.section
-      initial={{ opacity: 0, filter: 'blur(10px)' }}
-      animate={{ opacity: 1, filter: 'blur(0px)' }}
-      transition={{ duration: 1.75 }}
-      className="absolute top-0 left-0 w-full h-screen flex justify-center items-center text-9xl max-md:text-6xl font-sec"
-    >
-      <span className="absolute top-4 left-4 max-md:top-42">i</span>
-      <span className="absolute top-56 left-1/4">shut</span>
-      <span className="absolute top-4 right-4 max-md:top-40">my</span>
-      <span className="absolute bottom-8 left-4 max-md:bottom-72">Eyes</span>
-      <span className="absolute bottom-8 md:left-1/2 max-md:bottom-65 max-md:right-10">to</span>
-      <span className="absolute bottom-8 right-4 max-md:right-1/2">see</span>
-    </motion.section>
+    <AnimIn center blur className="inset-0 w-full h-dvh font-sec text-[10dvw] max-md:text-6xl leading-none absolute!">
+      <span className="top-4 max-md:top-42 left-4 absolute">i</span>
+      <span className="top-56 left-1/4 absolute">shut</span>
+      <span className="top-4 max-md:top-40 right-4 absolute">my</span>
+      <span className="bottom-8 max-md:bottom-72 left-4 absolute">Eyes</span>
+      <span className="max-md:right-10 bottom-8 max-md:bottom-65 md:left-1/2 absolute">to</span>
+      <span className="right-4 max-md:right-1/2 bottom-8 absolute">see</span>
+    </AnimIn>
   )
 }
