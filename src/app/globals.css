@@ -2,9 +2,10 @@
 @theme {
   --color-main: #005240;
   --color-bg: #030303;
+  --color-sec: #e6e6e6;
   --color-text: #ffffff;
 
-  --font-inter: var(--font-inter);
+  --font-main: var(--font-main);
   --font-sec: var(--font-sec);
 }
 * {
@@ -12,4 +13,7 @@
 }
 html {
   scrollbar-width: none;
+}
+body:has(.hide-footer) footer {
+  display: none;
 }

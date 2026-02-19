@@ -10,13 +10,13 @@ export const generateMetadata = metadataGenerators.privacy
 export default function PrivacyPolicy() {
   return (
     <Suspense fallback={<LoadingOverlay />}>
-      <div className="flex max-lg:flex-col justify-between max-lg:overflow-hidden">
+      <div className="flex max-lg:flex-col justify-between max-lg:overflow-hidden hide-footer">
         <div className="sticky max-lg:fixed top-0 left-0 lg:h-dvh max-lg:w-dvw max-lg:z-999 z-10">
           <Navbar />
         </div>
 
-        <div className="relative w-full h-full min-h-dvh max-md:mt-56">
-          <section className="relative w-full min-h-dvh overflow-hidden rounded-2xl py-12 md:pe-12 ps-4 max-md:px-1">
+        <div className="relative w-full h-full max-md:mt-36">
+          <section className="relative w-full min-h-dvh overflow-hidden rounded-2xl  md:pe-12 p-4 max-md:px-1">
             <div className="bg-bg/10 text-bg rounded-2xl">
               <div className="max-w-7xl mx-auto p-6">
                 <AnimText as="h1" className="text-8xl max-xl:text-7xl max-lg:text-4xl font-extrabold tracking-[-2px] uppercase mb-16">

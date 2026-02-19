@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Minus, Plus } from 'lucide-react'
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
@@ -10,14 +10,20 @@ import CloseBtn from '@/components/ui/Buttons/CloseBtn'
 export default function GlobalImageModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [imageSrc, setImageSrc] = useState('')
+  const [imageTitle, setImageTitle] = useState('')
+  const [imageDesc, setImageDesc] = useState('')
+  const [imageDate, setImageDate] = useState('')
   const [scale, setScale] = useState(1)
-  const calcConstraint = scale * 200
+  const calcConstraint = useMemo(() => scale * 200, [scale])
 
   useEffect(() => {
     const clickToOpen = (e) => {
       const img = e.target.closest('img')
-      if (img && img.src) {
+      if (img && img.src && (img.dataset.zoom === 'true' || img.classList.contains('openInModal'))) {
         setImageSrc(img.src)
+        setImageTitle(img.getAttribute('data-title') || '')
+        setImageDesc(img.getAttribute('data-description') || '')
+        setImageDate(img.getAttribute('data-date') || '')
         setIsOpen(true)
       }
     }
@@ -82,7 +88,7 @@ export default function GlobalImageModal() {
         animate={{ scale: 1 }}
         transition={{ duration: 0.3 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative size-[75%] cursor-default"
+        className="relative min-w-[50dvw] h-[85dvh] cursor-default"
       >
         <motion.div
           onClick={handleImageClick}
@@ -107,6 +113,19 @@ export default function GlobalImageModal() {
           />
         </motion.div>
       </motion.div>
+
+      {/* Info overlay */}
+      {(imageTitle || imageDesc) && scale === 1 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bottom-16 left-8 absolute max-w-3xl text-sec p-4 pointer-events-none"
+        >
+          {imageTitle && <h3 className="font-bold uppercase tracking-tight mb-1">{imageTitle}</h3>}
+          {imageDate && <p className="font-mono text-xs uppercase tracking-widest mb-2">{imageDate}</p>}
+          {imageDesc && <p className="opacity-80 font-light text-sm leading-relaxed">{imageDesc}</p>}
+        </motion.div>
+      )}
 
       <CloseBtn onClick={closeModal} />
 

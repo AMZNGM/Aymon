@@ -26,6 +26,7 @@ export const initialProjectForm = {
     client_location: '',
     project_type: 'freelance',
   },
+  showInSelectedWork: false,
   video: {
     url: '',
     type: 'vimeo',

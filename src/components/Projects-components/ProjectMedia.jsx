@@ -59,8 +59,8 @@ export default function ProjectMedia({ project }) {
                   <ImageIn
                     src={item.src}
                     alt={item.title}
-                    className="object-contain! rounded-2xl scale-100! cursor-zoom-in"
-                    divClassName="relative aspect-video overflow-hidden bg-text/10 rounded-2xl"
+                    className="object-contain! rounded-2xl scale-100! cursor-zoom-in openInModal"
+                    divClassName="relative w-full h-[80vh] overflow-hidden bg-text/10 rounded-2xl"
                   />
                 )}
               </div>

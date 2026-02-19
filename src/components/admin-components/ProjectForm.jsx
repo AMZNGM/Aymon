@@ -20,26 +20,12 @@ export default function ProjectForm({
   const changeImage = (e) => {
     const file = e.target.files[0]
     if (file) {
-      if (file.size > 1024 * 1024) {
-        alert('Primary image must be less than 1MB')
-        e.target.value = ''
-        return
-      }
       setProjectImageFile(file)
     }
   }
 
   const changeGalleryImages = (e) => {
     const files = Array.from(e.target.files)
-
-    const oversizedFiles = files.filter((file) => file.size > 500 * 1024)
-    if (oversizedFiles.length > 0) {
-      alert(
-        `Gallery images must be less than 500KB each. The following files are too large: ${oversizedFiles.map((f) => f.name).join(', ')}`
-      )
-      e.target.value = ''
-      return
-    }
 
     setGalleryFiles(files)
   }
@@ -49,6 +35,16 @@ export default function ProjectForm({
       ...prev,
       gallery: prev.gallery.filter((_, index) => index !== indexToDelete),
     }))
+  }
+
+  const removeAllGalleryImages = () => {
+    setCurrentImages((prev) => ({
+      ...prev,
+      gallery: [],
+    }))
+    setGalleryFiles([])
+    const galleryInput = document.getElementById('gallery-file-input')
+    if (galleryInput) galleryInput.value = ''
   }
 
   const galleryDragStart = (e, index) => {
@@ -188,20 +184,7 @@ export default function ProjectForm({
             />
           </div>
 
-          <div>
-            <label className="block font-medium text-sm mb-2">Status</label>
-            <select
-              value={projectForm.status}
-              onChange={(e) => setProjectForm((p) => ({ ...p, status: e.target.value }))}
-              className="w-full bg-bg/20 hover:bg-main/40 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main transition-colors px-3 py-2 cursor-pointer"
-            >
-              <option value="completed">Completed</option>
-              <option value="in-progress">In Progress</option>
-              <option value="planned">Planned</option>
-            </select>
-          </div>
-
-          <div className="h-fit flex items-center bg-bg/20 hover:bg-main/40 rounded-md transition-colors mt-auto">
+          <div className="h-fit flex items-center bg-bg/20 hover:bg-main/40 border border-bg/30 rounded-md transition-colors mt-auto">
             <input
               type="checkbox"
               id="featured"
@@ -213,6 +196,32 @@ export default function ProjectForm({
               Featured Project
             </label>
           </div>
+
+          <div className="h-fit flex items-center bg-bg/20 hover:bg-main/40 border border-bg/30 rounded-md transition-colors">
+            <input
+              type="checkbox"
+              id="showInSelectedWork"
+              checked={!!projectForm.showInSelectedWork}
+              onChange={(e) => setProjectForm((p) => ({ ...p, showInSelectedWork: e.target.checked }))}
+              className="ms-4 cursor-pointer"
+            />
+            <label htmlFor="showInSelectedWork" className="font-medium text-sm p-4 cursor-pointer select-none">
+              Show in Selected Work
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label className="block font-medium text-sm mb-2">Status</label>
+          <select
+            value={projectForm.status}
+            onChange={(e) => setProjectForm((p) => ({ ...p, status: e.target.value }))}
+            className="w-full bg-bg/20 hover:bg-main/40 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main transition-colors px-3 py-2 cursor-pointer"
+          >
+            <option value="completed">Completed</option>
+            <option value="in-progress">In Progress</option>
+            <option value="planned">Planned</option>
+          </select>
         </div>
 
         <div>
@@ -404,7 +413,7 @@ export default function ProjectForm({
 
         <div>
           <label className="block font-medium text-sm mb-2">
-            Primary Image {editingProjectId ? '(Leave empty to keep current)' : '(Required - Max 1MB)'}
+            Primary Image {editingProjectId ? '(Leave empty to keep current)' : '(Required)'}
           </label>
 
           {editingProjectId && currentImages.primary && (
@@ -423,13 +432,24 @@ export default function ProjectForm({
             className="w-full bg-bg/20 hover:bg-main/40 hover:file:bg-main/90 file:bg-main border border-bg/30 file:border-0 rounded-md file:rounded-full focus:outline-none focus:ring-2 focus:ring-main file:font-semibold file:text-text file:text-sm transition-colors file:mr-4 px-3 file:px-3 py-2 file:py-1 cursor-pointer"
           />
 
-          <p className="opacity-60 text-xs mt-1">Maximum file size: 1MB</p>
+          <p className="opacity-60 text-xs mt-1">Primary project image</p>
         </div>
 
         <div>
-          <label className="block font-medium text-sm mb-2">
-            Gallery Images {editingProjectId ? '(Optional - Leave empty to keep current)' : '(Optional - Max 500KB each)'}
-          </label>
+          <div className="flex justify-between items-center mb-2">
+            <label className="block font-medium text-sm">
+              Gallery Images {editingProjectId ? '(Optional - Leave empty to keep current)' : '(Optional)'}
+            </label>
+            {(currentImages.gallery.length > 0 || galleryFiles.length > 0) && (
+              <button
+                type="button"
+                onClick={removeAllGalleryImages}
+                className="hover:bg-red-600/10 rounded-md text-red-500 text-xs transition-colors px-2 py-1 cursor-pointer"
+              >
+                Remove All
+              </button>
+            )}
+          </div>
 
           {editingProjectId && currentImages.gallery.length > 0 && (
             <div className="mb-2">
@@ -471,7 +491,7 @@ export default function ProjectForm({
             className="w-full bg-bg/20 hover:bg-main/40 hover:file:bg-main/90 file:bg-main border border-bg/30 file:border-0 rounded-md file:rounded-full focus:outline-none focus:ring-2 focus:ring-main file:font-semibold file:text-text file:text-sm transition-colors file:mr-4 px-3 file:px-3 py-2 file:py-1 cursor-pointer"
           />
 
-          <p className="opacity-60 text-xs mt-1">Maximum file size: 500KB per image</p>
+          <p className="opacity-60 text-xs mt-1">Gallery images for the project</p>
           {galleryFiles.length > 0 && (
             <div className="opacity-60 text-sm mt-2">
               {galleryFiles.length} new image{galleryFiles.length > 1 ? 's' : ''} selected

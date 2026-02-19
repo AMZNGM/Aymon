@@ -4,16 +4,18 @@ import { metadataGenerators } from '@/seo/seo-helpers'
 import LoadingOverlay from '@/components/shared/LoadingOverlay'
 
 import SubNavbar from '@/components/nav-components/SubNavbar'
-const SelectedWork = dynamic(() => import('@/components/SelectedWork'))
+const WorkGallery = dynamic(() => import('@/components/work-components/WorkGallery'))
 
 export const generateMetadata = metadataGenerators.work
 
 export default function Work() {
   return (
     <Suspense fallback={<LoadingOverlay />}>
-      <SubNavbar />
-      <div className="md:pe-18">
-        <SelectedWork />
+      <div className="relative z-20">
+        <SubNavbar />
+      </div>
+      <div className="hide-footer">
+        <WorkGallery />
       </div>
     </Suspense>
   )

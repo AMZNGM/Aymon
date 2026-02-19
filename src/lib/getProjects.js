@@ -13,6 +13,7 @@ export async function getProjects() {
       id: doc.id,
       firestoreId: doc.id,
       ...doc.data(),
+      showInSelectedWork: doc.data().showInSelectedWork === true,
     }))
 
     // sort client-side by order field if it exists, otherwise by createdAt

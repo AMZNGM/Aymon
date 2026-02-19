@@ -8,7 +8,7 @@ export default function AnimIn({
   children,
   as = 'div',
   className = '',
-  delay = 0.1,
+  delay = 0,
   duration = 0.75,
   once = true,
   center = false,

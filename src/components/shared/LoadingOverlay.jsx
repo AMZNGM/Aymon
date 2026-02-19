@@ -1,15 +1,13 @@
 export default function LoadingOverlay({ text = 'Loading...', para = '' }) {
   return (
     <>
-      <div className="z-50 fixed inset-0 flex justify-center items-center bg-bg/50 backdrop-blur-sm">
-        <div className="w-full max-w-md bg-text rounded-2xl text-bg text-center mx-4 p-8">
-          <div className="flex justify-center mb-4">
-            <div className="loading-orbit-container"></div>
-          </div>
-
-          {text && <h3 className="font-bold text-xl mb-2">{text}</h3>}
-          {para && <p className="opacity-75 text-sm">{para}</p>}
+      <div className="z-50 fixed inset-0 flex flex-col justify-center items-center bg-text text-center p-8 pointer-events-none select-none">
+        <div className="flex justify-center mb-4">
+          <div className="loading-orbit-container"></div>
         </div>
+
+        {text && <h3 className="font-bold text-xl mb-2">{text}</h3>}
+        {para && <p className="opacity-75 text-sm">{para}</p>}
       </div>
 
       <style

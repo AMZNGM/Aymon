@@ -1,7 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { SquareArrowOutUpRight } from 'lucide-react'
+import AnimIn from '@/components/ui/unstyled/AnimIn'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function ProjectProcess({ project, className }) {
@@ -9,15 +9,9 @@ export default function ProjectProcess({ project, className }) {
     <div
       onClick={(e) => e.stopPropagation()}
       onWheel={(e) => e.stopPropagation()}
-      onTouchMove={(e) => e.stopPropagation()}
       className={`relative bg-bg/10 rounded-2xl p-4 ${className}`}
     >
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="h-full overflow-y-scroll flex flex-col justify-between gap-4"
-      >
+      <AnimIn className="h-full overflow-y-scroll flex flex-col justify-between gap-4">
         <h2 className="font-sec font-bold max-md:text-2xl text-3xl uppercase">Process & Approach</h2>
 
         <div className="flex flex-col flex-1 gap-4">
@@ -50,7 +44,7 @@ export default function ProjectProcess({ project, className }) {
             </a>
           </div>
         )}
-      </motion.div>
+      </AnimIn>
     </div>
   )
 }

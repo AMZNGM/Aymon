@@ -14,7 +14,6 @@ export default function ProjectDetailsModal({ project, showDetails, setShowDetai
       <div
         onClick={() => setShowDetails(false)}
         onWheel={(e) => e.stopPropagation()}
-        onTouchMove={(e) => e.stopPropagation()}
         className="absolute inset-0 bg-bg/60 backdrop-blur-sm"
       />
       <motion.div

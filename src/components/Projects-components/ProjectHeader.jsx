@@ -1,22 +1,10 @@
-'use client'
-
-import { motion } from 'framer-motion'
+import AnimIn from '@/components/ui/unstyled/AnimIn'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 
 export default function ProjectHeader({ project, className, onShowDetails }) {
   return (
-    <div
-      onClick={(e) => e.stopPropagation()}
-      onWheel={(e) => e.stopPropagation()}
-      onTouchMove={(e) => e.stopPropagation()}
-      className={`relative overflow-hidden bg-bg/10 rounded-2xl p-4 md:p-6 ${className}`}
-    >
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="h-full overflow-auto flex flex-col justify-between gap-4"
-      >
+    <div className={`relative overflow-hidden bg-sec rounded-2xl p-4 md:p-6 ${className}`}>
+      <AnimIn className="h-full overflow-auto flex flex-col justify-between gap-4">
         <div className="flex flex-col gap-8 max-md:gap-6">
           <div>
             <h1 className="font-sec font-extrabold max-md:text-3xl text-5xl">{project.client}</h1>
@@ -41,7 +29,7 @@ export default function ProjectHeader({ project, className, onShowDetails }) {
         >
           <VariableFontHoverByRandomLetter label="Show More Details" />
         </button>
-      </motion.div>
+      </AnimIn>
     </div>
   )
 }

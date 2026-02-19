@@ -22,6 +22,11 @@ export default memo(function RippleEffect({ children, className = '', ...props }
       const x = event.clientX - rect.left - size / 2
       const y = event.clientY - rect.top - size / 2
 
+      const hue = Math.random() * 360
+      const saturation = 60 + Math.random() * 40
+      const lightness = 40 + Math.random() * 30
+      const secondaryHue = (hue + 30 + Math.random() * 60) % 360
+
       const ripple = document.createElement('span')
       ripple.style.cssText = `
         position: absolute;
@@ -29,12 +34,13 @@ export default memo(function RippleEffect({ children, className = '', ...props }
         height: ${size}px;
         left: ${x}px;
         top: ${y}px;
-        background: rgba(255, 255, 255, 0.3);
+        background: radial-gradient(circle, hsla(${hue}, ${saturation}%, ${lightness}%, 0.8), hsla(${secondaryHue}, ${saturation}%, ${lightness}%, 0.4));
         border-radius: 50%;
         transform: scale(0);
         animation: ripple 0.6s linear;
         pointer-events: none;
-        z-index: 1000;
+        z-index: 9999;
+        mix-blend-mode: screen;
       `
 
       // Add keyframes for ripple animation only once

@@ -63,6 +63,7 @@ export default function ProjectList({ projects, onEdit, onDelete, onReorder, for
                   <div className="flex items-center gap-3 opacity-60 text-xs mt-2">
                     {formatDate(project.createdAt)}
                     {project.featured && <span className="text-main">Featured</span>}
+                    {project.showInSelectedWork === true && <span className="text-cyan-700">Selected Work</span>}
                   </div>
                 </div>
 

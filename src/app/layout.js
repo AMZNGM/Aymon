@@ -1,14 +1,22 @@
 import './globals.css'
-import { inter, gambarino } from '@/app/fonts'
-import Banner from '@/app/banner'
-import ErrorBoundary from '@/components/app-components/ErrorBoundary'
-import LenisSetup from '@/components/app-components/LenisSetup'
-import ScrollToTop from '@/components/app-components/ScrollToTop'
-import CustomCursor from '@/components/app-components/CustomCursor'
-import GlobalImageModal from '@/components/app-components/GlobalImageModal'
-import FooterWrapper from '@/components/footer-components/FooterWrapper'
+import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
+import AppWrapper from '@/components/app-components/AppWrapper'
+
+export const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-main',
+  display: 'swap',
+})
+
+export const gambarino = localFont({
+  src: '../../public/fonts/Gambarino-Regular.woff2',
+  variable: '--font-sec',
+  display: 'swap',
+})
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://aymon.work/'),
   title: 'Ahmed Ayman',
   description:
     'Ahmed Ayman, also known as Aymon, is a multidisciplinary visual artist based in Cairo, Egypt. He is known for his unique style and innovative approach to art, which has earned him recognition in the art world.',
@@ -27,20 +35,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${gambarino.variable}`}>
       <body
-        className={`relative w-full h-full overflow-x-hidden! bg-text text-bg selection:text-bg selection:bg-main font-inter scroll-smooth antialiased ${inter.variable} ${gambarino.variable}`}
+        suppressHydrationWarning
+        className="relative w-dvw h-full bg-text text-bg selection:text-bg selection:bg-main font-main antialiased md:subpixel-antialiased scroll-smooth"
       >
-        <LenisSetup />
-
-        <ErrorBoundary>
-          <Banner />
-          <CustomCursor />
-          <ScrollToTop />
-          {children}
-          <FooterWrapper />
-          <GlobalImageModal />
-        </ErrorBoundary>
+        <AppWrapper>{children}</AppWrapper>
       </body>
     </html>
   )

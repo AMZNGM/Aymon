@@ -6,12 +6,15 @@ import { motion } from 'motion/react'
 export default function ImageIn({
   src = '',
   alt = 'Image',
-  sizes = '(max-width: 768px) 60vw, (max-width: 1024px) 40vw, 35vw',
+  sizes = '(max-width: 768px) 60vw, 100vw',
+  // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
   className = '',
   divClassName = '',
   duration = 0.3,
-  delay = 0.3,
+  delay = 0,
   priority = false,
+  description = '',
+  date = '',
   ...props
 }) {
   return (
@@ -21,11 +24,14 @@ export default function ImageIn({
       whileInView={{ filter: 'blur(0px)' }}
       viewport={{ once: true }}
       transition={{ duration, delay: Number(delay) }}
-      className={`relative ${divClassName} h-full bg-bg`}
+      className={`relative ${divClassName}`}
     >
       <Image
         src={src}
         alt={alt}
+        data-title={alt}
+        data-description={description}
+        data-date={date}
         fill
         priority={priority}
         sizes={sizes}

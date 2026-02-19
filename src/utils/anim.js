@@ -1,6 +1,6 @@
 export const easings = {
-  motion: [0.55, 0.55, 0.45, 1],
-  gsap: 'slow(0.7,0.7,false)',
+  motion: [0.25, 1, 0.75, 1],
+  gsap: 'back.out(1.7)',
 }
 
 // ease: easings.motion
