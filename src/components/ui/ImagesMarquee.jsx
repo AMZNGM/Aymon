@@ -111,7 +111,6 @@ export default function ImagesMarquee({
 
   const handlePointerDown = (e) => {
     if (!draggable) return
-    e.currentTarget.setPointerCapture(e.pointerId)
     isDragging.current = true
     lastPointerPosition.current = { x: e.clientX, y: e.clientY }
     dragVelocity.current = 0
@@ -122,13 +121,16 @@ export default function ImagesMarquee({
     const deltaX = e.clientX - lastPointerPosition.current.x
     const deltaY = e.clientY - lastPointerPosition.current.y
     const projectedDelta = deltaX > 0 ? Math.sqrt(deltaX ** 2 + deltaY ** 2) : -Math.sqrt(deltaX ** 2 + deltaY ** 2)
-    dragVelocity.current = projectedDelta * dragSensitivity
-    lastPointerPosition.current = { x: e.clientX, y: e.clientY }
+
+    // Only start moving if there's significant movement
+    if (Math.abs(projectedDelta) > 2) {
+      dragVelocity.current = projectedDelta * dragSensitivity
+      lastPointerPosition.current = { x: e.clientX, y: e.clientY }
+    }
   }
 
   const handlePointerUp = (e) => {
     if (!draggable) return
-    e.currentTarget.releasePointerCapture(e.pointerId)
     isDragging.current = false
   }
 
@@ -141,7 +143,7 @@ export default function ImagesMarquee({
       onPointerCancel={handlePointerUp}
       onMouseEnter={() => (isHovered.current = true)}
       onMouseLeave={() => (isHovered.current = false)}
-      className={`relative overflow-x-hidden overflow-y-visible cursor-grab active:cursor-grabbing max-md:scale-200 ${className}`}
+      className={`relative overflow-x-hidden overflow-y-visible cursor-grab active:cursor-grabbing max-md:scale-200 touch-none ${className}`}
     >
       <div ref={marqueeContainerRef} className="relative">
         <svg
@@ -170,10 +172,10 @@ export default function ImagesMarquee({
               style={{
                 offsetPath: `path('${path}')`,
                 offsetDistance: useTransform(itemOffset, (v) => `${v}%`),
-                opacity,
                 display,
+                zIndex: 10,
               }}
-              className="top-0 -left-10 absolute -translate-x-1/2 -translate-y-1/2 backface-hidden pointer-events-auto select-none will-change-transform"
+              className="top-0 -left-10 active:z-50 absolute -translate-x-1/2 -translate-y-1/2 backface-hidden pointer-events-auto select-none will-change-transform"
             >
               {child}
             </motion.div>

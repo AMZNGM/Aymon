@@ -61,9 +61,12 @@ export default function AdminPanel() {
     logos,
     logosLoading,
     logoSubmitting,
+    editingLogoId,
     addLogo,
     deleteLogo,
     reorderLogos,
+    editLogo,
+    cancelLogoEdit,
   } = useAdmin()
 
   const editingConceptArt = conceptArts.find((c) => c.firestoreId === editingConceptArtId)
@@ -163,9 +166,14 @@ export default function AdminPanel() {
               </>
             ) : activeTab === 'logos' ? (
               <>
-                <LogoForm onAdd={addLogo} submitting={logoSubmitting} />
+                <LogoForm
+                  onAdd={addLogo}
+                  submitting={logoSubmitting}
+                  editingItem={logos.find((l) => l.firestoreId === editingLogoId)}
+                  onCancel={cancelLogoEdit}
+                />
                 <div className="sticky top-8 h-fit">
-                  <LogoList items={logos} onDelete={deleteLogo} onReorder={reorderLogos} loading={logosLoading} />
+                  <LogoList items={logos} onDelete={deleteLogo} onEdit={editLogo} onReorder={reorderLogos} loading={logosLoading} />
                 </div>
               </>
             ) : (

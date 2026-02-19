@@ -29,6 +29,7 @@ export function useAdmin() {
   const [logos, setLogos] = useState([])
   const [logosLoading, setLogosLoading] = useState(false)
   const [logoSubmitting, setLogoSubmitting] = useState(false)
+  const [editingLogoId, setEditingLogoId] = useState(null)
 
   // Content management state
   const [aboutContent, setAboutContent] = useState(null)
@@ -462,26 +463,53 @@ export function useAdmin() {
     }
   }
 
-  const addLogo = async (file) => {
-    if (!file) return
+  const addLogo = async (file, link = '') => {
     setLogoSubmitting(true)
     try {
-      const imgRef = ref(storage, `projects/logos/${Date.now()}_${file.name}`)
-      await uploadBytes(imgRef, file)
-      const imageUrl = await getDownloadURL(imgRef)
+      let imageUrl = ''
+      if (file) {
+        // If it's a new file (not just a string URL from an existing logo)
+        if (typeof file !== 'string') {
+          const imgRef = ref(storage, `projects/logos/${Date.now()}_${file.name}`)
+          await uploadBytes(imgRef, file)
+          imageUrl = await getDownloadURL(imgRef)
+        } else {
+          imageUrl = file
+        }
+      }
 
-      await addDoc(collection(db, 'logos'), {
+      const docData = {
         src: imageUrl,
-        order: logos.length,
-        createdAt: serverTimestamp(),
-      })
+        link: link,
+        updatedAt: serverTimestamp(),
+      }
+
+      if (editingLogoId) {
+        await updateDoc(doc(db, 'logos', editingLogoId), docData)
+        setEditingLogoId(null)
+      } else {
+        await addDoc(collection(db, 'logos'), {
+          ...docData,
+          order: logos.length,
+          createdAt: serverTimestamp(),
+        })
+      }
       fetchLogos()
     } catch (err) {
-      console.error('Error adding logo:', err)
+      console.error('Error adding/updating logo:', err)
       throw err
     } finally {
       setLogoSubmitting(false)
     }
+  }
+
+  const editLogo = (logo) => {
+    setEditingLogoId(logo.firestoreId)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const cancelLogoEdit = () => {
+    setEditingLogoId(null)
   }
 
   const deleteLogo = async (id) => {
@@ -571,9 +599,12 @@ export function useAdmin() {
     logos,
     logosLoading,
     logoSubmitting,
+    editingLogoId,
     addLogo,
     deleteLogo,
     reorderLogos,
     fetchLogos,
+    editLogo,
+    cancelLogoEdit,
   }
 }

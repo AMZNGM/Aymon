@@ -22,22 +22,14 @@ export default function NavLinks() {
         {navLinks.map((link, index) => (
           <motion.div key={index} whileTap={{ scale: 0.9 }} onClick={() => (window.location.href = link)}>
             <Link href={link}>
-              <VariableFontHoverByRandomLetter
-                fromFontVariationSettings="'wght' 500, 'slnt' 0"
-                toFontVariationSettings="'wght' 900, 'slnt' -10"
-                label={link.replace('/', '')}
-              />
+              <VariableFontHoverByRandomLetter label={link.replace('/', '')} />
             </Link>
           </motion.div>
         ))}
 
         <motion.div whileTap={{ scale: 0.9 }}>
           <button onClick={handleContactClick} className="uppercase cursor-pointer">
-            <VariableFontHoverByRandomLetter
-              fromFontVariationSettings="'wght' 500, 'slnt' 0"
-              toFontVariationSettings="'wght' 900, 'slnt' -10"
-              label="contact"
-            />
+            <VariableFontHoverByRandomLetter label="contact" />
           </button>
         </motion.div>
       </AnimText>

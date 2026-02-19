@@ -1,77 +1,72 @@
 'use client'
 
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
-import { easings } from '@/utils/anim'
-import { useScrollPosition } from '@/hooks/useScrollPosition'
-import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
-import { useIsMobile } from '@/hooks/useIsMobile'
+import { motion } from 'framer-motion'
+import { useMemo, useState, useEffect } from 'react'
+import { TextAlignJustify } from 'lucide-react'
+import RippleEffect from '@/components/ui/effect/RippleEffect'
 import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
 import ContactPopup from '@/components/nav-components/ContactPopup'
 
-export default function MobileMenu({ className, viewFromStart = false }) {
+export default function MobileMenu({ className, btnClassName }) {
   const navLinks = useMemo(() => ['/about', '/work'], [])
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isContactOpen, setIsContactOpen] = useState(false)
-  const isScrolled100vh = useScrollPosition(2.5)
-  const ToggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   const handleContactClick = (e) => {
     e.preventDefault()
     setIsContactOpen(true)
   }
 
-  useKeyboardShortcuts({
-    onEscape: () => {
-      setIsMenuOpen(false)
-    },
-  })
-
-  const isMobile = useIsMobile()
-  if (isMobile) {
-    viewFromStart = true
-  }
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen])
 
   return (
-    <aside className={`${className}`}>
-      <motion.label
+    <div className={`${className}`}>
+      <input
+        id="mobile-nav-toggle"
+        type="checkbox"
+        className="peer hidden"
+        checked={isMenuOpen}
+        onChange={() => setIsMenuOpen(!isMenuOpen)}
+      />
+      <label
         aria-label="Open Menu"
         htmlFor="mobile-nav-toggle"
-        onClick={ToggleMenu}
-        whileTap={{ scale: 2.2 }}
-        transition={{ duration: 0.3, ease: easings.motion }}
-        className={`z-9999 fixed -right-14 max-md:-right-26 ${!viewFromStart ? (isScrolled100vh ? '-top-32' : '-top-52') : '-top-32'} size-44 bg-main -rotate-12 cursor-pointer ${isMenuOpen ? 'rotate-12' : ''} transition-all duration-300`}
-      />
+        className={`absolute top-4 right-2 max-md:right-1 backdrop-blur-sm z-1001 ${btnClassName}`}
+      >
+        <RippleEffect className={`bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-1001 p-2`}>
+          <motion.div whileTap={{ scale: 0.9, rotate: 90 }}>
+            <TextAlignJustify strokeWidth={3} />
+          </motion.div>
+        </RippleEffect>
+      </label>
 
-      <AnimatePresence>
-        {isMenuOpen && (viewFromStart || isScrolled100vh) && (
-          <motion.nav
-            role="navigation"
-            initial={{ y: '115%', rotate: 30 }}
-            animate={{ y: 0, rotate: -20 }}
-            exit={{ y: '115%', rotate: 30 }}
-            transition={{ duration: 0.3, delay: 0.1, ease: easings.motion }}
-            className="z-1000 fixed inset-0 max-w-2xl flex flex-col justify-center items-center gap-4 bg-main font-medium text-5xl uppercase px-6 py-2"
-          >
-            {navLinks.map((link, index) => (
-              <motion.div key={index} whileTap={{ scale: 0.9 }}>
-                <Link href={link} onClick={() => setIsMenuOpen(false)}>
-                  <VariableFontHoverByRandomLetter label={link.replace('/', '')} />
-                </Link>
-              </motion.div>
-            ))}
+      <nav
+        role="navigation"
+        className="z-1000 fixed inset-0 flex flex-col justify-center items-center gap-4 bg-main opacity-0 peer-checked:opacity-100 font-medium text-5xl uppercase transition-all translate-y-full peer-checked:translate-y-0 duration-300 px-6 py-2 pointer-events-none peer-checked:pointer-events-auto"
+      >
+        {navLinks.map((link, index) => (
+          <motion.div key={index} whileTap={{ scale: 0.9 }}>
+            <Link href={link} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <VariableFontHoverByRandomLetter label={link.replace('/', '')} />
+            </Link>
+          </motion.div>
+        ))}
 
-            <motion.div whileTap={{ scale: 0.9 }}>
-              <button onClick={handleContactClick} className="cursor-pointer">
-                <VariableFontHoverByRandomLetter label="contact" className="uppercase" />
-              </button>
-            </motion.div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+        <motion.div whileTap={{ scale: 0.9 }}>
+          <button onClick={handleContactClick} className="cursor-pointer">
+            <VariableFontHoverByRandomLetter label="contact" className="uppercase" />
+          </button>
+        </motion.div>
+      </nav>
 
       <ContactPopup isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
-    </aside>
+    </div>
   )
 }

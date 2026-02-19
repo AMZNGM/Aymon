@@ -77,7 +77,7 @@ export default function FooterContent() {
               <div className="w-full space-y-4 text-end">
                 <nav className="space-y-2">
                   {quickLinks.map((link, index) => (
-                    <Link key={index} href={link.href} className="block hover:text-bg max-md:text-sm">
+                    <Link key={index} href={link.href} className="block hover:text-bg text-sm">
                       <VariableFontHoverByRandomLetter label={link.label} />
                     </Link>
                   ))}

@@ -9,7 +9,7 @@ export default function Navbar() {
       <LogoName />
       <NavImage />
       <NavLinks />
-      <MobileMenu />
+      <MobileMenu className={'lg:hidden'} btnClassName={'right-2!'} />
     </header>
   )
 }

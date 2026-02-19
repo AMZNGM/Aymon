@@ -4,13 +4,10 @@ import ScrollIcon from '@/components/nav-components/ScrollIcon'
 
 export default function SubNavbar() {
   return (
-    <header className="z-10 relative">
-      <MobileMenu viewFromStart />
-
-      <div className="top-14 right-3 fixed bg-sec -rotate-2">
-        <BackBtn />
-        <ScrollIcon />
-      </div>
+    <header className="top-0 right-2 max-md:right-1 z-10 fixed">
+      <MobileMenu />
+      <BackBtn />
+      <ScrollIcon />
     </header>
   )
 }

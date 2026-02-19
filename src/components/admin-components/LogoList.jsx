@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Trash2 } from 'lucide-react'
 
-export default function LogoList({ items, onDelete, onReorder, loading }) {
+export default function LogoList({ items, onDelete, onEdit, onReorder, loading }) {
   const [draggedIndex, setDraggedIndex] = useState(null)
 
   const handleDragStart = (e, index) => {
@@ -51,6 +51,14 @@ export default function LogoList({ items, onDelete, onReorder, loading }) {
             >
               <img src={item.src} alt="Logo" className="w-full object-contain aspect-video brightness-0 rounded p-2" />
 
+              {item.link && (
+                <div className="mt-2 px-1">
+                  <p className="opacity-60 text-[10px] truncate" title={item.link}>
+                    {item.link}
+                  </p>
+                </div>
+              )}
+
               <button
                 title="Delete logo"
                 onClick={() => onDelete(item.firestoreId)}
@@ -59,7 +67,27 @@ export default function LogoList({ items, onDelete, onReorder, loading }) {
                 <Trash2 size={14} />
               </button>
 
-              <div className="opacity-40 font-bold text-[10px] text-center uppercase tracking-widest mt-2">Order: {index + 1}</div>
+              <button
+                title="Edit logo"
+                onClick={() => onEdit(item)}
+                className="top-8 right-2 absolute bg-main hover:bg-main/90 opacity-0 group-hover:opacity-100 shadow-lg rounded-full text-text transition-opacity p-1 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                </svg>
+              </button>
+
+              <div className="opacity-40 font-bold text-[10px] text-center uppercase tracking-widest mt-2 px-1">Order: {index + 1}</div>
             </div>
           ))}
         </div>

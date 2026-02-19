@@ -1,7 +1,6 @@
 import { useVideoEmbed } from '@/hooks/useVideoEmbed'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
-import AnimText from '@/components/ui/unstyled/AnimText'
 
 export default function ProjectMedia({ project }) {
   const { getEmbedUrl } = useVideoEmbed()
@@ -31,10 +30,6 @@ export default function ProjectMedia({ project }) {
       <div className="bg-bg/10 rounded-2xl text-bg">
         <div className="max-w-7xl mx-auto p-6">
           <div className="space-y-4">
-            <AnimText as="h3" className="font-bold text-lg mb-4">
-              See more about: {project.title}
-            </AnimText>
-
             {hasVideoLink && (
               <AnimIn center blur duration={0.75}>
                 <h3 className="font-semibold text-lg capitalize mb-4">{project.media.video?.type}</h3>
