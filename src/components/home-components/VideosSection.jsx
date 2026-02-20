@@ -48,7 +48,7 @@ export default function VideosSection() {
   }, [isMobile])
 
   return (
-    <section className="relative min-h-[200vh] bg-text text-bg px-1 md:py-34">
+    <section className="relative min-h-[200vh] bg-text text-bg px-1 py-34 max-md:py-12">
       <SwapPoints />
 
       <AnimIn ref={containerRef} className="z-20 relative gap-4 columns-1 sm:columns-2 lg:columns-3">
