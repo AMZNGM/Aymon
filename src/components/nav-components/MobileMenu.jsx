@@ -49,7 +49,7 @@ export default function MobileMenu({ className, btnClassName }) {
 
       <nav
         role="navigation"
-        className="z-1000 fixed inset-0 flex flex-col justify-center items-center gap-4 bg-main opacity-100 peer-checked:opacity-100 font-medium text-5xl uppercase transition-all translate-y-full peer-checked:translate-y-0 duration-300 ease-in-out px-6 py-2 pointer-events-none peer-checked:pointer-events-auto"
+        className="z-1000 fixed inset-0 overflow-hidden flex flex-col justify-center items-center gap-4 bg-main opacity-100 peer-checked:opacity-100 font-medium text-5xl uppercase transition-all translate-y-full peer-checked:translate-y-0 duration-300 ease-in-out px-6 py-2 pointer-events-none peer-checked:pointer-events-auto"
       >
         {navLinks.map((link, index) => (
           <motion.div key={index} whileTap={{ scale: 0.9 }}>

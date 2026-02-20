@@ -13,7 +13,7 @@ const videos = [
   '/videos/feeling_1.mp4',
   '/videos/P2_1.mp4',
   '/videos/Plastine_1.mp4',
-  // '/videos/awarness.mp4',
+  '/videos/awarness.mp4',
   // '/videos/Eyes_1.mp4',
   // '/videos/test.mp4',
   // '/videos/H1_1.mp4',
