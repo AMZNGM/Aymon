@@ -50,7 +50,7 @@ export default function FooterContent() {
   return (
     <section className="z-10 relative w-full h-full flex flex-col justify-between text-bg/50 capitalize">
       <div className="h-1/2 max-md:h-80 flex justify-center items-center max-md:items-end">
-        <h6 className="font-extrabold text-[20rem] text-bg max-lg:text-[10rem] max-2xl:text-[19rem] max-xl:text-[13rem] max-sm:text-7xl max-md:text-9xl tracking-[-2px] duration-300 max-md:mb-4 cursor-default select-none">
+        <h6 className="text-[20rem] text-bg max-lg:text-[10rem] max-2xl:text-[19rem] max-xl:text-[13rem] max-sm:text-7xl max-md:text-9xl tracking-[-2px] duration-300 max-md:mb-4 cursor-default select-none">
           <TextWghtGrow label={aboutContent.nickname} from="'wght' 900, 'slnt' 0" to="'wght' 400, 'slnt' -10" className="z-10" />
         </h6>
       </div>
@@ -59,7 +59,7 @@ export default function FooterContent() {
         <div className="w-full max-w-7xl mx-auto">
           <div className="overflow-hidden">
             <motion.div initial={{ y: '100%' }} whileInView={{ y: 0 }} transition={{ duration: 0.75 }} className="flex justify-end">
-              <p className="w-1/2 flex flex-col justify-end gap-2 opacity-80 font-extrabold text-sm">
+              <p className="w-1/2 flex flex-col justify-end gap-2 opacity-80 text-sm">
                 <span>{aboutContent.location}</span>
 
                 <span className="text-nowrap">
@@ -93,7 +93,7 @@ export default function FooterContent() {
               transition={{ duration: 0.5, delay: 0.5 }}
               className="flex max-md:flex-col-reverse justify-between"
             >
-              <p className="max-md:flex max-md:justify-between opacity-60 font-extrabold text-sm max-md:text-end">
+              <p className="max-md:flex max-md:justify-between opacity-60 text-sm max-md:text-end">
                 © {aboutContent.nickname} {new Date().getFullYear()}
                 <span className="block text-xs mt-2 md:mt-0">All rights reserved.</span>
               </p>

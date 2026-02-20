@@ -18,7 +18,7 @@ export default function TrustedUs() {
 
       <div ref={sectionRef} className="lg:right-3/5 bottom-0 max-lg:-left-4 absolute overflow-hidden rounded-full">
         <div className="size-100 max-md:size-60 overflow-hidden flex justify-center items-center md:bg-bg rounded-full">
-          <h4 className="max-w-xs overflow-hidden flex flex-wrap justify-center text-[3dvw] max-md:text-bg max-md:text-3xl text-center uppercase leading-none">
+          <h4 className="z-10 max-w-xs overflow-hidden flex flex-wrap justify-center text-[3dvw] max-md:text-3xl text-center uppercase leading-none">
             &nbsp;&nbsp;&nbsp;A
             <br /> Trusted Names in Success.
           </h4>
@@ -29,7 +29,7 @@ export default function TrustedUs() {
             }}
             style={{ x: isMobile ? 0 : sx, y: isMobile ? 0 : sy }}
             transition={{ duration: 5, repeat: Infinity, repeatType: 'reverse', ease: easings.motion }}
-            className="absolute size-50 rounded-full cursor-none mix-blend-difference"
+            className="absolute size-50 max-md:opacity-50 rounded-full cursor-none mix-blend-difference"
           />
         </div>
       </div>
