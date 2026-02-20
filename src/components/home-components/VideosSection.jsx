@@ -9,19 +9,20 @@ import SwapPoints from '@/components/ui/SwapPoints'
 import FloatingEffect from '@/components/ui/effect/FloatingEffect'
 
 const videos = [
-  '/videos/LR.mp4',
-  '/videos/feeling2.mp4',
-  '/videos/P2.mp4',
-  '/videos/plastine.mp4',
-  '/videos/awarnessUrbnlanes.mp4',
-  '/videos/P2.mp4',
-  '/videos/eyes.mp4',
-  '/videos/test.mp4',
-  '/videos/H1.mp4',
-  '/videos/Green.mp4',
-  '/videos/K8.mp4',
-  '/videos/V2.mp4',
-  '/videos/visualCard.mp4',
+  '/videos/LR_1.mp4',
+  // '/videos/feeling_1.mp4',
+  // '/videos/P2_1.mp4',
+  // '/videos/Plastine_1.mp4',
+  // '/videos/awarness.mp4',
+  // '/videos/Eyes_1.mp4',
+  // '/videos/test.mp4',
+  // '/videos/H1_1.mp4',
+  // '/videos/Green_1.mp4',
+  // '/videos/K8_1.mp4',
+  // '/videos/V2_1.mp4',
+  // '/videos/visualCard_1.mp4',
+  // '/videos/cold.mp4',
+  // '/videos/O6_1.mp4',
 ]
 
 export default function VideosSection() {
