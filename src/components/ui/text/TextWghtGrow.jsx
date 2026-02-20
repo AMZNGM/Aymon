@@ -10,17 +10,12 @@ function shuffleArray(array) {
   }
 }
 
-export default function VariableFontHoverByRandomLetter({
+export default function TextWghtGrow({
   label,
-  fromFontVariationSettings = "'wght' 400, 'slnt' 0",
-  toFontVariationSettings = "'wght' 900, 'slnt' -10",
-  transition = {
-    type: 'spring',
-    duration: 0.7,
-  },
-  staggerDuration = 0.03,
   className,
-  onClick,
+  from = "'wght' 400, 'slnt' 0",
+  to = "'wght' 900, 'slnt' -10",
+  staggerDuration = 0.03,
   ...props
 }) {
   const shuffledIndices = useMemo(() => {
@@ -32,23 +27,17 @@ export default function VariableFontHoverByRandomLetter({
 
   const letterVariants = {
     hover: (index) => ({
-      fontVariationSettings: toFontVariationSettings,
-      transition: {
-        ...transition,
-        delay: staggerDuration * index,
-      },
+      fontVariationSettings: to,
+      transition: { type: 'spring', duration: 0.7, delay: staggerDuration * index },
     }),
     initial: (index) => ({
-      fontVariationSettings: fromFontVariationSettings,
-      transition: {
-        ...transition,
-        delay: staggerDuration * index,
-      },
+      fontVariationSettings: from,
+      transition: { type: 'spring', duration: 0.7, delay: staggerDuration * index },
     }),
   }
 
   return (
-    <motion.span className={className} onClick={onClick} whileHover="hover" initial="initial" {...props}>
+    <motion.span whileHover="hover" initial="initial" className={className} {...props}>
       <span className="sr-only">{label || ''}</span>
 
       {(label || '').split('').map((letter, i) => {

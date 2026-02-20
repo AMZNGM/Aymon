@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { auth } from '@/lib/firebase'
-import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
+import LoadingOverlay from '@/components/shared/LoadingOverlay'
 
 export default function ProtectedRoute({ children }) {
   const router = useRouter()
@@ -24,7 +24,7 @@ export default function ProtectedRoute({ children }) {
   }, [router])
 
   if (loading) {
-    return <LoadingSkeleton />
+    return <LoadingOverlay />
   }
 
   if (!user) {

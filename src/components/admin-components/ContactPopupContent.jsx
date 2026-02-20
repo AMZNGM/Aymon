@@ -90,6 +90,7 @@ export default function ContentManagement({ contactContent, setContactContent, s
           </div>
         )}
       </div>
+
       {message && <div className="lg:col-span-2 bg-bg/10 border border-main rounded-lg text-bg mt-6 p-4">{message}</div>}
     </>
   )

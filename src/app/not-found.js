@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
+import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 
 export default function NotFound() {
   return (
@@ -10,7 +10,7 @@ export default function NotFound() {
           <p className="text-sm">Sorry, there is nothing here</p>
         </div>
         <Link href="/" className="text-xs hover:text-main duration-200">
-          <VariableFontHoverByRandomLetter label="Go Back Home" />
+          <TextWghtGrow label="Go Back Home" />
         </Link>
       </section>
     </main>

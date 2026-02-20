@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import AnimText from '@/components/ui/unstyled/AnimText'
-import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
+import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 import ContactPopup from '@/components/nav-components/ContactPopup'
 
 export default function NavLinks() {
@@ -22,14 +22,14 @@ export default function NavLinks() {
         {navLinks.map((link, index) => (
           <motion.div key={index} whileTap={{ scale: 0.9 }} onClick={() => (window.location.href = link)}>
             <Link href={link}>
-              <VariableFontHoverByRandomLetter label={link.replace('/', '')} />
+              <TextWghtGrow label={link.replace('/', '')} />
             </Link>
           </motion.div>
         ))}
 
         <motion.div whileTap={{ scale: 0.9 }}>
           <button onClick={handleContactClick} className="uppercase cursor-pointer">
-            <VariableFontHoverByRandomLetter label="contact" />
+            <TextWghtGrow label="contact" />
           </button>
         </motion.div>
       </AnimText>

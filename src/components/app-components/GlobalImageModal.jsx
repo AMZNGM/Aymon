@@ -88,7 +88,7 @@ export default function GlobalImageModal() {
         animate={{ scale: 1 }}
         transition={{ duration: 0.3 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative min-w-[50dvw] h-[85dvh] cursor-default"
+        className="relative min-w-[50dvw] max-md:min-w-[85dvw] h-[85dvh] cursor-default"
       >
         <motion.div
           onClick={handleImageClick}

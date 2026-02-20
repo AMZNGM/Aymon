@@ -7,7 +7,6 @@ export default function ImageIn({
   src = '',
   alt = 'Image',
   sizes = '(max-width: 768px) 60vw, 100vw',
-  // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
   className = '',
   divClassName = '',
   duration = 0.3,

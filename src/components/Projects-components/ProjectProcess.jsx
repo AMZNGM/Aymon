@@ -2,7 +2,7 @@
 
 import { SquareArrowOutUpRight } from 'lucide-react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
-import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
+import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 
 export default function ProjectProcess({ project, className }) {
   return (
@@ -39,7 +39,7 @@ export default function ProjectProcess({ project, className }) {
               rel="noopener noreferrer"
               className="inline-flex max-lg:w-full justify-center items-center gap-2 bg-bg/10 hover:bg-bg/25 rounded-2xl text-bg max-md:text-xs text-sm duration-200 px-4 py-2"
             >
-              <VariableFontHoverByRandomLetter label="View Project Video" />
+              <TextWghtGrow label="View Project Video" />
               <SquareArrowOutUpRight size={14} />
             </a>
           </div>

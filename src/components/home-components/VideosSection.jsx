@@ -48,11 +48,9 @@ export default function VideosSection() {
 
   return (
     <section className="relative min-h-[200vh] bg-text text-bg px-1 md:py-34">
-      <hr className="top-0 absolute w-full mt-16 max-md:mb-4" />
+      <SwapPoints />
 
-      <AnimIn ref={containerRef} className="z-20 relative gap-4 columns-1 sm:columns-2 lg:columns-3 pt-[10vh]">
-        <SwapPoints />
-
+      <AnimIn ref={containerRef} className="z-20 relative gap-4 columns-1 sm:columns-2 lg:columns-3">
         {videos.map((video, index) => (
           <div key={index} data-swapy-slot={index} className="break-inside-avoid mb-4 cursor-grab active:cursor-grabbing">
             <div data-swapy-item={index} className="w-full h-full">

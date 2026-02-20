@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import LoadingOverlay from '@/components/shared/LoadingOverlay'
+import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
 
 export default function ProjectList({ projects, onEdit, onDelete, onReorder, formatDate }) {
   const router = useRouter()
@@ -42,7 +42,7 @@ export default function ProjectList({ projects, onEdit, onDelete, onReorder, for
 
       <div id="projects-container">
         {projects.length === 0 ? (
-          <LoadingOverlay />
+          <LoadingSkeleton />
         ) : (
           projects.map((project, index) => (
             <div

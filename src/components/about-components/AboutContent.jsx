@@ -1,14 +1,31 @@
 'use client'
 
-import { useAboutContent } from '@/hooks/useAboutContent'
+import { useState, useEffect } from 'react'
+import { getAboutContent } from '@/lib/getAbout'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import AnimText from '@/components/ui/unstyled/AnimText'
-import LoadingOverlay from '@/components/shared/LoadingOverlay'
 import WordMagnet from '@/components/ui/text/WordMagnet'
-import VariableFontHoverByRandomLetter from '@/components/ui/text/VariableFontHoverByRandomLetter'
+import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
+import LoadingOverlay from '@/components/shared/LoadingOverlay'
 
 export default function AboutContent() {
-  const { aboutContent, loading } = useAboutContent()
+  const [aboutContent, setAboutContent] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchContent() {
+      try {
+        const content = await getAboutContent()
+        setAboutContent(content)
+      } catch (error) {
+        console.error('Error fetching about content:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchContent()
+  }, [])
 
   if (loading || !aboutContent) {
     return <LoadingOverlay />
@@ -17,7 +34,11 @@ export default function AboutContent() {
   return (
     <section className="relative w-dvw min-h-dvh flex justify-center items-center text-center px-4">
       <div className="max-w-4xl min-h-dvh flex flex-col justify-center bg-bg/10 text-bg p-6">
-        <AnimText as="h2" delay={0.3} className="font-extrabold max-lg:text-4xl max-xl:text-7xl text-8xl uppercase tracking-[-2px] mb-16">
+        <AnimText
+          as="h2"
+          delay={0.3}
+          className="font-extrabold max-lg:text-4xl max-xl:text-7xl text-8xl uppercase tracking-[-2px] max-md:my-8 md:mb-16"
+        >
           {aboutContent.title}
         </AnimText>
 
@@ -47,7 +68,7 @@ export default function AboutContent() {
                 rel="noopener noreferrer"
                 className="text-bg max-md:text-base text-lg underline transition-colors duration-200"
               >
-                <VariableFontHoverByRandomLetter label={key === 'behance' ? `Béhance` : key.charAt(0).toUpperCase() + key.slice(1)} />
+                <TextWghtGrow label={key === 'Behance' ? `Béhance` : key.charAt(0).toUpperCase() + key.slice(1)} />
               </a>
             ))}
           </AnimIn>

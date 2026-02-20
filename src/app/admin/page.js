@@ -9,8 +9,6 @@ import ProtectedRoute from '@/components/shared/ProtectedRoute'
 import AdminHeader from '@/components/admin-components/AdminHeader'
 import ProjectForm from '@/components/admin-components/ProjectForm'
 import ProjectList from '@/components/admin-components/ProjectList'
-import ConceptArtForm from '@/components/admin-components/ConceptArtForm'
-import ConceptArtList from '@/components/admin-components/ConceptArtList'
 import ContentManagement from '@/components/admin-components/ContentManagement'
 import ContactPopupContent from '@/components/admin-components/ContactPopupContent'
 import LogoForm from '@/components/admin-components/LogoForm'
@@ -37,16 +35,6 @@ export default function AdminPanel() {
     editProject,
     cancelEdit,
     projectReorder,
-    // Concept Art
-    conceptArts,
-    conceptArtLoading,
-    conceptArtSubmitting,
-    addConceptArt,
-    deleteConceptArt,
-    reorderConceptArt,
-    editingConceptArtId,
-    editConceptArt,
-    cancelConceptArtEdit,
     // Content management
     aboutContent,
     setAboutContent,
@@ -69,9 +57,7 @@ export default function AdminPanel() {
     cancelLogoEdit,
   } = useAdmin()
 
-  const editingConceptArt = conceptArts.find((c) => c.firestoreId === editingConceptArtId)
-
-  const [activeTab, setActiveTab] = useState('projects') // 'projects', 'concept-art', or 'content'
+  const [activeTab, setActiveTab] = useState('projects') // 'projects', 'logos', or 'content'
 
   if (loading) {
     return <LoadingSkeleton />
@@ -104,7 +90,7 @@ export default function AdminPanel() {
 
           {/* Navigation Tabs */}
           <div className="flex gap-4 mb-8 border-b border-bg/10 pb-2">
-            {['projects', 'concept-art', 'logos', 'content'].map((tab) => (
+            {['projects', 'logos', 'content'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -142,25 +128,6 @@ export default function AdminPanel() {
                     onDelete={deleteProject}
                     onReorder={projectReorder}
                     formatDate={formatDate}
-                  />
-                </div>
-              </>
-            ) : activeTab === 'concept-art' ? (
-              <>
-                {/* Concept Art Management */}
-                <ConceptArtForm
-                  onAdd={addConceptArt}
-                  submitting={conceptArtSubmitting}
-                  editingItem={editingConceptArt}
-                  onCancel={cancelConceptArtEdit}
-                />
-                <div className="sticky top-8 h-fit">
-                  <ConceptArtList
-                    items={conceptArts}
-                    onDelete={deleteConceptArt}
-                    onReorder={reorderConceptArt}
-                    onEdit={editConceptArt}
-                    loading={conceptArtLoading}
                   />
                 </div>
               </>
