@@ -14,8 +14,6 @@ export const initialProjectForm = {
     short: '',
     detailed: '',
   },
-  services: [],
-  technologies: [],
   seo: {
     keywords: [],
     description: '',

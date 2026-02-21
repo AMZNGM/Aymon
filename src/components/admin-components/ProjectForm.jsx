@@ -298,28 +298,6 @@ export default function ProjectForm({
           />
         </div>
 
-        <div>
-          <label className="block font-medium text-sm mb-2">Services (comma-separated)</label>
-          <input
-            type="text"
-            value={projectForm.services}
-            onChange={(e) => setProjectForm((p) => ({ ...p, services: e.target.value }))}
-            placeholder="Brand Strategy, Logo Design, Marketing Materials"
-            className="w-full bg-bg/20 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main px-3 py-2"
-          />
-        </div>
-
-        <div>
-          <label className="block font-medium text-sm mb-2">Technologies (comma-separated)</label>
-          <input
-            type="text"
-            value={projectForm.technologies}
-            onChange={(e) => setProjectForm((p) => ({ ...p, technologies: e.target.value }))}
-            placeholder="Illustrator, Figma, After Effects"
-            className="w-full bg-bg/20 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main px-3 py-2"
-          />
-        </div>
-
         <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
           <div>
             <label className="block font-medium text-sm mb-2">Duration</label>

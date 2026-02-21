@@ -137,8 +137,6 @@ export function useAdmin() {
           process: projectForm.process,
           impact: projectForm.impact,
           description: projectForm.description,
-          services: Array.isArray(projectForm.services) ? projectForm.services : [],
-          technologies: Array.isArray(projectForm.technologies) ? projectForm.technologies : [],
           seo: projectForm.seo,
           metadata: projectForm.metadata,
           media: {
@@ -182,8 +180,6 @@ export function useAdmin() {
           process: projectForm.process,
           impact: projectForm.impact,
           description: projectForm.description,
-          services: Array.isArray(projectForm.services) ? projectForm.services : [],
-          technologies: Array.isArray(projectForm.technologies) ? projectForm.technologies : [],
           seo: projectForm.seo,
           metadata: projectForm.metadata,
           media: {
@@ -265,8 +261,6 @@ export function useAdmin() {
       process: project.process || '',
       impact: project.impact || '',
       description: project.description || { short: '', detailed: '' },
-      services: project.services || [],
-      technologies: project.technologies || [],
       seo: project.seo || { keywords: [], description: '' },
       metadata: project.metadata || { duration: '', team_size: 1, client_location: '', project_type: 'freelance' },
       video: project.media?.video || { url: '', type: 'vimeo', title: '' },

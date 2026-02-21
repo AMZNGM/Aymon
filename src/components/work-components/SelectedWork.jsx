@@ -7,14 +7,17 @@ import AnimIn from '@/components/ui/unstyled/AnimIn'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
 
-export default function SelectedWork({ className = '', title = 'Selected Work', hasButton = true }) {
+export default function SelectedWork({ className = '', title = 'Selected Work', hasButton = true, selected = true }) {
   const { projects, loading } = useProjects()
-  const filteredProjects = projects.filter((project) => project.showInSelectedWork === true)
+  const filteredProjects = selected ? projects.filter((project) => project.showInSelectedWork === true) : projects
 
   const heading = (
-    <h2 className="font-extrabold text-[7dvw] max-md:text-4xl uppercase leading-none tracking-[-2px] max-md:mb-6 md:pt-12 select-none">
-      {title}
-    </h2>
+    <div className="flex items-center gap-12">
+      <h2 className="font-extrabold text-[7dvw] max-md:text-4xl uppercase leading-none tracking-[-2px] max-md:mb-6 md:pt-12 select-none">
+        {title}
+      </h2>
+      <div className="w-28 max-md:w-22 h-2 max-md:h-1.5 bg-bg mt-12 max-md:mb-18" />
+    </div>
   )
 
   if (loading) {
@@ -71,7 +74,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
       {hasButton && (
         <Link
           href={'/work'}
-          className="w-fit flex flex-col justify-center items-end font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase tracking-wide ms-auto mt-12"
+          className="w-fit flex flex-col justify-center items-end opacity-45 hover:opacity-100 font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase tracking-wide transition-opacity duration-300 ms-auto mt-12"
         >
           See more
           <ArrowRight />

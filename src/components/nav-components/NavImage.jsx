@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
+import LazyVideo from '@/components/ui/unstyled/LazyVideo'
 import mainPhotoNoBG from '../../../public/images/profile.webp'
 
 export default function NavImage() {
@@ -24,7 +25,16 @@ export default function NavImage() {
           <ImageIn src={mainPhotoNoBG} alt="Main Image" priority className="rounded-2xl" divClassName="absolute! inset-0 backface-hidden" />
 
           <div className="absolute inset-0 rotate-y-180 backface-hidden">
-            <video src="/videos/draft.mp4" autoPlay loop muted className="object-cover rounded-2xl" />
+            <LazyVideo
+              src="/videos/draft.mp4"
+              loop
+              muted
+              autoPlay
+              playsInline
+              webkit-playsinline="true"
+              controls={false}
+              className="w-full h-auto object-cover rounded-2xl pointer-events-none"
+            />
           </div>
         </div>
       </AnimIn>

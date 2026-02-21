@@ -12,7 +12,7 @@ export default function Work() {
   return (
     <Suspense fallback={<LoadingOverlay />}>
       <SubNavbar />
-      <SelectedWork title="Work" className="md:pe-18 max-md:py-18" hasButton={false} />
+      <SelectedWork title="Work" selected={false} className="md:pe-18 max-md:py-18" hasButton={false} />
     </Suspense>
   )
 }
