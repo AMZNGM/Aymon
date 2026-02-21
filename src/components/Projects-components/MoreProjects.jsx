@@ -34,11 +34,11 @@ export default function MoreProjects({ currentSlug }) {
             initial={{ x: 0 }}
             animate={{ x: ['-100%', '0%'] }}
             transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-            className="flex whitespace-nowrap"
+            className="flex opacity-50 hover:opacity-100 whitespace-nowrap transition-opacity duration-300"
           >
             {[...Array(5)].map((_, index) => (
-              <AnimIn blur toDown duration={1} className="font-sec text-[8dvw] text-bg uppercase tracking-tight mx-4" key={index}>
-                Experience more
+              <AnimIn blur toDown duration={1} key={index} className="font-sec text-[8dvw] text-bg uppercase tracking-tight mx-4">
+                Experience more *
               </AnimIn>
             ))}
           </motion.div>
