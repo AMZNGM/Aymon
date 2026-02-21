@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${gambarino.variable}`}>
       <body
         suppressHydrationWarning
-        className="relative w-dvw h-full bg-text text-bg selection:text-bg selection:bg-main font-main antialiased md:subpixel-antialiased scroll-smooth"
+        className="relative w-dvw h-full bg-text text-bg selection:text-bg overflow-x-hidden! selection:bg-main font-main antialiased md:subpixel-antialiased scroll-smooth"
       >
         <AppWrapper>{children}</AppWrapper>
       </body>
