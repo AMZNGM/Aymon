@@ -28,7 +28,7 @@ export default function ProjectMedia({ project }) {
   return (
     <section className="relative w-full min-h-dvh overflow-hidden rounded-2xl px-4 max-md:px-1 py-12 md:pe-22">
       <div className="bg-sec rounded-2xl text-bg">
-        <div className="max-w-7xl mx-auto p-6">
+        <div className="max-w-7xl space-y-4 mx-auto p-6">
           {hasVideoLink && (
             <AnimIn center blur duration={0.75}>
               <h3 className="font-semibold text-lg capitalize mb-4">{project.media.video?.type}</h3>

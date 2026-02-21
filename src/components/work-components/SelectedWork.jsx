@@ -76,7 +76,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
         )}
       </AnimatePresence>
 
-      <div className="gap-4 grid md:grid-cols-2">
+      <div className="gap-4 grid md:grid-cols-2 mt-12">
         {filteredProjects.map((project, index) => (
           <AnimIn center blur delay={0.2 * index} key={project.id}>
             <Link href={`/work/${project.slug}`} className="block relative cursor-none">
