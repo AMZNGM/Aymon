@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { useMouseMotion } from '@/hooks/useMouseMotion'
 import { useProjects } from '@/hooks/useProjects'
-import { ArrowRight, ArrowUp } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
+import ArrowCursor from '@/components/ui/ArrowCursor'
 
 export default function SelectedWork({ className = '', title = 'Selected Work', hasButton = true, selected = true }) {
   const { projects, loading } = useProjects()
@@ -31,6 +32,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
     return (
       <section className="relative w-full min-h-dvh px-2 pt-4 max-md:pt-18 pb-24">
         {heading}
+
         <div className="gap-4 grid md:grid-cols-2">
           {[1, 2, 3, 4].map((index) => (
             <AnimIn center blur delay={0.2 * index} key={index} className="aspect-13/12 overflow-hidden rounded-2xl">
@@ -51,6 +53,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
     return (
       <section className="relative w-full min-h-dvh px-2 pt-4 max-md:pt-18 pb-24">
         {heading}
+
         <div className="text-center py-16">
           <p className="opacity-70 text-xl">No projects found for this category.</p>
         </div>
@@ -59,22 +62,10 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
   }
 
   return (
-    <section ref={containerRef} className={`z-99999 relative w-full min-h-dvh bg-text text-bg px-1 md:pt-4 md:pb-24 ${className}`}>
+    <section ref={containerRef} className={`relative w-full min-h-dvh bg-text text-bg px-1 md:pt-4 md:pb-24 ${className}`}>
       {heading}
 
-      <AnimatePresence>
-        {hoveredProject && (
-          <motion.div
-            style={{ x: sx, y: sy }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            className="top-1/2 left-1/2 z-50 absolute border-4 border-text rounded-full -translate-1/2 pointer-events-none mix-blend-difference"
-          >
-            <ArrowUp size={66} strokeWidth={1} className="text-text -rotate-45" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AnimatePresence>{hoveredProject && <ArrowCursor sx={sx} sy={sy} />}</AnimatePresence>
 
       <div className="gap-4 grid md:grid-cols-2 mt-12">
         {filteredProjects.map((project, index) => (
@@ -87,6 +78,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
                   src={project.media?.primary}
                   alt={project.client}
                   priority={index <= 3}
+                  data-hide-cursor="true"
                   divClassName="w-full h-full select-none cursor-none"
                 />
               </RippleEffect>

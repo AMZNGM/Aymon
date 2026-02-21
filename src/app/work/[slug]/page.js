@@ -9,6 +9,7 @@ import LoadingOverlay from '@/components/shared/LoadingOverlay'
 import SubNavbar from '@/components/nav-components/SubNavbar'
 const ProjectHero = dynamic(() => import('@/components/Projects-components/ProjectHero'))
 const ProjectMedia = dynamic(() => import('@/components/Projects-components/ProjectMedia'))
+const MoreProjects = dynamic(() => import('@/components/Projects-components/MoreProjects'))
 
 export async function generateStaticParams() {
   const projects = await getProjects()
@@ -77,6 +78,7 @@ export default async function ProjectPage({ params }) {
       <SubNavbar />
       <ProjectHero project={serializedProject} />
       <ProjectMedia project={serializedProject} />
+      <MoreProjects currentSlug={slug} />
     </Suspense>
   )
 }
