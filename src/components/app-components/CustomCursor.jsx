@@ -10,9 +10,7 @@ export default function CustomCursor() {
   const { x, y } = useMouseMotion(windowRef, { springConfig: { stiffness: 150, damping: 20 } })
   const { x: x2, y: y2 } = useMouseMotion(windowRef, { springConfig: { stiffness: 300, damping: 40 } })
   const [isHidden, setIsHidden] = useState(false)
-
   const isMobile = useIsMobile()
-  if (isMobile) return
 
   useEffect(() => {
     const handleMouseEnter = (e) => {
@@ -36,7 +34,7 @@ export default function CustomCursor() {
     }
   }, [])
 
-  if (isHidden) return null
+  if (isHidden || isMobile) return null
 
   return (
     <div className="flex justify-center items-center">
