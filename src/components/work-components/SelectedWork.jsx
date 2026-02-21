@@ -20,12 +20,17 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
   const [hoveredProject, setHoveredProject] = useState(null)
 
   const heading = (
-    <div className="flex items-center gap-12">
+    <div className="h-full flex items-center gap-12">
       <h2 className="font-extrabold text-[7dvw] max-md:text-4xl uppercase leading-none tracking-[-2px] max-md:mb-6 md:pt-12 select-none">
         {title}
       </h2>
       <div className="w-28 max-md:w-22 h-2 max-md:h-1.5 bg-bg mt-12 max-md:mb-18" />
-      {/* <div className="my-auto">Distilled to the Core</div> */}
+      <div className="max-md:hidden w-1/4 h-full flex justify-between max-md:text-xs mt-12 max-md:mb-18">
+        <span>Distilled </span>
+        <span>to </span>
+        <span>the </span>
+        <span>Core</span>
+      </div>
     </div>
   )
 

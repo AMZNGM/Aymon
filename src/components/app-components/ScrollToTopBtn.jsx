@@ -15,7 +15,7 @@ export default function ScrollToTopBtn() {
       animate={{ opacity: scroll100vh ? 1 : 0, y: 0 }}
       transition={{ type: 'spring', duration: 0.2, stiffness: 100 }}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="right-4 max-md:right-23 bottom-4 z-50 fixed bg-sec backdrop-blur-sm rounded-full p-3.5 cursor-pointer"
+      className="right-4 bottom-4 z-50 fixed bg-sec backdrop-blur-sm rounded-full p-3.5 cursor-pointer"
     >
       <ArrowUp />
     </motion.button>
