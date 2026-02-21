@@ -10,7 +10,7 @@ import FloatingEffect from '@/components/ui/effect/FloatingEffect'
 
 const videos = [
   '/videos/LR_1_1.mp4',
-  '/videos/feeling_1.mp4',
+  '/videos/edfeeling.mp4',
   '/videos/P2_1_1.mp4',
   '/videos/Plastine_1_1.mp4',
   '/videos/awarness_1.mp4',

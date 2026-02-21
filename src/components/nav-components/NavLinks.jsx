@@ -22,14 +22,14 @@ export default function NavLinks() {
         {navLinks.map((link, index) => (
           <motion.div key={index} whileTap={{ scale: 0.9 }} onClick={() => (window.location.href = link)}>
             <Link href={link}>
-              <TextWghtGrow label={link.replace('/', '')} />
+              <TextWghtGrow from="'wght' 900, 'slnt' 0" to="'wght' 400, 'slnt' -10" label={link.replace('/', '')} />
             </Link>
           </motion.div>
         ))}
 
         <motion.div whileTap={{ scale: 0.9 }}>
           <button onClick={handleContactClick} className="uppercase cursor-pointer">
-            <TextWghtGrow label="contact" />
+            <TextWghtGrow from="'wght' 900, 'slnt' 0" to="'wght' 400, 'slnt' -10" label="contact" />
           </button>
         </motion.div>
       </AnimText>
