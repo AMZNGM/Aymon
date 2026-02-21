@@ -37,8 +37,8 @@ export default function MoreProjects({ currentSlug }) {
             className="flex whitespace-nowrap"
           >
             {[...Array(5)].map((_, index) => (
-              <AnimIn blur toDown duration={1} className="font-bold text-[8dvw] text-bg uppercase tracking-tight mx-4" key={index}>
-                Next Project
+              <AnimIn blur toDown duration={1} className="font-sec text-[8dvw] text-bg uppercase tracking-tight mx-4" key={index}>
+                Experience more
               </AnimIn>
             ))}
           </motion.div>
