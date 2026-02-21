@@ -25,7 +25,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
         {title}
       </h2>
       <div className="w-28 max-md:w-22 h-2 max-md:h-1.5 bg-bg mt-12 max-md:mb-18" />
-      <div className="my-auto">Distilled to the Core</div>
+      {/* <div className="my-auto">Distilled to the Core</div> */}
     </div>
   )
 
