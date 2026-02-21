@@ -19,9 +19,7 @@ const videos = [
   '/videos/H1_1_1.mp4',
   '/videos/Green_1_1.mp4',
   '/videos/V2_1_1.mp4',
-  '/videos/visualCard_1_1.mp4',
   '/videos/cold_1.mp4',
-  '/videos/O6_1_1.mp4',
 ]
 
 export default function VideosSection() {

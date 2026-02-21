@@ -1,8 +1,11 @@
 'use client'
 
 import Link from 'next/link'
+import { useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useMouseMotion } from '@/hooks/useMouseMotion'
 import { useProjects } from '@/hooks/useProjects'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ArrowUp } from 'lucide-react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
@@ -10,6 +13,10 @@ import RippleEffect from '@/components/ui/effect/RippleEffect'
 export default function SelectedWork({ className = '', title = 'Selected Work', hasButton = true, selected = true }) {
   const { projects, loading } = useProjects()
   const filteredProjects = selected ? projects.filter((project) => project.showInSelectedWork === true) : projects
+
+  const containerRef = useRef(null)
+  const { sx, sy } = useMouseMotion({ containerRef, relative: true, center: true, spring: { stiffness: 150, damping: 20 } })
+  const [hoveredProject, setHoveredProject] = useState(null)
 
   const heading = (
     <div className="flex items-center gap-12">
@@ -52,15 +59,36 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
   }
 
   return (
-    <section className={`relative w-full min-h-dvh bg-text text-bg px-1 md:pt-4 md:pb-24 ${className}`}>
+    <section ref={containerRef} className={`relative w-full min-h-dvh bg-text text-bg px-1 md:pt-4 md:pb-24 ${className}`}>
       {heading}
+
+      <AnimatePresence>
+        {hoveredProject && (
+          <motion.div
+            style={{ x: sx, y: sy }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            className="top-1/2 left-1/2 z-50 absolute border-4 border-text rounded-full -translate-1/2 pointer-events-none mix-blend-difference"
+          >
+            <ArrowUp size={66} strokeWidth={1} className="text-text -rotate-45" />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="gap-4 grid md:grid-cols-2">
         {filteredProjects.map((project, index) => (
           <AnimIn center blur delay={0.2 * index} key={project.id}>
-            <Link href={`/work/${project.slug}`} className="block relative">
-              <RippleEffect className="group relative aspect-5/4 overflow-hidden rounded-2xl cursor-pointer">
-                <ImageIn src={project.media?.primary} alt={project.client} priority={index <= 3} divClassName="w-full h-full select-none" />
+            <Link href={`/work/${project.slug}`} className="block relative cursor-none">
+              <RippleEffect className="group relative aspect-5/4 overflow-hidden rounded-2xl">
+                <ImageIn
+                  onMouseEnter={() => setHoveredProject(project.id)}
+                  onMouseLeave={() => setHoveredProject(null)}
+                  src={project.media?.primary}
+                  alt={project.client}
+                  priority={index <= 3}
+                  divClassName="w-full h-full select-none cursor-none"
+                />
               </RippleEffect>
 
               <span className="block font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase leading-8 xl:leading-10 tracking-wide mt-2">
