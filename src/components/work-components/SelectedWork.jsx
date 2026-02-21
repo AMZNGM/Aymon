@@ -59,7 +59,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
   }
 
   return (
-    <section ref={containerRef} className={`relative w-full min-h-dvh bg-text text-bg px-1 md:pt-4 md:pb-24 ${className}`}>
+    <section ref={containerRef} className={`z-99999 relative w-full min-h-dvh bg-text text-bg px-1 md:pt-4 md:pb-24 ${className}`}>
       {heading}
 
       <AnimatePresence>
