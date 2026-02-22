@@ -42,7 +42,6 @@ export default function ProjectMedia({ project }) {
                     title={project.media.video.title || 'Project Video'}
                   />
                 </div>
-                <p className="text-text/40 text-sm break-all">{project.media.video.url}</p>
               </div>
             </AnimIn>
           )}
@@ -54,7 +53,7 @@ export default function ProjectMedia({ project }) {
                   src={item.src}
                   alt={item.title}
                   className="object-contain! rounded-2xl scale-100! cursor-zoom-in openInModal"
-                  divClassName="relative w-full h-[80vh] overflow-hidden bg-text/10 rounded-2xl"
+                  divClassName="relative w-full h-[80dvh] max-md:h-[20dvh] overflow-hidden bg-text/10 rounded-2xl"
                 />
               )}
             </div>

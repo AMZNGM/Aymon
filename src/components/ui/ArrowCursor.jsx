@@ -11,7 +11,7 @@ export default function ArrowCursor({ sx, sy }) {
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0, opacity: 0 }}
       data-hide-cursor="true"
-      className="top-1/2 left-1/2 z-50 absolute border-4 border-text rounded-full -translate-1/2 pointer-events-none mix-blend-difference"
+      className="top-1/2 left-1/2 z-50 absolute border-4 border-text rounded-full -translate-1/2 pointer-events-none mix-blend-differenc max-md:hiddene"
     >
       <ArrowUp size={66} strokeWidth={1} className="text-text -rotate-45" />
     </motion.div>

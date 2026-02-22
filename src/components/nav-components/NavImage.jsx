@@ -26,7 +26,7 @@ export default function NavImage() {
 
           <div className="absolute inset-0 rotate-y-180 backface-hidden">
             <LazyVideo
-              src="/videos/draft.mp4"
+              src="/videos/BB.mp4"
               loop
               muted
               autoPlay

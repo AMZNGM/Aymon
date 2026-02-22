@@ -37,7 +37,7 @@ export default function MoreProjects({ currentSlug }) {
             className="flex opacity-50 hover:opacity-100 whitespace-nowrap transition-opacity duration-300"
           >
             {[...Array(5)].map((_, index) => (
-              <AnimIn blur toDown duration={1} key={index} className="font-sec text-[8dvw] text-bg uppercase tracking-tight mx-4">
+              <AnimIn blur toDown duration={1} key={index} className="font-sec text-[8dvw] text-bg uppercase tracking-tight mx-0.5">
                 Experience more *
               </AnimIn>
             ))}

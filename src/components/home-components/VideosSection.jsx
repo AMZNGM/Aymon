@@ -14,12 +14,12 @@ const videos = [
   '/videos/P2_1_1.mp4',
   '/videos/Plastine_1_1.mp4',
   '/videos/awarness_1.mp4',
-  '/videos/Eyes_1_1.mp4',
   '/videos/K8_1_1.mp4',
   '/videos/H1_1_1.mp4',
-  '/videos/Green_1_1.mp4',
   '/videos/V2_1_1.mp4',
+  '/videos/Green_1_1.mp4',
   '/videos/cold_1.mp4',
+  '/videos/Eyes_1_1.mp4',
 ]
 
 export default function VideosSection() {
