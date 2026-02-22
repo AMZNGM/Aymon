@@ -25,7 +25,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
         {title}
       </h2>
       <div className="w-28 max-md:w-22 h-2 max-md:h-1.5 bg-bg mt-12 max-md:mb-18" />
-      <div className="w-1/4 max-md:w-full h-full flex justify-between font-bold max-md:text-xs mt-12 max-md:mb-18">
+      <div className="w-1/4 max-md:w-full h-full flex justify-between font-bold max-md:text-xs uppercase mt-12 max-md:mb-18">
         <span>Distilled </span>
         <span>to </span>
         <span>the </span>

@@ -6,11 +6,7 @@ import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 
 export default function ProjectProcess({ project, className }) {
   return (
-    <div
-      onClick={(e) => e.stopPropagation()}
-      onWheel={(e) => e.stopPropagation()}
-      className={`relative bg-bg/10 rounded-2xl p-4 ${className}`}
-    >
+    <div className={`relative bg-sec rounded-2xl p-4 ${className}`}>
       <AnimIn className="h-full overflow-y-scroll flex flex-col justify-between gap-4">
         <h2 className="font-sec font-bold max-md:text-2xl text-3xl uppercase">Process & Approach</h2>
 

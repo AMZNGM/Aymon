@@ -1,6 +1,30 @@
+'use client'
+
+import { motion, useScroll, useTransform } from 'motion/react'
+import { useRef } from 'react'
 import { useVideoEmbed } from '@/hooks/useVideoEmbed'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
+
+function ImageCard({ src, alt, title }) {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.2, 0.9])
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.5, 1, 1, 0.5])
+
+  return (
+    <motion.div ref={ref} style={{ opacity }} className="relative aspect-video overflow-hidden bg-sec rounded-2xl">
+      <ImageIn
+        src={src}
+        alt={alt}
+        data-title={title}
+        className="rounded-2xl cursor-zoom-in openInModal"
+        divClassName="relative w-full h-full"
+        style={{ scale }}
+      />
+    </motion.div>
+  )
+}
 
 export default function ProjectMedia({ project }) {
   const { getEmbedUrl } = useVideoEmbed()
@@ -28,7 +52,7 @@ export default function ProjectMedia({ project }) {
   return (
     <section className="relative w-full min-h-dvh overflow-hidden rounded-2xl px-4 max-md:px-1 py-12 md:pe-22">
       <div className="bg-sec rounded-2xl text-bg">
-        <div className="max-w-7xl space-y-4 mx-auto p-6">
+        <div className="space-y-4 p-6">
           {hasVideoLink && (
             <AnimIn center blur duration={0.75}>
               <h3 className="font-semibold text-lg capitalize mb-4">{project.media.video?.type}</h3>
@@ -47,16 +71,7 @@ export default function ProjectMedia({ project }) {
           )}
 
           {mediaItems.map((item, index) => (
-            <div key={index}>
-              {item.type === 'image' && (
-                <ImageIn
-                  src={item.src}
-                  alt={item.title}
-                  className="object-contain! rounded-2xl scale-100! cursor-zoom-in openInModal"
-                  divClassName="relative w-full h-[80dvh] max-md:h-[20dvh] overflow-hidden bg-text/10 rounded-2xl"
-                />
-              )}
-            </div>
+            <ImageCard key={index} src={item.src} alt={item.title} title={item.title} />
           ))}
         </div>
       </div>
