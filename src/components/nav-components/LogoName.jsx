@@ -25,7 +25,7 @@ export default function LogoName() {
   }
 
   return (
-    <h1 className="w-full font-black max-lg:text-6xl text-7xl text-center uppercase leading-15 max-lg:leading-12">
+    <h1 className="w-full font-black max-lg:text-6xl max-2xl:text-6xl text-7xl text-center uppercase leading-15 max-lg:leading-12">
       <AnimText className="group inline-block relative w-full">
         <motion.span
           variants={nameVariants}
