@@ -35,7 +35,7 @@ export default function Modal3d() {
       <div className="-top-[12dvh] md:-top-[15dvh] -bottom-[12dvh] md:-bottom-[10dvh] absolute inset-x-0 cursor-grab active:cursor-grabbing">
         <Canvas>
           <AdaptiveCamera />
-          <OrbitControls target={[5, 0.5, 4]} enableZoom={false} enablePan={false} />
+          <OrbitControls target={[5, 0.5, 4]} enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
           <Environment preset="studio" />
           <ambientLight intensity={0.5} />
           <Model />
