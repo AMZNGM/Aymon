@@ -1,9 +1,10 @@
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import Draggable from 'gsap/Draggable'
+import SplitText from 'gsap/SplitText'
 
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, Draggable)
+  gsap.registerPlugin(ScrollTrigger, Draggable, SplitText)
 
   ScrollTrigger.config({
     ignoreMobileResize: true,
@@ -14,4 +15,4 @@ if (typeof window !== 'undefined') {
   })
 }
 
-export { gsap, ScrollTrigger, Draggable }
+export { gsap, ScrollTrigger, Draggable, SplitText }

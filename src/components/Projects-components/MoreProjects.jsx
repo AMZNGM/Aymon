@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import React, { useRef, useState } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap, SplitText } from '@/utils/gsapConfig'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMouseMotion } from '@/hooks/useMouseMotion'
 import { useProjects } from '@/hooks/useProjects'
@@ -10,6 +12,36 @@ import ImageIn from '@/components/ui/unstyled/ImageIn'
 import ArrowCursor from '@/components/ui/ArrowCursor'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
 import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
+
+function SplitHoverText({ children, className }) {
+  const ref = useRef(null)
+
+  useGSAP(
+    () => {
+      if (!ref.current || typeof SplitText === 'undefined') return
+
+      SplitText.create(ref.current, {
+        type: 'chars',
+        autoSplit: true,
+        onSplit(self) {
+          gsap.set(self.chars, { opacity: 0.5 })
+
+          self.chars.forEach((char) => {
+            char.addEventListener('mouseenter', () => gsap.to(char, { opacity: 1, duration: 0.15, ease: 'power2.out' }))
+            char.addEventListener('mouseleave', () => gsap.to(char, { opacity: 0.5, duration: 0.3, ease: 'power2.inOut' }))
+          })
+        },
+      })
+    },
+    { scope: ref }
+  )
+
+  return (
+    <span ref={ref} className={className}>
+      {children}
+    </span>
+  )
+}
 
 export default function MoreProjects({ currentSlug }) {
   const { projects, loading } = useProjects()
@@ -34,11 +66,11 @@ export default function MoreProjects({ currentSlug }) {
             initial={{ x: 0 }}
             animate={{ x: ['-100%', '0%'] }}
             transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-            className="flex opacity-50 hover:opacity-100 whitespace-nowrap transition-opacity duration-300"
+            className="flex whitespace-nowrap"
           >
             {[...Array(5)].map((_, index) => (
-              <AnimIn blur toDown duration={1} key={index} className="font-sec text-[8dvw] text-bg uppercase tracking-tight mx-0.5">
-                Experience more *
+              <AnimIn blur toDown duration={1} key={index} className="mx-0.5">
+                <SplitHoverText className="font-sec text-[8dvw] text-bg uppercase tracking-tight">Experience more *</SplitHoverText>
               </AnimIn>
             ))}
           </motion.div>

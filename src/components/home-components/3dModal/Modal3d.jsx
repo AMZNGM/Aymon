@@ -13,7 +13,7 @@ function AdaptiveCamera() {
     const isTablet = size.width < 1024
 
     if (isMobile) {
-      camera.fov = 40
+      camera.fov = 30
       camera.position.set(5, 4, 13)
     } else if (isTablet) {
       camera.fov = 35
@@ -32,7 +32,7 @@ function AdaptiveCamera() {
 export default function Modal3d() {
   return (
     <section className="relative w-dvw h-[40dvh] md:h-[50dvh] lg:h-[60dvh]">
-      <div className="-top-[12dvh] md:-top-[15dvh] -bottom-[12dvh] md:-bottom-[10dvh] absolute inset-x-0">
+      <div className="-top-[12dvh] md:-top-[15dvh] -bottom-[12dvh] md:-bottom-[10dvh] absolute inset-x-0 cursor-grab active:cursor-grabbing">
         <Canvas>
           <AdaptiveCamera />
           <OrbitControls target={[5, 0.5, 4]} enableZoom={false} enablePan={false} />
