@@ -63,7 +63,7 @@ export default function ContactPopup({ isOpen, onClose }) {
                 exit={{ scale: 0.9, opacity: 0 }}
                 transition={{ type: 'spring', damping: 20 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-bg rounded-2xl text-text p-6"
+                className="relative w-full max-w-xl max-h-[90dvh] overflow-y-auto bg-bg rounded-2xl text-text p-6"
               >
                 <div className="text-center">Loading...</div>
               </motion.div>

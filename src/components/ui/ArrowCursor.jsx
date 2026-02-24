@@ -13,7 +13,7 @@ export default function ArrowCursor({ sx, sy }) {
       data-hide-cursor="true"
       className="max-md:hidden top-1/2 left-1/2 z-50 absolute border-4 border-text rounded-full -translate-1/2 pointer-events-none mix-blend-difference"
     >
-      <ArrowUp size={66} strokeWidth={1} className="text-text -rotate-45" />
+      <ArrowUp size={66} strokeWidth={1} className="2xl:size-[4dvw] text-text -rotate-45" />
     </motion.div>
   )
 }

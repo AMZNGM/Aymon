@@ -35,14 +35,13 @@ export default function ProjectMedia({ project }) {
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative w-full aspect-video overflow-hidden bg-text/10 rounded-lg">
                   <iframe
-                    src={getEmbedUrl(project.media.video.url)}
-                    className="w-full h-full rounded-lg"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
+                    src={getEmbedUrl(project.media.video.url)}
                     title={project.media.video.title || 'Project Video'}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    className="w-full h-full rounded-lg"
                   />
                 </div>
-                {/* <p className="text-text/40 text-sm break-all">{project.media.video.url}</p> */}
               </div>
             </AnimIn>
           )}
