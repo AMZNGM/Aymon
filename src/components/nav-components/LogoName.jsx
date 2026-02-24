@@ -40,7 +40,7 @@ export default function LogoName() {
           <span className="block group-hover:opacity-0 transition-opacity duration-400">
             Ahmed
             <br />
-            Aymen
+            Ayman
           </span>
         </motion.span>
 

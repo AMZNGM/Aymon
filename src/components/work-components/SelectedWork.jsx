@@ -20,11 +20,11 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
   const [hoveredProject, setHoveredProject] = useState(null)
 
   const heading = (
-    <div className="h-full flex items-center gap-12">
+    <div className="h-full flex items-center gap-12 max-md:gap-4">
       <h2 className="font-extrabold text-[7dvw] max-md:text-4xl uppercase leading-none tracking-[-2px] max-md:mb-6 md:pt-12 select-none">
         {title}
       </h2>
-      <div className="w-28 max-md:w-22 h-2 max-md:h-1.5 bg-bg mt-12 max-md:mb-18" />
+      <div className="max-md:hidden w-28 max-md:w-22 h-2 max-md:h-1.5 bg-bg mt-12 max-md:mb-18" />
       <div className="w-1/4 max-md:w-full h-full flex justify-between font-bold max-md:text-xs uppercase mt-12 max-md:mb-18">
         <span>Distilled </span>
         <span>to </span>
@@ -76,8 +76,17 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
       <div className="gap-4 grid md:grid-cols-2 mt-12">
         {filteredProjects.map((project, index) => (
           <AnimIn center blur delay={0.2 * index} key={project.id}>
-            <Link href={`/work/${project.slug}`} className="block relative cursor-none">
-              <RippleEffect className="group relative aspect-5/4 overflow-hidden rounded-2xl">
+            <Link href={`/work/${project.slug}`} className="group block relative cursor-none">
+              <RippleEffect
+                className="relative aspect-5/4 overflow-hidden rounded-2xl"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect()
+                  const x = ((e.clientX - rect.left) / rect.width) * 100
+                  const y = ((e.clientY - rect.top) / rect.height) * 100
+                  e.currentTarget.style.setProperty('--mouse-x', `${x}%`)
+                  e.currentTarget.style.setProperty('--mouse-y', `${y}%`)
+                }}
+              >
                 <ImageIn
                   onMouseEnter={() => setHoveredProject(project.id)}
                   onMouseLeave={() => setHoveredProject(null)}
@@ -86,7 +95,25 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
                   priority={index <= 3}
                   data-hide-cursor="true"
                   divClassName="w-full h-full select-none cursor-none"
+                  className="grayscale transition-all duration-300 filter"
                 />
+
+                <div
+                  style={{
+                    mask: 'radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, black 40%, transparent 80%, transparent 100%)',
+                    WebkitMask:
+                      'radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, black 40%, transparent 80%, transparent 100%)',
+                  }}
+                  className="z-10 absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                >
+                  <ImageIn
+                    src={project.media?.primary}
+                    alt={project.client}
+                    priority={index <= 3}
+                    data-hide-cursor="true"
+                    divClassName="w-full h-full select-none cursor-none"
+                  />
+                </div>
               </RippleEffect>
 
               <span className="block font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase leading-8 xl:leading-10 tracking-wide mt-2">
