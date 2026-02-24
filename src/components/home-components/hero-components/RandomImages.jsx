@@ -117,7 +117,7 @@ export default function RandomImages() {
                 src={image.src}
                 alt={image.alt}
                 className="h-fit! rounded-2xl select-none openInModal"
-                divClassName="aspect-square w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw]"
+                divClassName="aspect-square w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw]"
               />
             </AnimIn>
           </div>

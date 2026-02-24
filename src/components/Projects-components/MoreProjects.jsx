@@ -66,7 +66,7 @@ export default function MoreProjects({ currentSlug }) {
             initial={{ x: 0 }}
             animate={{ x: ['-100%', '0%'] }}
             transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-            className="flex whitespace-nowrap"
+            className="flex whitespace-nowrap select-none"
           >
             {[...Array(5)].map((_, index) => (
               <AnimIn blur toDown duration={1} key={index} className="mx-0.5">
@@ -82,8 +82,17 @@ export default function MoreProjects({ currentSlug }) {
           <div className="gap-4 grid md:grid-cols-2 mb-12">
             {moreProjects.slice(0, 2).map((project, index) => (
               <AnimIn center blur delay={0.2 * index} key={project.id}>
-                <Link href={`/work/${project.slug}`} className="block relative cursor-none">
-                  <RippleEffect className="group relative aspect-5/4 overflow-hidden rounded-2xl">
+                <Link href={`/work/${project.slug}`} className="group block relative cursor-none">
+                  <RippleEffect
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect()
+                      const x = ((e.clientX - rect.left) / rect.width) * 100
+                      const y = ((e.clientY - rect.top) / rect.height) * 100
+                      e.currentTarget.style.setProperty('--mouse-x', `${x}%`)
+                      e.currentTarget.style.setProperty('--mouse-y', `${y}%`)
+                    }}
+                    className="group relative aspect-5/4 overflow-hidden rounded-2xl"
+                  >
                     <ImageIn
                       onMouseEnter={() => setHoveredProject(project.id)}
                       onMouseLeave={() => setHoveredProject(null)}
@@ -91,13 +100,29 @@ export default function MoreProjects({ currentSlug }) {
                       alt={project.client}
                       priority={index <= 3}
                       data-hide-cursor="true"
+                      className="grayscale transition-all duration-300 filter"
                       divClassName="w-full h-full select-none cursor-none"
                     />
+
+                    <div
+                      style={{
+                        mask: 'radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, black 40%, transparent 80%, transparent 100%)',
+                        WebkitMask:
+                          'radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, black 40%, transparent 80%, transparent 100%)',
+                      }}
+                      className="z-10 absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    >
+                      <ImageIn
+                        src={project.media?.primary}
+                        alt={project.client}
+                        priority={index <= 3}
+                        data-hide-cursor="true"
+                        divClassName="w-full h-full select-none cursor-none"
+                      />
+                    </div>
                   </RippleEffect>
 
-                  <span className="block font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase leading-8 xl:leading-10 tracking-wide mt-2">
-                    {project.title}
-                  </span>
+                  <span className="block font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase tracking-wide mt-2">{project.title}</span>
                 </Link>
               </AnimIn>
             ))}

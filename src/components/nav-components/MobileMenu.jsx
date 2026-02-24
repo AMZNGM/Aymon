@@ -38,7 +38,7 @@ export default function MobileMenu({ className, btnClassName }) {
       <label
         aria-label="Open Menu"
         htmlFor="mobile-nav-toggle"
-        className={`absolute top-4 right-2 max-md:right-1 backdrop-blur-sm z-1001 ${btnClassName}`}
+        className={`absolute top-4 right-2 max-md:right-1 backdrop-blur-sm overflow-hidden rounded-xl z-1001 ${btnClassName}`}
       >
         <RippleEffect className={`bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-1001 p-2`}>
           <motion.div whileTap={{ scale: 0.9, rotate: 90 }}>

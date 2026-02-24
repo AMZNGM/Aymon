@@ -11,12 +11,16 @@ function AdaptiveCamera() {
   useEffect(() => {
     const isMobile = size.width < 768
     const isTablet = size.width < 1024
+    const is2xl = size.width > 1536
 
     if (isMobile) {
       camera.fov = 30
       camera.position.set(5, 4, 13)
     } else if (isTablet) {
       camera.fov = 35
+      camera.position.set(3, 3, 11)
+    } else if (is2xl) {
+      camera.fov = 55
       camera.position.set(3, 3, 11)
     } else {
       camera.fov = 40

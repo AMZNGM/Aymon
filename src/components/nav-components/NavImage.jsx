@@ -20,7 +20,12 @@ export default function NavImage() {
       transition={{ duration: 0.5 }}
       className="group max-lg:hidden z-20 relative cursor-grab active:cursor-grabbing"
     >
-      <AnimIn center blur duration={3} className="size-[18dvw] flex justify-center items-center bg-transparent perspective-distant my-12">
+      <AnimIn
+        center
+        blur
+        duration={3}
+        className="size-[18dvw] 2xl:size-[16dvw] flex justify-center items-center bg-transparent perspective-distant my-12 2xl:my-[3dvw]"
+      >
         <div className="relative size-full transform-3d group-hover:transform-[rotateY(180deg)] transition-transform duration-700 ease-in-out">
           <ImageIn src={mainPhotoNoBG} alt="Main Image" priority className="rounded-2xl" divClassName="absolute! inset-0 backface-hidden" />
 

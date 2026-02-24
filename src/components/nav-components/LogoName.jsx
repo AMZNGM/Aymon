@@ -25,7 +25,7 @@ export default function LogoName() {
   }
 
   return (
-    <h1 className="w-full font-black max-lg:text-6xl max-2xl:text-6xl text-7xl text-center uppercase leading-15 max-lg:leading-12">
+    <h1 className="w-full font-black 2xl:text-[4dvw] max-lg:text-6xl max-2xl:text-6xl text-7xl text-center uppercase leading-15 max-lg:leading-12 2xl:leading-none">
       <AnimText className="group inline-block relative w-full">
         <motion.span
           variants={nameVariants}
@@ -63,7 +63,9 @@ export default function LogoName() {
         </motion.span>
       </AnimText>
 
-      <AnimText className="block font-sec text-bg/50 max-sm:text-bg/25 max-lg:text-2xl text-3xl normal-case">Visual Artist</AnimText>
+      <AnimText className="block font-sec text-bg/50 max-sm:text-bg/25 2xl:text-[1.5dvw] max-lg:text-2xl text-3xl normal-case">
+        Visual Artist
+      </AnimText>
     </h1>
   )
 }

@@ -14,7 +14,7 @@ export default function Visionary() {
           <span>Your Wings</span>
         </span>
 
-        <div className="max-w-2xl space-y-1 opacity-70 font-sec text-xs text-center px-8">
+        <div className="2xl:max-w-[55dvw] max-w-2xl space-y-1 opacity-70 font-sec 2xl:text-[0.75dvw] text-xs text-center px-8">
           <p>
             When Aymon draws a line on a piece of white paper, he does so with such awareness that the line does not simply remain as it is;
             it becomes something more than that.

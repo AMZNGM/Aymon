@@ -18,7 +18,7 @@ export default function NavLinks() {
 
   return (
     <>
-      <AnimText className="max-lg:hidden flex justify-center items-center gap-4 text-[15px] text-center uppercase mt-4 p-2">
+      <AnimText className="max-lg:hidden flex justify-center items-center gap-4 2xl:gap-[1dvw] text-[15px] 2xl:text-[0.8dvw] text-center uppercase mt-4 p-2">
         {navLinks.map((link, index) => (
           <motion.div key={index} whileTap={{ scale: 0.9 }} onClick={() => (window.location.href = link)}>
             <Link href={link}>

@@ -26,7 +26,7 @@ export default function ProjectMedia({ project }) {
   }
 
   return (
-    <section className="relative w-full min-h-dvh overflow-hidden rounded-2xl px-4 max-md:px-1 py-12 md:pe-22">
+    <section className="relative w-full overflow-hidden rounded-2xl px-4 max-md:px-1 py-12 md:pe-22">
       <div className="bg-sec rounded-2xl text-bg">
         <div className="max-w-7xl space-y-4 mx-auto p-6">
           {hasVideoLink && (
