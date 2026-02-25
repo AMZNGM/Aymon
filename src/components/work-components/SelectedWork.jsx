@@ -101,7 +101,7 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
       {hasButton && (
         <Link
           href={'/work'}
-          className="w-fit flex flex-col justify-center items-end opacity-45 hover:opacity-100 font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase tracking-wide transition-opacity duration-300 ms-auto mt-12"
+          className="z-30 relative w-fit flex flex-col justify-center items-end opacity-45 hover:opacity-100 font-bold text-[2.2dvw] text-bg max-md:text-xl uppercase tracking-wide transition-opacity duration-300 ms-auto mt-12"
         >
           See more
           <ArrowRight />

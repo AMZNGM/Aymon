@@ -20,7 +20,7 @@ function AdaptiveCamera() {
       camera.fov = 35
       camera.position.set(3, 3, 11)
     } else if (is2xl) {
-      camera.fov = 55
+      camera.fov = 35
       camera.position.set(3, 3, 11)
     } else {
       camera.fov = 40
