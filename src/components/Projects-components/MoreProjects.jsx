@@ -100,7 +100,7 @@ export default function MoreProjects({ currentSlug }) {
                       alt={project.client}
                       priority={index <= 3}
                       data-hide-cursor="true"
-                      className="grayscale transition-all duration-300 filter"
+                      className="md:grayscale transition-all duration-300 md:filter"
                       divClassName="w-full h-full select-none cursor-none"
                     />
 
@@ -110,7 +110,7 @@ export default function MoreProjects({ currentSlug }) {
                         WebkitMask:
                           'radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, black 40%, transparent 80%, transparent 100%)',
                       }}
-                      className="z-10 absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      className="max-md:hidden z-10 absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                     >
                       <ImageIn
                         src={project.media?.primary}

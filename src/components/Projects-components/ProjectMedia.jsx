@@ -61,7 +61,7 @@ export default function ProjectMedia({ project }) {
                     src={item.src}
                     alt={item.title}
                     className="object-contain! rounded-2xl scale-100! cursor-zoom-in openInModal"
-                    divClassName="relative w-full h-[80vh] overflow-hidden bg-text/10 rounded-2xl"
+                    divClassName="relative w-full h-[80vh] overflow-hidden bg-text/10 rounded-2xl bg-transparent!"
                   />
                 )}
               </motion.div>
