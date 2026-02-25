@@ -70,7 +70,7 @@ export default function MoreProjects({ currentSlug }) {
           >
             {[...Array(5)].map((_, index) => (
               <AnimIn blur toDown duration={1} key={index} className="mx-0.5">
-                <SplitHoverText className="font-sec text-[8dvw] text-bg uppercase tracking-tight">Experience more *</SplitHoverText>
+                <SplitHoverText className="font-sec text-[8dvw] text-bg uppercase tracking-wide">Experience more *</SplitHoverText>
               </AnimIn>
             ))}
           </motion.div>
