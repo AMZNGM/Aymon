@@ -1,10 +1,13 @@
+'use client'
+
 import { useVideoEmbed } from '@/hooks/useVideoEmbed'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 
 export default function ProjectMedia({ project }) {
   const { getEmbedUrl } = useVideoEmbed()
-
   const mediaItems = []
 
   if (project.media?.gallery?.length > 1) {
@@ -46,18 +49,24 @@ export default function ProjectMedia({ project }) {
             </AnimIn>
           )}
 
-          {mediaItems.map((item, index) => (
-            <div key={index}>
-              {item.type === 'image' && (
-                <ImageIn
-                  src={item.src}
-                  alt={item.title}
-                  className="object-contain! rounded-2xl scale-100! cursor-zoom-in openInModal"
-                  divClassName="relative w-full h-[80vh] overflow-hidden bg-text/10 rounded-2xl"
-                />
-              )}
-            </div>
-          ))}
+          {mediaItems.map((item, index) => {
+            const ref = useRef(null)
+            const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+            const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 1.2])
+
+            return (
+              <motion.div key={index} ref={ref} style={{ scale }} className="relative">
+                {item.type === 'image' && (
+                  <ImageIn
+                    src={item.src}
+                    alt={item.title}
+                    className="object-contain! rounded-2xl scale-100! cursor-zoom-in openInModal"
+                    divClassName="relative w-full h-[80vh] overflow-hidden bg-text/10 rounded-2xl"
+                  />
+                )}
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
