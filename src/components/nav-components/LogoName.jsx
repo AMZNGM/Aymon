@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
-import AnimText from '@/components/ui/unstyled/AnimText'
+import AnimIn from '@/components/ui/unstyled/AnimIn'
 
 export default function LogoName() {
   const isMobile = useIsMobile()
@@ -26,7 +26,7 @@ export default function LogoName() {
 
   return (
     <h1 className="w-full font-black 2xl:text-[4dvw] max-lg:text-6xl max-2xl:text-6xl text-7xl text-center uppercase leading-15 max-lg:leading-12 2xl:leading-none">
-      <AnimText className="group inline-block relative w-full">
+      <AnimIn center blur duration={2.7} className="group inline-block relative w-full">
         <motion.span
           variants={nameVariants}
           animate={isMobile ? 'mobile' : 'desktop'}
@@ -61,11 +61,16 @@ export default function LogoName() {
             Aymon
           </Link>
         </motion.span>
-      </AnimText>
+      </AnimIn>
 
-      <AnimText className="block font-sec text-bg/50 max-sm:text-bg/25 2xl:text-[1.5dvw] max-lg:text-2xl text-3xl normal-case">
+      <AnimIn
+        center
+        blur
+        duration={1.7}
+        className="block font-sec text-bg/50 max-sm:text-bg/25 2xl:text-[1.5dvw] max-lg:text-2xl text-3xl normal-case"
+      >
         Visual Artist
-      </AnimText>
+      </AnimIn>
     </h1>
   )
 }

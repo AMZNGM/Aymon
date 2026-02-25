@@ -1,44 +1,15 @@
 'use client'
 
-import { useEffect } from 'react'
-import { Environment, OrbitControls } from '@react-three/drei'
-import { Canvas, useThree } from '@react-three/fiber'
+import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
 import { Model } from '@/components/home-components/3dModal/Model'
-
-function AdaptiveCamera() {
-  const { camera, size } = useThree()
-
-  useEffect(() => {
-    const isMobile = size.width < 768
-    const isTablet = size.width < 1024
-    const is2xl = size.width > 1536
-
-    if (isMobile) {
-      camera.fov = 30
-      camera.position.set(5, 4, 13)
-    } else if (isTablet) {
-      camera.fov = 35
-      camera.position.set(3, 3, 11)
-    } else if (is2xl) {
-      camera.fov = 35
-      camera.position.set(3, 3, 11)
-    } else {
-      camera.fov = 40
-      camera.position.set(2, 3, 9)
-    }
-
-    camera.updateProjectionMatrix()
-  }, [camera, size])
-
-  return null
-}
 
 export default function Modal3d() {
   return (
     <div className="-top-[12dvh] md:-top-[15dvh] -bottom-[12dvh] md:-bottom-[10dvh] z-10 absolute inset-x-0 cursor-grab active:cursor-grabbing">
-      <Canvas>
-        <AdaptiveCamera />
-        <OrbitControls target={[5, 0.5, 4]} enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+      <Canvas gl={{ antialias: true }}>
+        <PerspectiveCamera makeDefault position={[8, 4, 8]} fov={50} />
+        <OrbitControls target={[5, 0.5, 4]} enableZoom={false} enablePan={false} autoRotate />
         <Environment preset="studio" />
         <ambientLight intensity={0.5} />
         <Model />

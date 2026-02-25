@@ -1,5 +1,6 @@
 'use client'
 
+import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
 import { useState, useRef, useEffect } from 'react'
 
 export default function LazyVideo({ src, ...props }) {
@@ -26,7 +27,7 @@ export default function LazyVideo({ src, ...props }) {
 
   return (
     <div ref={containerRef} className="relative w-full min-h-[200px]">
-      {isVisible ? <video src={src} {...props} /> : <div className="absolute inset-0 w-full h-full bg-main/5 rounded-2xl" />}
+      {isVisible ? <video src={src} {...props} /> : <LoadingSkeleton count="1" />}
     </div>
   )
 }

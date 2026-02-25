@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { useAdmin } from '@/hooks/useAdmin'
+import { useAdmin } from '@/hooks/for-db/useAdmin'
 import LoadingOverlay from '@/components/shared/LoadingOverlay'
 import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
 import ProtectedRoute from '@/components/shared/ProtectedRoute'

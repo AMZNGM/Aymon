@@ -16,7 +16,7 @@ export default function TrustedUs() {
     <section className="relative h-150 max-md:h-110 2xl:h-full overflow-hidden text-text">
       <LogosMarquee />
 
-      <div ref={sectionRef} className="lg:right-3/5 bottom-20 max-md:bottom-0 max-lg:-left-4 absolute overflow-hidden rounded-full">
+      <div ref={sectionRef} className="top-38 max-md:top-50 max-md:-left-4 md:left-[14dvw] absolute overflow-hidden rounded-full">
         <div className="size-[25dvw] max-md:size-60 overflow-hidden flex justify-center items-center md:bg-bg rounded-full">
           <h4 className="z-10 max-2xl:max-w-xs overflow-hidden flex flex-wrap justify-center text-[3dvw] max-md:text-bg max-md:text-3xl text-center uppercase leading-none">
             &nbsp;&nbsp;&nbsp;A

@@ -10,14 +10,35 @@ const path =
 
 export default function LogosMarquee() {
   const [logos, setLogos] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchLogos = async () => {
-      const data = await getLogos()
-      setLogos(data)
+      try {
+        const data = await getLogos()
+        setLogos(data)
+      } catch (error) {
+        console.error('Error fetching logos:', error)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchLogos()
   }, [])
+
+  if (loading) {
+    return (
+      <section className="relative w-full h-fit md:overflow-hidden max-md:-translate-x-28 max-md:-translate-y-12 pt-6 max-md:pt-22">
+        <ImagesMarquee path={path} viewBox="50 50 2000 600" spacing={1}>
+          {Array.from({ length: 8 }, (_, index) => (
+            <div key={index} className="w-24">
+              <div className="aspect-square bg-bg/5 rounded-lg animate-pulse" />
+            </div>
+          ))}
+        </ImagesMarquee>
+      </section>
+    )
+  }
 
   if (!logos || logos.length === 0) return null
 

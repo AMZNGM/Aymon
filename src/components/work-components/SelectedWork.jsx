@@ -4,14 +4,15 @@ import Link from 'next/link'
 import { useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useMouseMotion } from '@/hooks/useMouseMotion'
-import { useProjects } from '@/hooks/useProjects'
+import { useProjects } from '@/hooks/for-db/useProjects'
 import { ArrowRight } from 'lucide-react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
 import ArrowCursor from '@/components/ui/ArrowCursor'
+import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
 
-export default function SelectedWork({ className = '', title = 'Selected Work', hasButton = true, selected = true }) {
+export default function SelectedWork({ className = '', hasButton = true, selected = true }) {
   const { projects, loading } = useProjects()
   const filteredProjects = selected ? projects.filter((project) => project.showInSelectedWork === true) : projects
 
@@ -19,64 +20,15 @@ export default function SelectedWork({ className = '', title = 'Selected Work', 
   const { sx, sy } = useMouseMotion({ containerRef, relative: true, center: true, spring: { stiffness: 150, damping: 20 } })
   const [hoveredProject, setHoveredProject] = useState(null)
 
-  const heading = (
-    <div className="w-full h-full flex justify-between items-center gap-12 max-md:gap-4 pe-1">
-      <div className="flex justify-between items-center gap-12">
-        <h2 className="font-extrabold text-[7dvw] max-md:text-4xl uppercase leading-none tracking-[-2px] max-md:mb-6 md:pt-12 select-none">
-          {title}
-        </h2>
-        <div className="max-md:hidden w-[6dvw] max-md:w-22 h-2 max-md:h-1.5 bg-bg mt-12 max-md:mb-18" />
-      </div>
-
-      <div className="w-1/4 max-md:w-1/2 h-full flex justify-between font-bold text-[1dvw] max-md:text-xs uppercase mt-12 max-md:mb-18">
-        <span>Distilled </span>
-        <span>to </span>
-        <span>the </span>
-        <span>Core</span>
-      </div>
-    </div>
-  )
-
   if (loading) {
-    return (
-      <section className="relative w-full min-h-dvh px-2 pt-4 max-md:pt-18 pb-24">
-        {heading}
-
-        <div className="gap-4 grid md:grid-cols-2">
-          {[1, 2, 3, 4].map((index) => (
-            <AnimIn center blur delay={0.2 * index} key={index} className="aspect-13/12 overflow-hidden rounded-2xl">
-              <div className="w-full h-full bg-bg/5 animate-pulse">
-                <div className="w-full h-full bg-linear-to-r from-bg/1 to-bg/5"></div>
-              </div>
-            </AnimIn>
-          ))}
-        </div>
-        <div className="bg-bg/10 rounded-lg mt-8 p-4">
-          <p className="opacity-70 text-sm">Loading projects...</p>
-        </div>
-      </section>
-    )
-  }
-
-  if (filteredProjects.length === 0) {
-    return (
-      <section className="relative w-full min-h-dvh px-2 pt-4 max-md:pt-18 pb-24">
-        {heading}
-
-        <div className="text-center py-16">
-          <p className="opacity-70 text-xl">No projects found for this category.</p>
-        </div>
-      </section>
-    )
+    return <LoadingSkeleton count="4" className={`mb-12 px-1 ${className}`} />
   }
 
   return (
-    <section ref={containerRef} className={`relative w-full min-h-dvh text-bg px-1 md:pt-4 ${className}`}>
-      {heading}
-
+    <section ref={containerRef} className={`relative w-full text-bg mb-12 px-1 ${className}`}>
       <AnimatePresence>{hoveredProject && <ArrowCursor sx={sx} sy={sy} />}</AnimatePresence>
 
-      <div className="gap-4 grid md:grid-cols-2 mt-12">
+      <div className="gap-4 grid md:grid-cols-2">
         {filteredProjects.map((project, index) => (
           <AnimIn center blur delay={0.2 * index} key={project.id}>
             <Link href={`/work/${project.slug}`} className="block relative cursor-none">

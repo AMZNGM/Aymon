@@ -12,6 +12,7 @@ export default function AnimIn({
   duration = 0.75,
   once = true,
   center = false,
+  scale = false,
   toDown = false,
   blur = false,
   reAnim = true,
@@ -30,12 +31,9 @@ export default function AnimIn({
           opacity: 0,
           y: isReduced || center ? 0 : toDown ? -40 : 40,
           filter: !isReduced && blur ? 'blur(10px)' : 'blur(0px)',
+          scale: scale ? 1.2 : 1,
         },
-        visible: {
-          opacity: 1,
-          y: 0,
-          filter: 'blur(0px)',
-        },
+        visible: { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 },
       },
     }
   }, [duration, delay, center, toDown, blur, shouldReduceMotion])

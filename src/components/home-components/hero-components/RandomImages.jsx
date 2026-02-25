@@ -31,9 +31,9 @@ const toPositions = [
   { x: '20dvw', y: '50dvh', rotate: 8 },
   { x: '-25dvw', y: '40dvh', rotate: 5 },
   { x: '-18dvw', y: '80dvh', rotate: -5 },
-  { x: '10dvw', y: '70dvh', rotate: 12 },
-  { x: '0dvw', y: '90dvh', rotate: -18 },
-  { x: '13dvw', y: '135dvh', rotate: 15 },
+  { x: '10dvw', y: '90dvh', rotate: 12 },
+  { x: '0dvw', y: '120dvh', rotate: -18 },
+  { x: '13dvw', y: '150dvh', rotate: 15 },
   { x: '-23dvw', y: '118dvh', rotate: -10 },
 ]
 

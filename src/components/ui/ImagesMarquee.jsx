@@ -20,7 +20,7 @@ export default function ImagesMarquee({
   dragSensitivity = 0.05,
   useScrollVelocity = true,
   slowdownOnHover = true,
-  slowDownFactor = 0.3,
+  slowDownFactor = 0.1,
   slowDownSpringConfig = { damping: 50, stiffness: 400 },
   dragAwareDirection = true,
   verticalBuffer = 80,

@@ -11,11 +11,10 @@ export default function ScrollToTopBtn() {
     <motion.button
       aria-label="Scroll to top"
       aria-controls="scroll-to-top"
-      initial={{ opacity: 0, y: '100%' }}
-      animate={{ opacity: scroll100vh ? 1 : 0, y: 0 }}
+      animate={{ y: scroll100vh ? 0 : 100 }}
       transition={{ type: 'spring', duration: 0.2, stiffness: 100 }}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="right-4 bottom-4 z-50 fixed bg-sec backdrop-blur-sm rounded-full hover:scale-95 transition-transform duration-500 p-[1dvw] cursor-pointer"
+      className="right-4 bottom-4 z-50 fixed bg-sec backdrop-blur-sm rounded-full p-[1dvw] cursor-pointer"
     >
       <ArrowUp />
     </motion.button>
