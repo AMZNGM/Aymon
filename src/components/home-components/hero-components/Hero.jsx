@@ -1,12 +1,17 @@
 'use client'
 
+import { useEffect } from 'react'
 import { usePreloader } from '@/context/PreloaderContext'
 import Slogun from '@/components/home-components/hero-components/Slogun'
 import Navbar from '@/components/nav-components/Navbar'
 import RandomImages from '@/components/home-components/hero-components/RandomImages'
 
 export default function Hero() {
-  const { isComplete } = usePreloader()
+  const { isComplete, setIsComplete } = usePreloader()
+
+  useEffect(() => {
+    setIsComplete(true)
+  }, [])
 
   return (
     <div
