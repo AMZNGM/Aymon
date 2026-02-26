@@ -17,11 +17,11 @@ export default function Home() {
     <>
       {/* <Preloader /> */}
       <Hero />
-      {/* <TrustedUs /> */}
-      {/* <SectionHeading title="Selected Work" /> */}
-      {/* <SelectedWork /> */}
-      {/* <Visionary /> */}
-      {/* <VideosSection /> */}
+      <TrustedUs />
+      <SectionHeading title="Selected Work" />
+      <SelectedWork />
+      <Visionary />
+      <VideosSection />
     </>
   )
 }
