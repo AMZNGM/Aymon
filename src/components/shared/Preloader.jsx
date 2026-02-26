@@ -1,83 +1,91 @@
 'use client'
 
-import { AnimatePresence, motion } from 'motion/react'
-import { useEffect, useState } from 'react'
-import { getAboutContent, getContactContent } from '@/lib/getAbout'
+import { useEffect, useRef } from 'react'
+import { gsap } from '@/utils/gsapConfig'
+import { useGSAP } from '@gsap/react'
+import { usePreloader } from '@/context/PreloaderContext'
 import { getProjects } from '@/lib/getProjects'
 import { getLogos } from '@/lib/getLogos'
 import { easings } from '@/utils/anim'
+import { images } from '@/components/home-components/hero-components/RandomImages'
+import AnimIn from '@/components/ui/unstyled/AnimIn'
 
 export default function Preloader() {
-  const [progress, setProgress] = useState(0)
-  const [displayedNumbers, setDisplayedNumbers] = useState([])
-  const [isVisible, setIsVisible] = useState(true)
+  const { setIsComplete } = usePreloader()
+  const containerRef = useRef(null)
 
   useEffect(() => {
     const loadData = async () => {
-      let completedSteps = 0
-      const totalSteps = 1
-
-      const updateProgress = () => {
-        completedSteps++
-        const scaledProgress = Math.round((completedSteps / totalSteps) * 100)
-        setProgress(scaledProgress)
-
-        if (scaledProgress >= 100) {
-          setTimeout(() => setIsVisible(false), 5000)
-        }
-      }
-
       try {
-        // await getAboutContent()
-        // await getContactContent()
         await getProjects()
-        // await getLogos()
-        updateProgress()
+        await getLogos()
       } catch (error) {
         console.error('Error loading data:', error)
-        updateProgress()
       }
     }
 
     loadData()
   }, [])
 
-  // Typewriter effect for numbers
-  useEffect(() => {
-    if (displayedNumbers.length < progress) {
-      const timer = setTimeout(() => {
-        setDisplayedNumbers((prev) => [...prev, prev.length])
-      }, 20) // Faster delay for smoother progress
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setIsComplete(true)
+          gsap.set(containerRef.current, { display: 'none' })
+        },
+      })
 
-      return () => clearTimeout(timer)
-    }
-  }, [progress, displayedNumbers.length])
+      const imgElements = gsap.utils.toArray('.preloader-image')
+
+      imgElements.forEach((img, index) => {
+        const angleOffset = (index / imgElements.length) * Math.PI * 2
+        const radius = 25 + (index % 2.2) * 15
+        const x = Math.cos(angleOffset) * radius
+        const y = Math.sin(angleOffset) * radius
+
+        gsap.to(img, {
+          x: `${x}dvw`,
+          y: `${y - 10}dvh`,
+          delay: 2.6 + index * 0.1,
+        })
+      })
+
+      tl.to(
+        containerRef.current,
+        {
+          scale: window.innerWidth < 768 ? 1 : 18,
+          duration: 2.8,
+          ease: easings.gsap,
+        },
+        '+=4.4'
+      )
+
+      tl.to(imgElements, { opacity: 0 })
+      tl.to(containerRef.current, { scale: 1 })
+    },
+    { scope: containerRef }
+  )
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ y: '0%' }}
-          animate={{ y: '0%' }}
-          exit={{ y: '100%' }}
-          transition={{ duration: 0.9, ease: easings.motion }}
-          className="z-50 fixed inset-0 flex flex-col justify-center items-center bg-sec text-bg text-center"
-        >
-          <div className="max-w-md flex flex-wrap justify-center gap-2 mb-6">
-            {displayedNumbers.map((number) => (
-              <motion.span
-                key={number}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.2, type: 'spring', stiffness: 200 }}
-                className="font-sec font-bold text-2xl"
-              >
-                {number}
-              </motion.span>
-            ))}
+    <div ref={containerRef} className="fixed inset-0 overflow-hidden bg-text">
+      <div className="relative w-full h-full">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            style={{ transform: `translate(-50%, -50%) rotate(${images[index].rotation}deg)` }}
+            className="top-1/2 left-1/2 absolute will-change-transform preloader-image"
+          >
+            <AnimIn center blur delay={0.2 * index} className="duration-300">
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw] h-fit object-cover rounded-2xl"
+              />
+            </AnimIn>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        ))}
+      </div>
+    </div>
   )
 }

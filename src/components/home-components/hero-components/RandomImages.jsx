@@ -7,22 +7,22 @@ import { useIsMobile } from '@/hooks/useIsMobile'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 
-const images = [
-  { src: '/images/hero-Images/Asfour.webp', alt: 'Asfour' },
-  { src: '/images/hero-Images/aymon-self-portrait.webp', alt: 'Aymon Self Portrait' },
-  { src: '/images/hero-Images/caligula.webp', alt: 'Caligula' },
-  { src: '/images/hero-Images/Crow.webp', alt: 'Crow' },
-  { src: '/images/hero-Images/Folk.webp', alt: 'Folk' },
-  { src: '/images/hero-Images/Forcing.webp', alt: 'Forcing' },
-  { src: '/images/hero-Images/Inside.webp', alt: 'Inside' },
-  { src: '/images/hero-Images/Metro.webp', alt: 'Metro' },
-  { src: '/images/hero-Images/Working24.webp', alt: 'Working24' },
-  { src: '/images/hero-Images/Perspective.webp', alt: 'Perspective' },
-  { src: '/images/hero-Images/Pigeon.webp', alt: 'Pigeon' },
-  { src: '/images/hero-Images/Proof.webp', alt: 'Proof' },
+export const images = [
+  { src: '/images/hero-Images/Asfour.webp', alt: 'Asfour', rotation: -15 },
+  { src: '/images/hero-Images/aymon-self-portrait.webp', alt: 'Aymon Self Portrait', rotation: 9 },
+  { src: '/images/hero-Images/caligula.webp', alt: 'Caligula', rotation: 5 },
+  { src: '/images/hero-Images/Crow.webp', alt: 'Crow', rotation: -5 },
+  { src: '/images/hero-Images/Folk.webp', alt: 'Folk', rotation: -12 },
+  { src: '/images/hero-Images/Forcing.webp', alt: 'Forcing', rotation: 8 },
+  { src: '/images/hero-Images/Inside.webp', alt: 'Inside', rotation: 5 },
+  { src: '/images/hero-Images/Metro.webp', alt: 'Metro', rotation: -5 },
+  { src: '/images/hero-Images/Working24.webp', alt: 'Working24', rotation: 12 },
+  { src: '/images/hero-Images/Perspective.webp', alt: 'Perspective', rotation: -18 },
+  { src: '/images/hero-Images/Pigeon.webp', alt: 'Pigeon', rotation: 15 },
+  { src: '/images/hero-Images/Proof.webp', alt: 'Proof', rotation: -10 },
 ]
 
-const toPositions = [
+const finalPositions = [
   { x: '0dvw', y: '-10dvh', rotate: -15 },
   { x: '18dvw', y: '-5dvh', rotate: 8 },
   { x: '22dvw', y: '100dvh', rotate: 5 },
@@ -61,7 +61,7 @@ export default function RandomImages() {
       })
 
       images.forEach((img, index) => {
-        const toPos = toPositions[index % toPositions.length]
+        const toPos = finalPositions[index % finalPositions.length]
 
         tl.fromTo(
           img,
