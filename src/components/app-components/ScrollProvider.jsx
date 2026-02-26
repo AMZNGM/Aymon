@@ -11,7 +11,7 @@ export default function ScrollProvider({ children }) {
     const lenis = new Lenis({
       smooth: true,
       lerp: 0.1, // scroll smooth
-      wheelMultiplier: 1,
+      wheelMultiplier: 0.5,
       touchMultiplier: 1,
     })
 
