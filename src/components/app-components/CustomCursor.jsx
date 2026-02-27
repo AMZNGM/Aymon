@@ -37,7 +37,7 @@ export default function CustomCursor() {
   if (isHidden || isMobile) return null
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="max-md:hidden flex justify-center items-center">
       <motion.div
         style={{
           x: x,

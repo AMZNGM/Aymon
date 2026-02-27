@@ -12,7 +12,6 @@ const quickLinks = [
   { href: '/', label: 'Home' },
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
-  { href: '/privacy', label: 'Privacy Policy' },
 ]
 
 export default function FooterContent() {

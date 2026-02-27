@@ -31,12 +31,6 @@ export const SEO = {
     keywords: ['Ahmed Ayman work', 'Aymon projects', 'motion graphics portfolio', 'visual art projects', 'design portfolio Cairo'],
   },
 
-  '/privacy': {
-    title: 'Privacy Policy | Aymon',
-    description: "Our policy on privacy at Ahmed Ayman's website. Learn how we protect your personal information and data.",
-    keywords: ['Ahmed Ayman', 'privacy policy', 'data protection', 'personal information'],
-  },
-
   '*': {
     title: 'Page Not Found | Aymon',
     description:

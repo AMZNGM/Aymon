@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import { metadataGenerators } from '@/seo/seo-helpers'
 import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
 
-import Preloader from '@/components/shared/Preloader'
+// import Preloader from '@/components/home-components/Preloader'
 import Hero from '@/components/home-components/hero-components/Hero.jsx'
 const TrustedUs = dynamic(() => import('@/components/home-components/TrustedUs'), { loading: LoadingSkeleton })
 import SectionHeading from '@/components/shared/SectionHeading'

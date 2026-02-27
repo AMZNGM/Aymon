@@ -38,7 +38,6 @@ export const metadataGenerators = {
   home: createMetadataGenerator('/'),
   about: createMetadataGenerator('/about'),
   work: createMetadataGenerator('/work'),
-  privacy: createMetadataGenerator('/privacy'),
   notFound: createMetadataGenerator('*'),
   works: (data) => ({
     title: data.title,

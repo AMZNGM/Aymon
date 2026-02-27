@@ -1,4 +1,3 @@
-import { PreloaderProvider } from '@/context/PreloaderContext'
 import ErrorBoundary from '@/components/app-components/ErrorBoundary'
 import ScrollProvider from '@/components/app-components/ScrollProvider'
 import Banner from '@/app/banner'
@@ -12,15 +11,13 @@ export default function AppWrapper({ children }) {
   return (
     <ErrorBoundary>
       <ScrollProvider>
-        <PreloaderProvider>
-          <Banner />
-          <ScrollToTop />
-          {children}
-          <CustomCursor />
-          <GlobalImageModal />
-          <ScrollToTopBtn />
-          <Footer />
-        </PreloaderProvider>
+        <Banner />
+        <ScrollToTop />
+        {children}
+        <CustomCursor />
+        <GlobalImageModal />
+        <ScrollToTopBtn />
+        <Footer />
       </ScrollProvider>
     </ErrorBoundary>
   )
