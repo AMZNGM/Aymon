@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import LazyVideo from '@/components/ui/unstyled/LazyVideo'
-import mainPhotoNoBG from '../../../public/images/profile.webp'
+import mainPhotoNoBG from '../../../public/images/profile2.webp'
 
 export default function NavImage() {
   const { scrollYProgress } = useScroll({})
