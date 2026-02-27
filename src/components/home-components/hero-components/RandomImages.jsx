@@ -11,7 +11,7 @@ export const images = [
   { src: '/images/hero-Images/Asfour.webp', alt: 'Asfour', rotation: -15 },
   { src: '/images/hero-Images/aymon-self-portrait.webp', alt: 'Aymon Self Portrait', rotation: 9 },
   { src: '/images/hero-Images/caligula.webp', alt: 'Caligula', rotation: 5 },
-  { src: '/images/hero-Images/Crow.webp', alt: 'Crow', rotation: -5 },
+  { src: '/images/hero-Images/Crow2.webp', alt: 'Crow', rotation: -5 },
   { src: '/images/hero-Images/Folk.webp', alt: 'Folk', rotation: -12 },
   { src: '/images/hero-Images/Forcing.webp', alt: 'Forcing', rotation: 8 },
   { src: '/images/hero-Images/Inside.webp', alt: 'Inside', rotation: 5 },
