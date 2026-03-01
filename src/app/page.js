@@ -14,6 +14,7 @@ export const generateMetadata = metadataGenerators.home
 export default function Home() {
   return (
     <>
+       {/* <Preloader /> */}
       <Hero />
       <TrustedUs />
       <SectionHeading title="Selected Work" />
