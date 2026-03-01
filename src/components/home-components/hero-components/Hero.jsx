@@ -9,6 +9,11 @@ export default function Hero() {
 
       <div className="top-0 left-0 z-50 sticky lg:w-[27dvw] h-fit lg:h-screen">
         <Navbar />
+
+
+
+
+
       </div>
 
       <div className="relative grow">

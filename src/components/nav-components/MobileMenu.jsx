@@ -6,7 +6,6 @@ import { useMemo, useState, useEffect } from 'react'
 import { TextAlignJustify } from 'lucide-react'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
 import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
-import ContactPopup from '@/components/nav-components/ContactPopup'
 
 export default function MobileMenu({ className, btnClassName }) {
   const navLinks = useMemo(() => ['/about', '/work'], [])
@@ -66,7 +65,7 @@ export default function MobileMenu({ className, btnClassName }) {
         </motion.div>
       </nav>
 
-      <ContactPopup isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      {/* <ContactPopup isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} /> */}
     </div>
   )
 }

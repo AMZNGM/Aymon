@@ -1,13 +1,22 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
+import { useEffect } from 'react'
+import { useScrollLock } from 'usehooks-ts'
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import CloseBtn from '@/components/ui/Buttons/CloseBtn'
 
 export default function ProjectDetailsModal({ project, showDetails, setShowDetails }) {
-  useBodyScrollLock(showDetails)
   useKeyboardShortcuts({ onEscape: () => setShowDetails(false) })
+  const { lock, unlock } = useScrollLock({ autoLock: false })
+
+  useEffect(() => {
+    if (showDetails) {
+      lock()
+    } else {
+      unlock()
+    }
+  }, [showDetails, lock, unlock])
 
   return (
     <div className="z-50 fixed inset-0 flex justify-center items-center p-4">

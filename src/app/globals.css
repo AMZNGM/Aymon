@@ -8,12 +8,12 @@
   --font-main: var(--font-main);
   --font-sec: var(--font-sec);
 }
-* {
+/* * {
   box-sizing: border-box;
-}
-html {
+} */
+/* html {
   scrollbar-width: none;
-}
+} */
 body:has(.hide-footer) footer {
   display: none;
 }

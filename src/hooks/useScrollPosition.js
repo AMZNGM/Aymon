@@ -19,4 +19,4 @@ export function useScrollPosition(thresholdVh = 1) {
   return active
 }
 
-// let isScrolled100vh = useScrollPosition(0.1)
+// const isScrolled100vh = useScrollPosition(0.1)

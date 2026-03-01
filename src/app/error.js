@@ -1,35 +1,33 @@
 'use client'
 
-import { Component } from 'react'
-import ErrorBackground from '@/components/shared/ErrorBackground'
+import { useEffect } from 'react'
 
-export default class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { hasError: false, error: null }
-  }
+export default function Error({ error, reset }) {
+  useEffect(() => {
+    console.error('Error boundary caught:', error)
+  }, [error])
 
-  static getDerivedStateFromError(error) {
-    return { hasError: true, error }
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo)
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <ErrorBoundaryUI />
+  const backgroundChars = useMemo(() => {
+    let seed = 12345
+    const seededRandom = () => {
+      seed = (seed * 9301 + 49297) % 233280
+      return seed / 233280
     }
 
-    return this.props.children
-  }
-}
+    return Array.from({ length: 30 }).map((_, i) => (
+      <div key={i}>
+        {Array.from({ length: 500 })
+          .map(() => String.fromCharCode(33 + Math.floor(seededRandom() * 94)))
+          .join('')}
+      </div>
+    ))
+  }, [])
 
-function ErrorBoundaryUI() {
   return (
-    <div className="relative w-dvw h-dvh overflow-hidden flex justify-center items-center bg-text font-mono text-bg">
-      <ErrorBackground />
+    <main className="relative w-dvw h-dvh overflow-hidden flex justify-center items-center bg-text font-mono text-bg">
+      <div className="absolute inset-0 overflow-hidden opacity-50 text-xs leading-tight pointer-events-none select-none">
+        {backgroundChars}
+      </div>
 
       <div className="z-10 relative w-full max-w-3xl space-y-4 bg-text border-4 p-8">
         <pre className="overflow-x-auto text-xs">
@@ -65,7 +63,10 @@ function ErrorBoundaryUI() {
         <div className="text-green-400/50 text-xs mb-4">{'═'.repeat(60)}</div>
 
         <button
-          onClick={() => window.location.reload()}
+          onClick={() => {
+            // attempt to recover by re-rendering the segment
+            reset()
+          }}
           className="w-full hover:bg-bg hover:text-text transition-colors p-4 cursor-pointer"
         >
           [ REBOOT SYSTEM ]
@@ -78,6 +79,6 @@ function ErrorBoundaryUI() {
           <span className="animate-ping">|</span>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

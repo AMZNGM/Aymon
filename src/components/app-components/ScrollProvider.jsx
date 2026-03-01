@@ -8,14 +8,19 @@ export default function ScrollProvider({ children }) {
   const rafIdRef = useRef(null)
 
   useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual'
+    }
+
     const lenis = new Lenis({
       smooth: true,
-      lerp: 0.1, // scroll smooth
+      lerp: 0.1,
       wheelMultiplier: 1,
       touchMultiplier: 1,
     })
 
     lenisRef.current = lenis
+    window.lenis = lenis
 
     function raf(time) {
       lenis.raf(time)
@@ -26,7 +31,7 @@ export default function ScrollProvider({ children }) {
 
     return () => {
       lenis.destroy()
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current)
+      if (rafIdRef.current) cancelAnimationFrame(raf)
     }
   }, [])
 

@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import { createSwapy } from 'swapy'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
-import LazyVideo from '@/components/ui/unstyled/LazyVideo'
 import SwapPoints from '@/components/ui/SwapPoints'
 import FloatingEffect from '@/components/ui/effect/FloatingEffect'
 
@@ -54,7 +53,7 @@ export default function VideosSection() {
             <div data-swapy-item={index} className="w-full h-full">
               <FloatingEffect>
                 <article className="w-full">
-                  <LazyVideo
+                  <video
                     loop
                     muted
                     autoPlay

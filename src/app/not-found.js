@@ -3,16 +3,12 @@ import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 
 export default function NotFound() {
   return (
-    <main className="relative w-dvw h-dvh overflow-hidden bg-text text-bg py-24 px-4 z-50">
-      <section className="relative size-full flex flex-col justify-center items-center gap-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-medium">Page not found</h1>
-          <p className="text-sm">Sorry, there is nothing here</p>
-        </div>
-        <Link href="/" className="text-xs hover:text-main duration-200">
-          <TextWghtGrow label="Go Back Home" />
-        </Link>
-      </section>
-    </main>
+    <section className="relative w-dvw h-dvh flex max-md:flex-col justify-center items-center gap-4 p-4">
+      <h1 className="text-2xl font-medium">nothing here</h1>
+      <p className="text-sm">shut your eyes and go back</p>
+      <Link href="/" className="text-xs duration-200 border px-2 py-1 rounded-sm hover:bg-bg hover:text-text">
+        <TextWghtGrow label="by by" />
+      </Link>
+    </section>
   )
 }

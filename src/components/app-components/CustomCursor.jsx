@@ -2,61 +2,36 @@
 
 import { motion } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
-import { useIsMobile } from '@/hooks/useIsMobile'
 import { useMouseMotion } from '@/hooks/useMouseMotion'
 
 export default function CustomCursor() {
-  const windowRef = useRef(null)
-  const { x, y } = useMouseMotion(windowRef, { springConfig: { stiffness: 150, damping: 20 } })
-  const { x: x2, y: y2 } = useMouseMotion(windowRef, { springConfig: { stiffness: 300, damping: 40 } })
+  const ref = useRef(null)
+  const { x, y } = useMouseMotion(ref, { springConfig: { stiffness: 150, damping: 20 } })
+  const { x: x2, y: y2 } = useMouseMotion(ref, { springConfig: { stiffness: 300, damping: 40 } })
   const [isHidden, setIsHidden] = useState(false)
-  const isMobile = useIsMobile()
 
   useEffect(() => {
-    const handleMouseEnter = (e) => {
+    const handle = (e) => {
       if (e.target.closest('[data-hide-cursor="true"]')) {
-        setIsHidden(true)
+        setIsHidden(e.type === 'mouseover')
       }
     }
 
-    const handleMouseLeave = (e) => {
-      if (e.target.closest('[data-hide-cursor="true"]')) {
-        setIsHidden(false)
-      }
-    }
-
-    document.addEventListener('mouseover', handleMouseEnter)
-    document.addEventListener('mouseout', handleMouseLeave)
+    document.addEventListener('mouseover', handle)
+    document.addEventListener('mouseout', handle)
 
     return () => {
-      document.removeEventListener('mouseover', handleMouseEnter)
-      document.removeEventListener('mouseout', handleMouseLeave)
+      document.removeEventListener('mouseover', handle)
+      document.removeEventListener('mouseout', handle)
     }
   }, [])
 
-  if (isHidden || isMobile) return null
+  if (isHidden) return null
 
   return (
-    <div className="max-md:hidden flex justify-center items-center">
-      <motion.div
-        style={{
-          x: x,
-          y: y,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        className="top-0 left-0 z-9999 fixed w-2 h-2 bg-bg rounded-full pointer-events-none"
-      />
-
-      <motion.div
-        style={{
-          x: x2,
-          y: y2,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        className="top-0 left-0 z-9999 fixed w-8 h-8 border border-bg rounded-full pointer-events-none"
-      />
+    <div className="hidden pointer-events-none max-md:">
+      <motion.div style={{ x: x, y: y }} className="z-50 fixed inset-0 w-4 h-2 bg-bg rounded-full -translate-1/2" />
+      <motion.div style={{ x: x2, y: y2 }} className="z-50 fixed inset-0 w-8 h-8 border rounded-full -translate-1/2" />
     </div>
   )
 }

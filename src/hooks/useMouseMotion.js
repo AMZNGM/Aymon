@@ -3,38 +3,28 @@
 import { useEffect, useRef } from 'react'
 import { useMotionValue, useSpring } from 'framer-motion'
 
-type Options = {
-  containerRef?: React.RefObject<HTMLElement>
-  spring?: { stiffness?: number; damping?: number }
-  relative?: boolean
-  center?: boolean
-  disabled?: boolean
-}
-
 export function useMouseMotion({
   containerRef,
   spring = { stiffness: 250, damping: 40 },
   relative = true,
   center = true,
   disabled = false,
-}: Options = {}) {
+}) {
+  const ref = useRef()
   const x = useMotionValue(0)
   const y = useMotionValue(0)
-
   const sx = useSpring(x, spring)
   const sy = useSpring(y, spring)
-
-  const raf = useRef<number | null>(null)
 
   useEffect(() => {
     if (disabled || typeof window === 'undefined') return
 
     const target = window
 
-    const update = (e: PointerEvent) => {
-      if (raf.current) cancelAnimationFrame(raf.current)
+    const update = (e) => {
+      if (ref.current) cancelAnimationFrame(ref.current)
 
-      raf.current = requestAnimationFrame(() => {
+      ref.current = requestAnimationFrame(() => {
         let nx = e.clientX
         let ny = e.clientY
 
@@ -59,7 +49,7 @@ export function useMouseMotion({
 
     return () => {
       target.removeEventListener('pointermove', update)
-      if (raf.current) cancelAnimationFrame(raf.current)
+      if (ref.current) cancelAnimationFrame(ref.current)
     }
   }, [containerRef, relative, center, disabled])
 

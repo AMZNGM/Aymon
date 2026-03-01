@@ -5,7 +5,7 @@ import { db } from '@/lib/firebase'
 export async function GET() {
   try {
     console.log('Test-admin: Starting admin-style fetch...')
-    
+
     if (!db) {
       console.log('Test-admin: Firebase not initialized')
       return NextResponse.json({ success: false, error: 'Firebase not initialized' }, { status: 500 })
@@ -14,12 +14,12 @@ export async function GET() {
     const projectsQuery = query(collection(db, 'projects'), orderBy('createdAt', 'desc'))
     const querySnapshot = await getDocs(projectsQuery)
     console.log('Test-admin: Snapshot received, docs count:', querySnapshot.docs.length)
-    
+
     const projects = querySnapshot.docs.map((doc) => ({
       firestoreId: doc.id,
       ...doc.data(),
     }))
-    
+
     console.log('Test-admin: Projects mapped:', projects.length)
 
     const sortedProjects = projects.sort((a, b) => {
@@ -32,11 +32,11 @@ export async function GET() {
     })
 
     console.log('Test-admin: Projects sorted, returning:', sortedProjects.length)
-    
+
     return NextResponse.json({
       success: true,
       count: sortedProjects.length,
-      projects: sortedProjects.map(p => ({
+      projects: sortedProjects.map((p) => ({
         id: p.id,
         firestoreId: p.firestoreId,
         title: p.title,
@@ -45,15 +45,18 @@ export async function GET() {
         hasMedia: !!p.media,
         hasPrimaryImage: !!p.media?.primary,
         order: p.order,
-        createdAt: p.createdAt
-      }))
+        createdAt: p.createdAt,
+      })),
     })
   } catch (error) {
     console.error('Test-admin: Error:', error)
-    return NextResponse.json({
-      success: false,
-      error: error.message,
-      stack: error.stack
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message,
+        stack: error.stack,
+      },
+      { status: 500 }
+    )
   }
 }

@@ -1,128 +1,104 @@
 'use client'
 
-import { useRef } from 'react'
-import { gsap, Draggable } from '@/utils/gsapConfig'
+import { useRef, useState, useEffect } from 'react'
+import { gsap, Draggable, ScrollTrigger } from '@/utils/gsapConfig'
 import { useGSAP } from '@gsap/react'
-import { useIsMobile } from '@/hooks/useIsMobile'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 
-export const images = [
-  { src: '/images/hero-Images/Asfour.webp', alt: 'Asfour', rotation: -15 },
-  { src: '/images/hero-Images/aymon-self-portrait.webp', alt: 'Aymon Self Portrait', rotation: 9 },
-  { src: '/images/hero-Images/caligula.webp', alt: 'Caligula', rotation: 5 },
-  { src: '/images/hero-Images/Crow2.webp', alt: 'Crow', rotation: -5 },
-  { src: '/images/hero-Images/Folk.webp', alt: 'Folk', rotation: -12 },
-  { src: '/images/hero-Images/Forcing.webp', alt: 'Forcing', rotation: 8 },
-  { src: '/images/hero-Images/Inside.webp', alt: 'Inside', rotation: 5 },
-  { src: '/images/hero-Images/Metro.webp', alt: 'Metro', rotation: -5 },
-  { src: '/images/hero-Images/Working24.webp', alt: 'Working24', rotation: 12 },
-  { src: '/images/hero-Images/Perspective.webp', alt: 'Perspective', rotation: -18 },
-  { src: '/images/hero-Images/Pigeon.webp', alt: 'Pigeon', rotation: 15 },
-  { src: '/images/hero-Images/Proof.webp', alt: 'Proof', rotation: -10 },
-]
-
-const finalPositions = [
-  { x: '0dvw', y: '-10dvh', rotate: -15 },
-  { x: '18dvw', y: '-5dvh', rotate: 8 },
-  { x: '22dvw', y: '100dvh', rotate: 5 },
-  { x: '-20dvw', y: '-1dvh', rotate: -5 },
-  { x: '0dvw', y: '30dvh', rotate: -12 },
-  { x: '20dvw', y: '50dvh', rotate: 8 },
-  { x: '-25dvw', y: '40dvh', rotate: 5 },
-  { x: '-18dvw', y: '80dvh', rotate: -5 },
-  { x: '10dvw', y: '90dvh', rotate: 12 },
-  { x: '0dvw', y: '120dvh', rotate: -18 },
-  { x: '13dvw', y: '150dvh', rotate: 15 },
-  { x: '-23dvw', y: '118dvh', rotate: -10 },
+const IMAGES = [
+  { src: '/images/hero-Images/Asfour.webp', alt: 'Asfour', x: '0dvw', y: '-10dvh', r: -15 },
+  { src: '/images/hero-Images/aymon-self-portrait.webp', alt: 'Self Portrait', x: '18dvw', y: '-5dvh', r: 8 },
+  { src: '/images/hero-Images/caligula.webp', alt: 'Caligula', x: '22dvw', y: '100dvh', r: 5 },
+  { src: '/images/hero-Images/Crow2.webp', alt: 'Crow', x: '-20dvw', y: '-1dvh', r: -5 },
+  { src: '/images/hero-Images/Folk.webp', alt: 'Folk', x: '0dvw', y: '30dvh', r: -12 },
+  { src: '/images/hero-Images/Forcing.webp', alt: 'Forcing', x: '20dvw', y: '50dvh', r: 8 },
+  { src: '/images/hero-Images/Inside.webp', alt: 'Inside', x: '-25dvw', y: '40dvh', r: 5 },
+  { src: '/images/hero-Images/Metro.webp', alt: 'Metro', x: '-18dvw', y: '80dvh', r: -5 },
+  { src: '/images/hero-Images/Working24.webp', alt: 'Working24', x: '10dvw', y: '90dvh', r: 12 },
+  { src: '/images/hero-Images/Perspective.webp', alt: 'Perspective', x: '0dvw', y: '120dvh', r: -18 },
+  { src: '/images/hero-Images/Pigeon.webp', alt: 'Pigeon', x: '13dvw', y: '150dvh', r: 15 },
+  { src: '/images/hero-Images/Proof.webp', alt: 'Proof', x: '-23dvw', y: '118dvh', r: -10 },
 ]
 
 export default function RandomImages() {
-  const isMobile = useIsMobile()
   const sectionRef = useRef(null)
   const containerRef = useRef(null)
-  const AllImages = isMobile ? images.slice(0, 10) : images
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e) => {
+      gsap.killTweensOf('.gsap-image')
+      ScrollTrigger.killAll()
+      setIsMobile(e.matches)
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   useGSAP(
     () => {
-      if (!sectionRef.current) return
-
-      const images = gsap.utils.toArray('.gsap-image')
-      const isMobile = window.innerWidth <= 768
+      if (!containerRef.current) return
+      const imgs = gsap.utils.toArray('.gsap-image')
 
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: containerRef.current,
           start: isMobile ? '' : 'top top',
           end: isMobile ? '' : 'bottom top',
           scrub: isMobile ? false : 1,
-          pin: isMobile ? false : true,
+          pin: !isMobile,
         },
       })
 
-      images.forEach((img, index) => {
-        const toPos = finalPositions[index % finalPositions.length]
-
+      imgs.forEach((img, i) => {
+        const { x, y, r } = IMAGES[i % IMAGES.length]
         tl.fromTo(
           img,
           {
             x: 0,
             y: isMobile ? -180 : 0,
-            rotation: gsap.utils.random(45, -45),
+            rotation: gsap.utils.random(-45, 45),
             scale: gsap.utils.random(0.75, 0.8),
-            opacity: 1,
-            zIndex: Math.min(index, 10),
+            zIndex: Math.min(i, 10),
           },
-          {
-            x: toPos.x,
-            y: toPos.y,
-            rotation: toPos.rotate,
-            scale: gsap.utils.random(0.7, 1),
-            opacity: 1,
-            ease: 'power2.out',
-            duration: 1,
-          },
-          index * 0.05
+          { x, y, rotation: r, scale: gsap.utils.random(0.7, 1), ease: 'power2.out', duration: 1 },
+          i * 0.05
         )
       })
 
-      Draggable.create(images, {
+      Draggable.create(imgs, {
         type: 'x,y',
         inertia: true,
-        bounds: containerRef.current,
+        bounds: sectionRef.current,
         allowEventDefault: true,
         allowNativeTouchScrolling: true,
-        onRelease: function () {
-          if (isMobile) {
-            images.forEach((img) => {
-              img.style.zIndex = 30
-            })
-          }
-        },
-        // onPress: function () {
-        //   gsap.killTweensOf(this.target)
-        // },
+        onRelease: () => isMobile && imgs.forEach((img) => (img.style.zIndex = 30)),
       })
     },
-    { scope: sectionRef }
+    { scope: containerRef, dependencies: [isMobile] }
   )
 
+  const visibleImages = isMobile ? IMAGES.slice(0, 10) : IMAGES
+
   return (
-    <div ref={containerRef} className="h-[300dvh] max-md:h-[170dvh]">
-      <section ref={sectionRef} className="relative h-dvh flex justify-center items-center">
-        {AllImages.map((image, index) => (
-          <div key={index} className="absolute cursor-grab active:cursor-grabbing will-change-transform gsap-image">
-            <AnimIn delay={0.07 * index}>
+    <section ref={sectionRef} className="h-[300dvh] max-md:h-[170dvh]">
+      <div key={isMobile ? 'mobile' : 'desktop'} ref={containerRef} className="relative h-dvh flex justify-center items-center">
+        {visibleImages.map((img, i) => (
+          <div key={i} className="absolute cursor-grab active:cursor-grabbing will-change-transform gsap-image">
+            <AnimIn delay={0.07 * i}>
               <ImageIn
-                src={image.src}
-                alt={image.alt}
+                src={img.src}
+                alt={img.alt}
                 className="h-fit! rounded-2xl select-none openInModal"
-                divClassName="aspect-square w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw]"
+                divClassName="h-100 w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw]"
               />
             </AnimIn>
           </div>
         ))}
-      </section>
-    </div>
+      </div>
+    </section>
   )
 }
