@@ -12,7 +12,7 @@ const BehanceIcon = () => (
   </svg>
 )
 
-export default function ContactModal() {
+export default function ContactModal({ id = 'contact-modal' }: { id?: string }) {
   const [contactContent, setContactContent] = useState<ContactContent | null>(null)
 
   useEffect(() => {
@@ -22,19 +22,19 @@ export default function ContactModal() {
   if (!contactContent) return null
 
   const LINKS = [
-    { href: `mailto:${contactContent?.email}`, icon: <Mail /> },
-    { href: `tel:${contactContent?.mobile.replace(/\s/g, '')}`, icon: <Phone /> },
-    { href: contactContent?.socialLinks.linkedin.replace(/\s/g, ''), icon: <Linkedin /> },
-    { href: contactContent?.socialLinks.instagram.replace(/\s/g, ''), icon: <Instagram /> },
-    { href: contactContent?.socialLinks.behance.replace(/\s/g, ''), icon: <BehanceIcon /> },
+    { href: `mailto:${contactContent?.email}`, icon: <Mail />, label: `Email: ${contactContent?.email}` },
+    { href: `tel:${contactContent?.mobile.replace(/\s/g, '')}`, icon: <Phone />, label: `Phone: ${contactContent?.mobile}` },
+    { href: contactContent?.socialLinks.linkedin.replace(/\s/g, ''), icon: <Linkedin />, label: 'LinkedIn' },
+    { href: contactContent?.socialLinks.instagram.replace(/\s/g, ''), icon: <Instagram />, label: 'Instagram' },
+    { href: contactContent?.socialLinks.behance.replace(/\s/g, ''), icon: <BehanceIcon />, label: 'Behance' },
   ]
 
   return (
-    <Modal id="contact-modal" className="max-w-xl">
+    <Modal id={id} className="max-w-xl">
       <h2 className="font-sec font-bold text-3xl mb-6">{contactContent.title}</h2>
       <div className="flex justify-center items-center gap-4">
         {LINKS.map((link, i) => (
-          <a key={i} target="_blank" href={link.href}>
+          <a key={i} target="_blank" href={link.href} aria-label={link.label}>
             <RippleEffect className="flex items-center size-13.5 border border-text/20 hover:border-text/40 rounded-lg transition-colors p-4 cursor-pointer">
               {link.icon}
             </RippleEffect>

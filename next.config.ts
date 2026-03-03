@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 60 * 60 * 24 * 7, // 7 days
+  },
+  compress: true,
+  poweredByHeader: false,
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react', 'motion/react'],
   },
 }
 

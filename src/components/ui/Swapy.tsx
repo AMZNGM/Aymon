@@ -1,5 +1,6 @@
 'use client'
 
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { useEffect, useRef } from 'react'
 import { createSwapy, type Swapy, type Config, type SwapEventHandler } from 'swapy'
 
@@ -18,6 +19,7 @@ export const SwapyLayout = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const swapyRef = useRef<Swapy | null>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const container = containerRef.current
@@ -30,6 +32,8 @@ export const SwapyLayout = ({
       swapyRef.current?.destroy()
     }
   }, [config, onSwap])
+
+  if (isMobile) return children
 
   return (
     <div id={id} ref={containerRef} className={className}>

@@ -6,7 +6,7 @@ export default function Visionary() {
       <Modal3d />
 
       <div className="flex flex-col justify-center items-center gap-6 w-full h-full uppercase">
-        <h5 className="font-sec text-[14.5dvw] leading-none whitespace-nowrap mb-6">{`// Visionary **`}</h5>
+        <h3 className="font-sec text-[14.5dvw] leading-none whitespace-nowrap mb-6">{`// Visionary **`}</h3>
 
         <span className="flex justify-center items-center gap-8 max-w-xl text-xs text-center">
           <span>Find</span>

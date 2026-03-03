@@ -45,7 +45,7 @@ export default function SelectedWork({
                   onMouseEnter={() => setHoveredProject(project.id)}
                   onMouseLeave={() => setHoveredProject(null)}
                   src={project.media?.primary || ''}
-                  alt={project.client}
+                  alt={`Project thumbnail for ${project.client}`}
                   priority={index <= 3}
                   data-hide-cursor="true"
                   divClassName="w-full h-full select-none cursor-none"

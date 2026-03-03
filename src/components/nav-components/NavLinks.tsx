@@ -17,12 +17,12 @@ export default async function NavLinks() {
           </Link>
         ))}
 
-        <ModalTrigger targetId="contact-modal" className="cursor-pointer">
+        <ModalTrigger targetId="desktop-contact-modal" className="cursor-pointer">
           <TextWghtGrow label="contact" />
         </ModalTrigger>
       </AnimText>
 
-      <ContactModal />
+      <ContactModal id="desktop-contact-modal" />
     </>
   )
 }

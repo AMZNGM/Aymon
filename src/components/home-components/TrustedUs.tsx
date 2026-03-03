@@ -16,11 +16,12 @@ export default function TrustedUs() {
       <LogosMarquee />
 
       <div ref={sectionRef} className="top-38 max-md:top-50 max-md:-left-4 md:left-[14dvw] absolute overflow-hidden rounded-full">
-        <div className="flex justify-center items-center size-[25dvw] max-md:size-60 overflow-hidden md:bg-bg rounded-full">
-          <h4 className="z-10 flex flex-wrap justify-center max-2xl:max-w-xs overflow-hidden text-[3dvw] max-md:text-bg max-md:text-3xl text-center uppercase leading-none cursor-none select-none">
+        <div className="flex justify-center items-center size-[25dvw] max-md:size-60 overflow-hidden bg-bg rounded-full">
+          <h3 className="z-10 flex flex-wrap justify-center max-2xl:max-w-xs overflow-hidden text-[3dvw] max-md:text-2xl text-center uppercase leading-none cursor-none select-none">
             &nbsp;&nbsp;&nbsp;A
-            <br /> Trusted Names in Success.
-          </h4>
+            <br /> Trusted Names
+            <br /> in Success.
+          </h3>
 
           <motion.div
             animate={{
@@ -28,7 +29,7 @@ export default function TrustedUs() {
             }}
             style={{ x: isMobile ? 0 : sx, y: isMobile ? 0 : sy }}
             transition={{ duration: 5, repeat: Infinity, repeatType: 'reverse', ease: [0.25, 1, 0.75, 1] }}
-            className="absolute size-50 max-md:opacity-50 rounded-full -translate-1/2 cursor-none mix-blend-difference"
+            className="max-md:hidden absolute size-50 max-md:opacity-50 rounded-full -translate-1/2 cursor-none mix-blend-difference"
           />
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useId, useMemo } from 'react'
 import { motion, useAnimationFrame, useMotionValue, useTransform, useScroll, useVelocity, useSpring, type MotionValue } from 'motion/react'
+import { useIsMobile } from '@/hooks/useIsMobile'
 
 interface ImagesMarqueeProps {
   children: React.ReactNode
@@ -87,6 +88,7 @@ export default function ImagesMarquee({
   verticalBuffer = 80,
   spacing = 1.5,
 }: ImagesMarqueeProps) {
+  const isMobile = useIsMobile()
   const container = useRef(null)
   const marqueeContainerRef = useRef(null)
   const baseOffset = useMotionValue(0)
@@ -103,6 +105,8 @@ export default function ImagesMarquee({
   const scrollVelocity = useVelocity(scrollY)
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 })
   const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false })
+
+  const isDragEnabled = draggable && !isMobile
 
   useEffect(() => {
     const [, , vbWidth, vbHeight] = viewBox.split(' ').map(Number)
@@ -155,7 +159,7 @@ export default function ImagesMarquee({
       moveBy += moveBy * Math.abs(velocityFactor.get())
     }
 
-    if (draggable) {
+    if (isDragEnabled) {
       if (isDragging.current && dragAwareDirection && Math.abs(dragVelocity.current) > 0.1) {
         directionFactor.current = Math.sign(dragVelocity.current)
       }
@@ -171,14 +175,14 @@ export default function ImagesMarquee({
   })
 
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (!draggable) return
+    if (!isDragEnabled) return
     isDragging.current = true
     lastPointerPosition.current = { x: e.clientX, y: e.clientY }
     dragVelocity.current = 0
   }
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!draggable || !isDragging.current) return
+    if (!isDragEnabled || !isDragging.current) return
     const deltaX = e.clientX - lastPointerPosition.current.x
     const deltaY = e.clientY - lastPointerPosition.current.y
     const projectedDelta = deltaX > 0 ? Math.sqrt(deltaX ** 2 + deltaY ** 2) : -Math.sqrt(deltaX ** 2 + deltaY ** 2)
@@ -191,7 +195,7 @@ export default function ImagesMarquee({
   }
 
   const handlePointerUp = () => {
-    if (!draggable) return
+    if (!isDragEnabled) return
     isDragging.current = false
   }
 
@@ -204,7 +208,7 @@ export default function ImagesMarquee({
       onPointerCancel={handlePointerUp}
       onMouseEnter={() => (isHovered.current = true)}
       onMouseLeave={() => (isHovered.current = false)}
-      className={`relative overflow-x-hidden overflow-y-visible cursor-grab active:cursor-grabbing max-md:scale-200 touch-none ${className}`}
+      className={`relative overflow-x-hidden overflow-y-visible ${isDragEnabled ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'} max-md:scale-200 touch-none ${className}`}
     >
       <div ref={marqueeContainerRef} className="relative">
         <svg

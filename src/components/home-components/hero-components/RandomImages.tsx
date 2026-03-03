@@ -123,6 +123,7 @@ export default function RandomImages() {
                 alt={img.alt}
                 className="h-fit! rounded-2xl select-none openInModal"
                 divClassName="h-100 w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw]"
+                priority={i < 3}
               />
             </AnimIn>
           </div>

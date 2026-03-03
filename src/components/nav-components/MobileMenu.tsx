@@ -51,13 +51,13 @@ export default function MobileMenu({ className, btnClassName }: { className?: st
         ))}
 
         <motion.div whileTap={{ scale: 0.9 }}>
-          <ModalTrigger targetId="contact-modal" className="cursor-pointer">
+          <ModalTrigger targetId="mobile-contact-modal" className="cursor-pointer">
             <TextWghtGrow label="contact" className="uppercase" />
           </ModalTrigger>
         </motion.div>
       </nav>
 
-      <ContactModal />
+      <ContactModal id="mobile-contact-modal" />
     </div>
   )
 }
