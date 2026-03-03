@@ -12,7 +12,7 @@ export default function LogoName() {
 
   return (
     <h1 className="font-black text-[4dvw] max-2xl:text-6xl text-center uppercase leading-12 max-lg:leading-12 2xl:leading-none">
-      <AnimIn as="span" center blur duration={2.7} className="group">
+      <AnimIn center blur duration={2.7} className="group">
         <motion.span
           animate={{ opacity: isMobile ? [1, 0] : 1 }}
           transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
@@ -30,7 +30,7 @@ export default function LogoName() {
         >
           <Link
             href="/"
-            className="top-1/2 absolute flex justify-center items-center lg:opacity-0 group-hover:opacity-100 transition-opacity -translate-y-1/2 duration-400"
+            className="absolute inset-0 flex justify-center items-center lg:opacity-0 group-hover:opacity-100 transition-opacity duration-400"
           >
             Aymon
           </Link>
@@ -38,7 +38,6 @@ export default function LogoName() {
       </AnimIn>
 
       <AnimIn
-        as="span"
         center
         blur
         duration={1.7}

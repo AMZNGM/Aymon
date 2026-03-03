@@ -5,7 +5,6 @@ import AppWrapper from '@/components/app-components/AppWrapper'
 
 export const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-main',
   display: 'swap',
 })
 
@@ -35,7 +34,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${gambarino.variable}`}>
+    <html lang="en" className={`${inter.className} ${gambarino.variable}`}>
       <body
         suppressHydrationWarning
         className="relative w-dvw h-full bg-text selection:bg-main text-bg selection:text-bg antialiased md:subpixel-antialiased scroll-smooth"

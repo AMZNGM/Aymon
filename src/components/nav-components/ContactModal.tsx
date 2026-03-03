@@ -30,7 +30,7 @@ export default function ContactModal({ id = 'contact-modal' }: { id?: string }) 
   ]
 
   return (
-    <Modal id={id} className="max-w-xl">
+    <Modal id={id} className="max-w-xl m-2">
       <h2 className="font-sec font-bold text-3xl mb-6">{contactContent.title}</h2>
       <div className="flex justify-center items-center gap-4">
         {LINKS.map((link, i) => (
