@@ -1,8 +1,4 @@
-'use client'
-
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { useMemo, useState, useEffect } from 'react'
 import { TextAlignJustify } from 'lucide-react'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
 import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
@@ -10,51 +6,34 @@ import ModalTrigger from '@/components/ui/Modal/ModalTrigger'
 import ContactModal from '@/components/nav-components/ContactModal'
 
 export default function MobileMenu({ className, btnClassName }: { className?: string; btnClassName?: string }) {
-  const navLinks = useMemo(() => ['/about', '/work'], [])
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-  }, [isMenuOpen])
+  const navLinks = ['/about', '/work']
 
   return (
-    <div className={`${className}`}>
-      <input
-        id="mobile-nav-toggle"
-        type="checkbox"
-        checked={isMenuOpen}
-        onChange={() => setIsMenuOpen(!isMenuOpen)}
-        className="peer hidden"
-      />
+    <div className={`${className} overflow-hidden`}>
+      <input id="mobile-nav-toggle" type="checkbox" className="peer hidden" />
       <label
         htmlFor="mobile-nav-toggle"
-        className={`absolute top-4 right-2 max-md:right-1 backdrop-blur-sm overflow-hidden rounded-xl z-1001 ${btnClassName}`}
+        className={`absolute top-4 right-2 max-md:right-1 backdrop-blur-sm overflow-hidden rounded-xl z-9999 ${btnClassName}`}
       >
-        <motion.div whileTap={{ scale: 0.9, rotate: 90 }}>
-          <RippleEffect className={`bg-bg/10 hover:bg-bg/30 duration-100 rounded-xl cursor-pointer z-1001 p-2`}>
-            <TextAlignJustify strokeWidth={3} />
-          </RippleEffect>
-        </motion.div>
+        <RippleEffect
+          className={`bg-bg/10 hover:bg-bg/30 duration-200 rounded-xl cursor-pointer z-1001 p-2 active:scale-90 active:rotate-20`}
+        >
+          <TextAlignJustify strokeWidth={3} />
+        </RippleEffect>
       </label>
 
-      <nav className="z-1000 fixed inset-0 flex flex-col justify-center items-center gap-4 overflow-hidden bg-main opacity-100 peer-checked:opacity-100 font-medium 2xl:text-[4dvw] text-5xl uppercase transition-all translate-y-full peer-checked:translate-y-0 duration-300 ease-in-out px-6 py-2 pointer-events-none peer-checked:pointer-events-auto">
+      <nav className="z-9998 fixed inset-0 flex flex-col justify-center items-center gap-4 overflow-hidden bg-main opacity-100 peer-checked:opacity-100 font-medium 2xl:text-[4dvw] text-5xl uppercase transition-all translate-y-full peer-checked:translate-y-0 duration-300 ease-in-out px-6 py-2 pointer-events-none peer-checked:pointer-events-auto">
         {navLinks.map((link, index) => (
-          <motion.div key={index} whileTap={{ scale: 0.9 }}>
-            <Link href={link} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <label key={index} htmlFor="mobile-nav-toggle" className="cursor-pointer">
+            <Link href={link} className="active:scale-90 duration-200">
               <TextWghtGrow label={link.replace('/', '')} />
             </Link>
-          </motion.div>
+          </label>
         ))}
 
-        <motion.div whileTap={{ scale: 0.9 }}>
-          <ModalTrigger targetId="mobile-contact-modal" className="cursor-pointer">
-            <TextWghtGrow label="contact" className="uppercase" />
-          </ModalTrigger>
-        </motion.div>
+        <ModalTrigger targetId="mobile-contact-modal" className="active:scale-90 duration-200 cursor-pointer">
+          <TextWghtGrow label="contact" className="uppercase" />
+        </ModalTrigger>
       </nav>
 
       <ContactModal id="mobile-contact-modal" />

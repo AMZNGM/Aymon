@@ -12,6 +12,7 @@ interface ImageInProps extends MotionProps {
   duration?: number
   delay?: number
   priority?: ImageProps['priority']
+  loading?: ImageProps['loading']
   description?: string
   date?: string
   onMouseEnter?: () => void
@@ -27,6 +28,7 @@ export default function ImageIn({
   duration = 0.3,
   delay = 0,
   priority = false,
+  loading = 'lazy',
   description = '',
   date = '',
   onMouseEnter,
@@ -52,6 +54,7 @@ export default function ImageIn({
         data-date={date}
         fill
         priority={priority}
+        loading={loading}
         sizes={sizes}
         className={`object-center object-cover hover:scale-105 transition-transform duration-700 ${className}`}
       />

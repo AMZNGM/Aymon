@@ -52,7 +52,6 @@ export default function RandomImages() {
         (context) => {
           const { desktop, mobile } = context.conditions!
 
-          const visibleImages = mobile ? IMAGES.slice(0, 10) : IMAGES
           const imgs = gsap.utils.toArray<HTMLElement>('.gsap-image')
 
           const tl = gsap.timeline({
@@ -68,7 +67,7 @@ export default function RandomImages() {
           })
 
           imgs.forEach((img, i) => {
-            const { x, y, r } = visibleImages[i % visibleImages.length]
+            const { x, y, r } = IMAGES[i % IMAGES.length]
 
             tl.fromTo(
               img,
@@ -91,18 +90,22 @@ export default function RandomImages() {
             )
           })
 
-          const draggable = Draggable.create(imgs, {
-            type: 'x,y',
-            inertia: true,
-            bounds: sectionRef.current ?? undefined,
-            allowEventDefault: true,
-            allowNativeTouchScrolling: true,
-            onRelease: () => imgs.forEach((img) => (img.style.zIndex = '30')),
-          })
+          let draggable: ReturnType<typeof Draggable.create> = []
+
+          if (desktop) {
+            draggable = Draggable.create(imgs, {
+              type: 'x,y',
+              inertia: true,
+              bounds: sectionRef.current ?? undefined,
+              allowEventDefault: true,
+              allowNativeTouchScrolling: true,
+              onRelease: () => imgs.forEach((img) => (img.style.zIndex = '30')),
+            })
+          }
 
           return () => {
             tl.kill()
-            draggable.forEach((d) => d.kill())
+            draggable?.forEach((d) => d.kill())
           }
         }
       )
@@ -116,7 +119,10 @@ export default function RandomImages() {
     <section ref={sectionRef} className="h-[300dvh] max-md:h-[170dvh] overflow-x-hidden">
       <div ref={containerRef} className="relative flex justify-center items-center h-dvh">
         {IMAGES.map((img, i) => (
-          <div key={i} className="absolute cursor-grab active:cursor-grabbing will-change-transform gsap-image">
+          <div
+            key={i}
+            className="absolute cursor-grab active:cursor-grabbing will-change-transform gsap-image contain-layout contain-paint"
+          >
             <AnimIn delay={0.07 * i}>
               <ImageIn
                 src={img.src}
@@ -124,6 +130,8 @@ export default function RandomImages() {
                 className="h-fit! rounded-2xl select-none openInModal"
                 divClassName="h-100 w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw]"
                 priority={i < 3}
+                loading={i < 3 ? 'eager' : 'lazy'}
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
             </AnimIn>
           </div>

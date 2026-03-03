@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
@@ -12,7 +11,7 @@ export default function LogoName() {
 
   return (
     <h1 className="font-black text-[4dvw] max-2xl:text-6xl text-center uppercase leading-12 max-lg:leading-12 2xl:leading-none">
-      <AnimIn center blur duration={2.7} className="group">
+      <AnimIn center blur duration={2.7} className="group cursor-default">
         <motion.span
           animate={{ opacity: isMobile ? [1, 0] : 1 }}
           transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
@@ -24,17 +23,14 @@ export default function LogoName() {
           </span>
         </motion.span>
 
-        <motion.span
+        <motion.div
           animate={{ opacity: isMobile ? [0, 1] : 1, color: COLORS }}
           transition={{ duration: isMobile ? 3 : 5, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
         >
-          <Link
-            href="/"
-            className="absolute inset-0 flex justify-center items-center lg:opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-          >
+          <span className="absolute inset-0 flex justify-center items-center lg:opacity-0 group-hover:opacity-100 transition-opacity duration-400">
             Aymon
-          </Link>
-        </motion.span>
+          </span>
+        </motion.div>
       </AnimIn>
 
       <AnimIn

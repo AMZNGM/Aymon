@@ -33,7 +33,7 @@ export const SwapyLayout = ({
     }
   }, [config, onSwap])
 
-  if (isMobile) return children
+  if (isMobile) return <div className={className}>{children}</div>
 
   return (
     <div id={id} ref={containerRef} className={className}>
