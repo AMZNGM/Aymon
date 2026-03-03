@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useId, useMemo } from 'react'
 import { motion, useAnimationFrame, useMotionValue, useTransform, useScroll, useVelocity, useSpring, type MotionValue } from 'motion/react'
+import { useInView } from 'motion/react'
 import { useIsMobile } from '@/hooks/useIsMobile'
 
 interface ImagesMarqueeProps {
@@ -76,7 +77,7 @@ export default function ImagesMarquee({
   path,
   viewBox = '0 0 100 100',
   repeat = 2,
-  baseVelocity = 8,
+  baseVelocity = 6,
   direction = 'normal',
   draggable = true,
   dragSensitivity = 0.05,
@@ -105,7 +106,9 @@ export default function ImagesMarquee({
   const scrollVelocity = useVelocity(scrollY)
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 })
   const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false })
+  const isInView = useInView(container, { amount: 0.1 })
 
+  // Disable dragging on mobile
   const isDragEnabled = draggable && !isMobile
 
   useEffect(() => {
@@ -146,6 +149,9 @@ export default function ImagesMarquee({
   }, [children, repeat])
 
   useAnimationFrame((_, delta) => {
+    // Stop animation when out of viewport
+    if (!isInView) return
+
     hoverFactorValue.set(isHovered.current && slowdownOnHover ? slowDownFactor : 1)
 
     const velocity = scrollVelocity.get()

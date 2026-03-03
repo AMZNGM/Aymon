@@ -7,9 +7,7 @@ export function useIsMobile(breakpoint = 768) {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(
-        window.innerWidth < breakpoint || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-      )
+      setIsMobile(window.innerWidth < breakpoint)
     }
 
     checkMobile()

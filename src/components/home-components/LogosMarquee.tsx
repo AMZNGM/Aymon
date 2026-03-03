@@ -1,8 +1,8 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { getLogos } from '@/lib/getLogos'
-import ImageIn from '@/components/ui/unstyled/ImageIn'
 import ImagesMarquee from '@/components/ui/ImagesMarquee'
 
 const path =
@@ -53,25 +53,29 @@ export default function LogosMarquee() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="block z-50 relative w-full h-full cursor-pointer"
+                className="block z-50 relative w-full h-full aspect-square cursor-pointer"
               >
-                <ImageIn
+                <Image
                   src={logo.src}
                   alt={`Worked With - ${index}`}
                   priority={index < 5}
+                  loading={index < 5 ? 'eager' : 'lazy'}
                   sizes="100px"
+                  width={96}
+                  height={96}
                   className="object-contain! brightness-0 group-hover:brightness-100 transition-all pointer-events-none select-none"
-                  divClassName="aspect-square"
                 />
               </a>
             ) : (
-              <ImageIn
+              <Image
                 src={logo.src}
                 alt={`Worked With - ${index}`}
                 priority={index < 5}
+                loading={index < 5 ? 'eager' : 'lazy'}
                 sizes="100px"
+                width={96}
+                height={96}
                 className="object-contain! pointer-events-none select-none"
-                divClassName="aspect-square"
               />
             )}
           </div>

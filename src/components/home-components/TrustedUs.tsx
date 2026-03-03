@@ -2,12 +2,10 @@
 
 import { useRef } from 'react'
 import { motion } from 'motion/react'
-import { useIsMobile } from '@/hooks/useIsMobile'
 import { useMouseMotion } from '@/hooks/useMouseMotion'
 import LogosMarquee from '@/components/home-components/LogosMarquee'
 
 export default function TrustedUs() {
-  const isMobile = useIsMobile()
   const sectionRef = useRef<HTMLDivElement>(null)
   const { sx, sy } = useMouseMotion({ containerRef: sectionRef, center: false })
 
@@ -27,7 +25,7 @@ export default function TrustedUs() {
             animate={{
               backgroundColor: ['#ff4d4d', '#4dff88', '#4dd2ff', '#ff4df2', '#ffe74d', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f0932b'],
             }}
-            style={{ x: isMobile ? 0 : sx, y: isMobile ? 0 : sy }}
+            style={{ x: sx, y: sy }}
             transition={{ duration: 5, repeat: Infinity, repeatType: 'reverse', ease: [0.25, 1, 0.75, 1] }}
             className="max-md:hidden absolute size-50 max-md:opacity-50 rounded-full -translate-1/2 cursor-none mix-blend-difference"
           />

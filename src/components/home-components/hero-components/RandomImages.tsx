@@ -29,8 +29,8 @@ const IMAGES: ImageConfig[] = [
   { src: '/images/hero-Images/Inside.webp', alt: 'Inside', x: '-25dvw', y: '40dvh', r: 5 },
   { src: '/images/hero-Images/Metro.webp', alt: 'Metro', x: '-18dvw', y: '80dvh', r: -5 },
   { src: '/images/hero-Images/Working24.webp', alt: 'Working24', x: '10dvw', y: '90dvh', r: 12 },
-  { src: '/images/hero-Images/Perspective.webp', alt: 'Perspective', x: '0dvw', y: '120dvh', r: -18 },
-  { src: '/images/hero-Images/Pigeon.webp', alt: 'Pigeon', x: '13dvw', y: '150dvh', r: 15 },
+  { src: '/images/hero-Images/Perspective.webp', alt: 'Perspective', x: '0dvw', y: '80dvh', r: -18 },
+  { src: '/images/hero-Images/Pigeon.webp', alt: 'Pigeon', x: '13dvw', y: '120dvh', r: 15 },
   { src: '/images/hero-Images/Proof.webp', alt: 'Proof', x: '-23dvw', y: '118dvh', r: -10 },
 ]
 
@@ -123,7 +123,7 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="h-[300dvh] max-md:h-[170dvh] overflow-x-hidden">
+    <section ref={sectionRef} className="h-[300dvh] max-md:h-[200dvh] overflow-hidden">
       <div ref={containerRef} className="relative flex justify-center items-center h-dvh">
         {IMAGES.map((img, i) => (
           <div
@@ -137,7 +137,7 @@ export default function RandomImages() {
                 priority={i < 3}
                 loading={i < 3 ? 'eager' : 'lazy'}
                 sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="h-fit! overflow-hidden rounded-2xl scale-100! select-none openInModal"
+                className="scale-100! openInModal"
                 divClassName="h-100 w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw] rounded-2xl overflow-hidden"
               />
             </AnimIn>
