@@ -58,7 +58,7 @@ export default function RandomImages() {
         (context) => {
           const { desktop, mobile } = context.conditions!
 
-          const imgs = containerRef.current?.querySelectorAll('.gsap-image')
+          const imgs = gsap.utils.toArray('.gsap-image') as HTMLElement[]
 
           const tl = gsap.timeline({
             scrollTrigger: desktop
