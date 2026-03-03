@@ -34,6 +34,12 @@ const IMAGES: ImageConfig[] = [
   { src: '/images/hero-Images/Proof.webp', alt: 'Proof', x: '-23dvw', y: '118dvh', r: -10 },
 ]
 
+const RANDOM_VALUES = IMAGES.map(() => ({
+  rotation: gsap.utils.random(-45, 45),
+  scaleStart: gsap.utils.random(0.75, 0.8),
+  scaleEnd: gsap.utils.random(0.7, 1),
+}))
+
 export default function RandomImages() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -52,7 +58,7 @@ export default function RandomImages() {
         (context) => {
           const { desktop, mobile } = context.conditions!
 
-          const imgs = gsap.utils.toArray<HTMLElement>('.gsap-image')
+          const imgs = containerRef.current?.querySelectorAll('.gsap-image')
 
           const tl = gsap.timeline({
             scrollTrigger: desktop
@@ -60,7 +66,7 @@ export default function RandomImages() {
                   trigger: containerRef.current,
                   start: 'top top',
                   end: 'bottom top',
-                  scrub: 1,
+                  scrub: 0.6,
                   pin: true,
                 }
               : undefined,
@@ -68,21 +74,22 @@ export default function RandomImages() {
 
           imgs.forEach((img, i) => {
             const { x, y, r } = IMAGES[i % IMAGES.length]
+            const randomValues = RANDOM_VALUES[i % RANDOM_VALUES.length]
 
             tl.fromTo(
               img,
               {
                 x: 0,
                 y: mobile ? -180 : 0,
-                rotation: gsap.utils.random(-45, 45),
-                scale: gsap.utils.random(0.75, 0.8),
+                rotation: randomValues.rotation,
+                scale: randomValues.scaleStart,
                 zIndex: Math.min(i, 10),
               },
               {
                 x,
                 y,
                 rotation: r,
-                scale: gsap.utils.random(0.7, 1),
+                scale: randomValues.scaleEnd,
                 ease: 'power2.out',
                 duration: 1,
               },
