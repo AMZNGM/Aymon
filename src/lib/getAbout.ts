@@ -12,7 +12,7 @@ export interface AboutContent {
   title: string
   firstName: string
   lastName: string
-  nickName: string
+  nickname: string
   position: string
   slogan: string
   bio: string
@@ -24,7 +24,7 @@ const defaultAboutContent: AboutContent = {
   title: 'About',
   firstName: 'Ahmed',
   lastName: 'Ayman',
-  nickName: 'Aymon',
+  nickname: 'Aymon',
   position: 'Multidisciplinary Visual Artist',
   slogan: 'I Shut My eyes to See',
   bio: `Ahmed Ayman, Known As Aymon...`,
