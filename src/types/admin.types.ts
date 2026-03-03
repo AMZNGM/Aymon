@@ -59,7 +59,7 @@ export interface AboutContent {
   title: string
   firstName: string
   lastName: string
-  nickName: string
+  nickname: string
   position: string
   slogan: string
   bio: string
