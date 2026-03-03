@@ -127,11 +127,11 @@ export default function RandomImages() {
               <ImageIn
                 src={img.src}
                 alt={img.alt}
-                className="h-fit! rounded-2xl select-none openInModal"
-                divClassName="h-100 w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw]"
                 priority={i < 3}
                 loading={i < 3 ? 'eager' : 'lazy'}
                 sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="h-fit! overflow-hidden rounded-2xl scale-100! select-none openInModal"
+                divClassName="h-100 w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw] rounded-2xl overflow-hidden"
               />
             </AnimIn>
           </div>
