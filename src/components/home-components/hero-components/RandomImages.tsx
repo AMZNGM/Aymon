@@ -123,7 +123,7 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="h-[300dvh] max-md:h-[200dvh] overflow-hidden">
+    <section ref={sectionRef} className="h-[300dvh] max-md:h-[200dvh]">
       <div ref={containerRef} className="relative flex justify-center items-center h-dvh">
         {IMAGES.map((img, i) => (
           <div
@@ -136,9 +136,8 @@ export default function RandomImages() {
                 alt={img.alt}
                 priority={i < 3}
                 loading={i < 3 ? 'eager' : 'lazy'}
-                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="scale-100! openInModal"
-                divClassName="h-100 w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw] rounded-2xl overflow-hidden"
+                className="object-contain! scale-100! openInModal"
+                divClassName="h-[40dvh] w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw]"
               />
             </AnimIn>
           </div>
