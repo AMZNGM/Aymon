@@ -13,7 +13,7 @@ export default function MobileMenu({ className, btnClassName }: { className?: st
       <input id="mobile-nav-toggle" type="checkbox" className="peer hidden" />
       <label
         htmlFor="mobile-nav-toggle"
-        className={`absolute top-4 right-2 max-md:right-1 backdrop-blur-sm overflow-hidden rounded-xl z-9999 ${btnClassName}`}
+        className={`absolute top-4 right-2 max-md:right-1 overflow-hidden rounded-xl z-9999 ${btnClassName}`}
       >
         <RippleEffect
           className={`bg-bg/10 hover:bg-bg/30 duration-200 rounded-xl cursor-pointer z-1001 p-2 active:scale-90 active:rotate-20`}

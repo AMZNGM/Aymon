@@ -1,8 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect, useMemo, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { useScrollLock } from 'usehooks-ts'
 import { Minus, Plus } from 'lucide-react'
 import CloseBtn from '@/components/ui/Buttons/CloseBtn'
@@ -11,138 +11,162 @@ const ZOOM = { min: 0.5, max: 3, step: 0.25 }
 
 export default function GlobalImageModal() {
   const { lock, unlock } = useScrollLock({ autoLock: false })
-  const [modal, setModal] = useState(null)
+  const [modal, setModal] = useState<{ src: string; title: string; desc: string; date: string } | null>(null)
   const [scale, setScale] = useState(1)
-  const dragConstraint = useMemo(() => scale * 200, [scale])
-
   const close = useCallback(() => {
     setModal(null)
     setScale(1)
     unlock()
   }, [unlock])
+  const zoom = useCallback((delta: number) => {
+    setScale((prev) => Math.min(Math.max(prev + delta, ZOOM.min), ZOOM.max))
+  }, [])
 
-  const zoom = useCallback((delta) => setScale((p) => Math.min(Math.max(p + delta, ZOOM.min), ZOOM.max)), [])
+  function getOriginalImageSrc(img: HTMLImageElement) {
+    const rawSrc = img.getAttribute('src') || img.src
+    if (!rawSrc) return null
+
+    try {
+      const url = new URL(rawSrc, window.location.origin)
+
+      if (url.pathname.startsWith('/_next/image')) {
+        const original = url.searchParams.get('url')
+        return original ? decodeURIComponent(original) : rawSrc
+      }
+
+      return rawSrc
+    } catch {
+      return rawSrc
+    }
+  }
 
   useEffect(() => {
-    const onClick = (e) => {
-      const img = e.target.closest('img')
-      if (img?.src && (img.dataset.zoom === 'true' || img.classList.contains('openInModal'))) {
-        setModal({ src: img.src, title: img.dataset.title || '', desc: img.dataset.description || '', date: img.dataset.date || '' })
+    const onClick = (e: MouseEvent) => {
+      if (modal) return
+      const img = (e.target as Element).closest('img')
+      if (!img) return
+
+      if (img.dataset.zoom === 'true' || img.classList.contains('openInModal')) {
+        e.preventDefault()
+
+        const src = getOriginalImageSrc(img)
+        if (!src) return
+
+        setModal({
+          src,
+          title: img.dataset.title || '',
+          desc: img.dataset.description || '',
+          date: img.dataset.date || '',
+        })
+
         setScale(1)
         lock()
       }
     }
-    const onKey = (e) => e.key === 'Escape' && close()
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close()
+    }
 
     document.addEventListener('click', onClick)
     document.addEventListener('keydown', onKey)
+
     return () => {
       document.removeEventListener('click', onClick)
       document.removeEventListener('keydown', onKey)
     }
-  }, [close, lock])
+  }, [close, lock, modal])
 
   return (
     <AnimatePresence>
       {modal && (
         <motion.div
-          key="modal-backdrop"
+          key="backdrop"
           onClick={close}
-          onWheel={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { delay: 0.3 } }}
-          transition={{ duration: 0.25 }}
-          className="z-9999 fixed inset-0 flex justify-center items-center bg-bg/60 backdrop-blur-sm text-text cursor-zoom-out"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="z-9999 fixed inset-0 flex justify-center items-center bg-black/70 text-text cursor-zoom-out"
         >
           <motion.div
-            key="modal-content"
+            key="content"
             onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, y: 40, scale: 0.9, filter: 'blur(40px)' }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -40, scale: 0.9, filter: 'blur(40px)' }}
-            transition={{ type: 'spring', stiffness: 110, damping: 15 }}
-            className="relative min-w-[85dvw] h-[85dvh] cursor-default"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="relative w-[85vw] h-[85vh] cursor-default"
           >
             <motion.div
+              key={modal.src}
               drag={scale > 1}
-              dragElastic={0.2}
-              dragConstraints={{ left: -dragConstraint, right: dragConstraint, top: -dragConstraint + 150, bottom: dragConstraint - 150 }}
               dragMomentum={false}
-              onClick={(e) => {
-                if (e.ctrlKey || e.metaKey) {
-                  e.preventDefault()
-                  zoom(ZOOM.step)
-                } else if (e.altKey) {
-                  e.preventDefault()
-                  zoom(-ZOOM.step)
-                }
+              onWheel={(e) => {
+                e.stopPropagation()
+                // zoom(e.deltaY > 0 ? -ZOOM.step : ZOOM.step)
               }}
-              animate={{ x: scale === 1 ? 0 : undefined, y: scale === 1 ? 0 : undefined }}
-              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+              animate={{
+                x: scale === 1 ? 0 : undefined,
+                y: scale === 1 ? 0 : undefined,
+              }}
+              transition={{ type: 'spring', stiffness: 200, damping: 25 }}
               style={{ scale }}
-              className="relative size-full cursor-grab active:cursor-grabbing select-none"
+              className="relative w-full h-full touch-none cursor-grab active:cursor-grabbing"
             >
               <Image
                 src={modal.src}
                 alt="Modal Image"
                 fill
-                sizes="(max-width: 768px) 90vw, 80vw"
-                className="-z-10 object-contain pointer-events-none select-none"
                 priority
-                unoptimized
+                sizes="90vw"
+                className="object-contain pointer-events-none select-none"
               />
             </motion.div>
           </motion.div>
 
-          <AnimatePresence>
-            {(modal.title || modal.desc) && scale === 1 && (
-              <motion.div
-                key="modal-info"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className="right-8 bottom-16 absolute max-w-3xl text-sec p-4 pointer-events-none"
-              >
-                {modal.title && <h3 className="font-bold uppercase tracking-tight mb-1">{modal.title}</h3>}
-                {modal.date && <p className="font-mono text-xs uppercase tracking-widest mb-2">{modal.date}</p>}
-                {modal.desc && <p className="opacity-80 font-light text-sm leading-relaxed">{modal.desc}</p>}
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {(modal.title || modal.desc) && scale === 1 && (
+            <div className="right-8 bottom-16 absolute max-w-2xl text-sec">
+              {modal.title && <h3 className="font-bold uppercase mb-1">{modal.title}</h3>}
+              {modal.date && <p className="opacity-70 text-xs mb-2">{modal.date}</p>}
+              {modal.desc && <p className="opacity-80 text-sm leading-relaxed">{modal.desc}</p>}
+            </div>
+          )}
 
           <CloseBtn onClick={close} />
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="bottom-4 left-1/2 absolute flex gap-2 bg-text/20 backdrop-blur-md rounded-full -translate-x-1/2 p-2"
-          >
-            {[
-              { icon: <Minus size={20} />, action: () => zoom(-ZOOM.step), label: 'Zoom out', hint: 'Alt + click', side: 'right-30' },
-              { icon: `${Math.round(scale * 100)}%`, action: () => setScale(1), label: 'Reset zoom', hint: 'Reset', side: null },
-              { icon: <Plus size={20} />, action: () => zoom(ZOOM.step), label: 'Zoom in', hint: 'Ctrl + click', side: 'left-30' },
-            ].map(({ icon, action, label, hint, side }) => (
-              <button
-                key={label}
-                aria-label={label}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  action()
-                }}
-                className="group relative flex justify-center items-center size-8 rounded-full font-medium text-sm p-1 cursor-pointer"
-              >
-                {icon}
-                <span
-                  className={`absolute ${side ?? 'inset-0'} size-full flex justify-center items-center opacity-0 group-hover:opacity-100 text-xs ${side ? '-translate-y-1/2 top-1/2' : '-translate-y-10'} duration-200 pointer-events-none`}
-                >
-                  {hint}
-                </span>
-              </button>
-            ))}
-          </motion.div>
+          {/* Zoom Controls */}
+          <div className="bottom-6 left-1/2 absolute flex gap-2 bg-text/10 backdrop-blur-xs rounded-full -translate-x-1/2 p-2">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                zoom(-ZOOM.step)
+              }}
+              className="flex justify-center items-center size-8 cursor-pointer"
+            >
+              <Minus size={18} />
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setScale(1)
+              }}
+              className="flex justify-center items-center size-8 text-sm cursor-pointer"
+            >
+              {Math.round(scale * 100)}%
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                zoom(ZOOM.step)
+              }}
+              className="flex justify-center items-center size-8 cursor-pointer"
+            >
+              <Plus size={18} />
+            </button>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

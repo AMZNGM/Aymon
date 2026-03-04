@@ -104,6 +104,7 @@ export default function MoreProjects({ currentSlug }) {
                       src={project.media?.primary}
                       alt={project.client}
                       priority={index <= 3}
+                      loading={index <= 3 ? 'eager' : 'lazy'}
                       data-hide-cursor="true"
                       className="md:grayscale scale-100! transition-all duration-300 md:filter"
                       divClassName="w-full h-full select-none cursor-none"
@@ -121,6 +122,7 @@ export default function MoreProjects({ currentSlug }) {
                         src={project.media?.primary}
                         alt={project.client}
                         priority={index <= 3}
+                        loading={index <= 3 ? 'eager' : 'lazy'}
                         data-hide-cursor="true"
                         divClassName="w-full h-full select-none cursor-none"
                       />

@@ -19,7 +19,7 @@ export default function BackBtn() {
     <button
       onClick={handleBack}
       aria-label="Go back to previous page"
-      className="top-16 max-md:top-4 right-2 max-md:right-12 absolute backdrop-blur-sm"
+      className="top-16 max-md:top-4 right-2 max-md:right-12 absolute backdrop-blur-xs"
     >
       <RippleEffect className="z-50 bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 p-2 cursor-pointer">
         <ArrowLeft strokeWidth={2.5} />

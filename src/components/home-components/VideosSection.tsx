@@ -20,7 +20,7 @@ const videos = [
 
 export default function VideosSection() {
   return (
-    <section className="relative min-h-[200vh] overflow-hidden text-bg px-1 max-md:py-12 pt-12 pb-34">
+    <section className="relative overflow-hidden text-bg px-1 py-12 max-md:py-12">
       <SwapPoints />
 
       <SwapyLayout config={{ animation: 'dynamic' }}>

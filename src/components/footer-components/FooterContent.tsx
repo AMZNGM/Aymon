@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useInterval } from 'usehooks-ts'
 import { useAbout } from '@/hooks/for-db/useAbout'
 import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
@@ -20,6 +20,26 @@ export default function FooterContent() {
   useInterval(() => {
     setCurrentTime(new Date())
   }, 1000)
+
+  const timeFormatter = useMemo(
+    () =>
+      new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Africa/Cairo',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      }),
+    []
+  )
+
+  const socialLinks = useMemo(() => {
+    if (!aboutContent?.socialLinks) return []
+    return Object.entries(aboutContent.socialLinks).map(([platform, url], index) => (
+      <a key={index} href={url} target="_blank" rel="noopener noreferrer" className="text-[0.8dvw] hover:text-bg max-2xl:text-sm">
+        <TextWghtGrow label={platform === 'Behance' ? `Béhance` : platform.charAt(0).toUpperCase() + platform.slice(1)} />
+      </a>
+    ))
+  }, [aboutContent])
 
   if (loading || !aboutContent) {
     return (
@@ -42,26 +62,24 @@ export default function FooterContent() {
 
       <div className="w-[74dvw] max-md:w-[79dvw] md:h-full text-bg/50 mx-auto">
         <div className="overflow-hidden">
-          <motion.div initial={{ y: '100%' }} whileInView={{ y: 0 }} transition={{ duration: 0.75 }} className="flex justify-end">
+          <motion.div
+            initial={{ y: '100%' }}
+            whileInView={{ y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.75 }}
+            className="flex justify-end"
+          >
             {/* location and timer */}
             <p className="flex flex-col justify-end gap-2 w-1/2 opacity-80 text-[0.8dvw] max-2xl:text-sm">
               <span>{aboutContent.location}</span>
-
-              <span className="text-nowrap">
-                {currentTime.toLocaleTimeString('en-US', {
-                  timeZone: 'Africa/Cairo',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit',
-                })}
-              </span>
+              <span className="text-nowrap">{timeFormatter.format(currentTime)}</span>
             </p>
 
             {/* links */}
             <div className="space-y-4 w-1/2 text-end">
               <nav className="space-y-2">
                 {quickLinks.map((link, index) => (
-                  <Link key={index} href={link.href} className="block text-[0.8dvw] hover:text-bg max-2xl:text-sm cursor-none">
+                  <Link key={index} href={link.href} className="block text-[0.8dvw] hover:text-bg max-2xl:text-sm">
                     <TextWghtGrow label={link.label} />
                   </Link>
                 ))}
@@ -77,6 +95,7 @@ export default function FooterContent() {
           <motion.div
             initial={{ y: '-100%' }}
             whileInView={{ y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.5 }}
             className="flex max-md:flex-col-reverse justify-between"
           >
@@ -85,19 +104,7 @@ export default function FooterContent() {
               <span className="block text-xs mt-2 md:mt-0">All rights reserved.</span>
             </p>
 
-            <div className="flex justify-between md:justify-end md:items-end gap-4 h-full md:text-end pb-4">
-              {Object.entries(aboutContent.socialLinks || {}).map(([platform, url], index) => (
-                <a
-                  key={index}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[0.8dvw] hover:text-bg max-2xl:text-sm cursor-none"
-                >
-                  <TextWghtGrow label={platform === 'Behance' ? `Béhance` : platform.charAt(0).toUpperCase() + platform.slice(1)} />
-                </a>
-              ))}
-            </div>
+            <div className="flex justify-between md:justify-end md:items-end gap-4 h-full md:text-end pb-4">{socialLinks}</div>
           </motion.div>
         </div>
       </div>
