@@ -2,6 +2,7 @@ import { SwapyItem, SwapyLayout, SwapySlot } from '@/components/ui/Swapy'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import SwapPoints from '@/components/ui/SwapPoints'
 import FloatingEffect from '@/components/ui/effect/FloatingEffect'
+import AutoVideo from '@/components/ui/AutoVideo'
 
 const videos = [
   '/videos/LR_1_1.mp4',
@@ -30,10 +31,9 @@ export default function VideosSection() {
                 <div className="w-full h-full">
                   <FloatingEffect>
                     <article className="w-full">
-                      <video
+                      <AutoVideo
                         loop
                         muted
-                        autoPlay
                         playsInline
                         webkit-playsinline="true"
                         controls={false}
