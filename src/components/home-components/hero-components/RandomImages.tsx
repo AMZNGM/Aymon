@@ -99,16 +99,14 @@ export default function RandomImages() {
 
           let draggable: ReturnType<typeof Draggable.create> = []
 
-          if (desktop) {
-            draggable = Draggable.create(imgs, {
-              type: 'x,y',
-              inertia: true,
-              bounds: sectionRef.current ?? undefined,
-              allowEventDefault: true,
-              allowNativeTouchScrolling: true,
-              onRelease: () => imgs.forEach((img) => (img.style.zIndex = '30')),
-            })
-          }
+          draggable = Draggable.create(imgs, {
+            type: 'x,y',
+            inertia: true,
+            bounds: sectionRef.current ?? undefined,
+            allowEventDefault: true,
+            allowNativeTouchScrolling: true,
+            onRelease: () => imgs.forEach((img) => (img.style.zIndex = '30')),
+          })
 
           return () => {
             tl.kill()

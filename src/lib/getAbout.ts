@@ -56,24 +56,33 @@ const defaultContactContent: ContactContent = {
 
 /////////
 
+let cachedAboutContent: AboutContent | null = null
+let aboutCacheTimestamp = 0
+const ABOUT_CACHE_DURATION = 30 * 60 * 1000 // 30 minutes
+
 export async function getAboutContent(): Promise<AboutContent | null> {
   if (!db) {
     console.warn('Firebase not initialized')
     return defaultAboutContent
   }
 
+  if (cachedAboutContent && Date.now() - aboutCacheTimestamp < ABOUT_CACHE_DURATION) {
+    return cachedAboutContent
+  }
+
   try {
     const docRef = doc(db, 'content', 'about')
     const docSnap = await getDoc(docRef)
 
-    if (docSnap.exists()) {
-      return docSnap.data() as AboutContent
-    }
+    const content = docSnap.exists() ? (docSnap.data() as AboutContent) : defaultAboutContent
 
-    return defaultAboutContent
+    cachedAboutContent = content
+    aboutCacheTimestamp = Date.now()
+
+    return content
   } catch (error) {
     console.error('Error fetching about content:', error)
-    return null
+    return cachedAboutContent || null
   }
 }
 
@@ -83,6 +92,10 @@ export async function updateAboutContent(content: Partial<AboutContent>): Promis
   try {
     const docRef = doc(db, 'content', 'about')
     await updateDoc(docRef, content)
+
+    cachedAboutContent = null
+    aboutCacheTimestamp = 0
+
     return true
   } catch (error) {
     console.error('Error updating about content:', error)
@@ -96,6 +109,10 @@ export async function setAboutContent(content: AboutContent): Promise<boolean> {
   try {
     const docRef = doc(db, 'content', 'about')
     await setDoc(docRef, content)
+
+    cachedAboutContent = null
+    aboutCacheTimestamp = 0
+
     return true
   } catch (error) {
     console.error('Error setting about content:', error)
@@ -105,21 +122,30 @@ export async function setAboutContent(content: AboutContent): Promise<boolean> {
 
 ////////
 
+let cachedContactContent: ContactContent | null = null
+let contactCacheTimestamp = 0
+const CONTACT_CACHE_DURATION = 30 * 60 * 1000 // 30 minutes
+
 export async function getContactContent(): Promise<ContactContent | null> {
   if (!db) return defaultContactContent
+
+  if (cachedContactContent && Date.now() - contactCacheTimestamp < CONTACT_CACHE_DURATION) {
+    return cachedContactContent
+  }
 
   try {
     const docRef = doc(db, 'content', 'contact')
     const docSnap = await getDoc(docRef)
 
-    if (docSnap.exists()) {
-      return docSnap.data() as ContactContent
-    }
+    const content = docSnap.exists() ? (docSnap.data() as ContactContent) : defaultContactContent
 
-    return defaultContactContent
+    cachedContactContent = content
+    contactCacheTimestamp = Date.now()
+
+    return content
   } catch (error) {
     console.error('Error fetching contact content:', error)
-    return null
+    return cachedContactContent || null
   }
 }
 
@@ -129,6 +155,10 @@ export async function updateContactContent(content: Partial<ContactContent>): Pr
   try {
     const docRef = doc(db, 'content', 'contact')
     await updateDoc(docRef, content)
+
+    cachedContactContent = null
+    contactCacheTimestamp = 0
+
     return true
   } catch (error) {
     console.error('Error updating contact content:', error)
@@ -142,6 +172,10 @@ export async function setContactContent(content: ContactContent): Promise<boolea
   try {
     const docRef = doc(db, 'content', 'contact')
     await setDoc(docRef, content)
+
+    cachedContactContent = null
+    contactCacheTimestamp = 0
+
     return true
   } catch (error) {
     console.error('Error setting contact content:', error)
