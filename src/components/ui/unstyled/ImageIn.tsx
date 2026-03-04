@@ -40,8 +40,8 @@ export default function ImageIn({
       {...props}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      initial={{ filter: 'blur(4px)' }}
-      whileInView={{ filter: 'blur(0px)' }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration, delay }}
       className={`relative ${divClassName}`}

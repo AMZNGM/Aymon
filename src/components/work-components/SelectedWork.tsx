@@ -25,8 +25,8 @@ export default function SelectedWork({
   const filteredProjects = selected ? projects.filter((project) => project.showInSelectedWork === true) : projects
 
   const containerRef = useRef<HTMLElement>(null)
-  const { sx, sy } = useMouseMotion({ containerRef, relative: true, center: true, spring: { stiffness: 150, damping: 20 } })
   const [hoveredProject, setHoveredProject] = useState<string | null>(null)
+  const { sx, sy } = useMouseMotion({ containerRef, disabled: !hoveredProject })
 
   if (loading) {
     return <LoadingSkeleton count="4" className={`mb-12 px-1 ${className}`} />
@@ -47,6 +47,7 @@ export default function SelectedWork({
                   src={project.media?.primary || ''}
                   alt={`Project thumbnail for ${project.client}`}
                   priority={index <= 3}
+                  loading={index <= 3 ? 'eager' : 'lazy'}
                   data-hide-cursor="true"
                   divClassName="w-full h-full select-none cursor-none"
                 />

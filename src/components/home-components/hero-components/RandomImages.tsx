@@ -136,8 +136,8 @@ export default function RandomImages() {
                 alt={img.alt}
                 priority={i < 3}
                 loading={i < 3 ? 'eager' : 'lazy'}
-                className="object-contain! scale-100! openInModal"
-                divClassName="h-[40dvh] w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw]"
+                className="h-fit! overflow-hidden rounded-2xl scale-100! openInModal"
+                divClassName="h-[50dvh] w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw] overflow-hidden rounded-2xl"
               />
             </AnimIn>
           </div>

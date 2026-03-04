@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, forwardRef } from 'react'
-import { AnimatePresence, motion, type MotionProps, useReducedMotion, type Variants } from 'motion/react'
+import { motion, type MotionProps, useReducedMotion, type Variants } from 'motion/react'
 
 interface AnimInProps extends MotionProps {
   children: React.ReactNode
@@ -14,8 +14,6 @@ interface AnimInProps extends MotionProps {
   scale?: boolean
   toDown?: boolean
   blur?: boolean
-  /** If `true`, the animation runs. If a non‑boolean value is passed, it becomes the React `key` (forces re‑mount). */
-  reAnim?: boolean | string | number
 }
 
 const AnimIn = forwardRef<HTMLElement, AnimInProps>(
@@ -31,7 +29,6 @@ const AnimIn = forwardRef<HTMLElement, AnimInProps>(
       scale = false,
       toDown = false,
       blur = false,
-      reAnim = true,
       ...props
     },
     ref
@@ -56,28 +53,20 @@ const AnimIn = forwardRef<HTMLElement, AnimInProps>(
       }
     }, [duration, delay, center, toDown, blur, scale, shouldReduceMotion])
 
-    const animationKey = typeof reAnim === 'boolean' ? undefined : JSON.stringify(reAnim)
-
     return (
-      <AnimatePresence mode="wait">
-        {reAnim && (
-          <Tag
-            key={animationKey}
-            ref={ref}
-            initial="hidden"
-            whileInView="visible"
-            exit="hidden"
-            variants={animationConfig.variants}
-            transition={animationConfig.transition}
-            viewport={{ once }}
-            className={`relative ${className}`}
-            style={{ position: 'relative', ...props.style }}
-            {...props}
-          >
-            {children}
-          </Tag>
-        )}
-      </AnimatePresence>
+      <Tag
+        ref={ref}
+        initial="hidden"
+        whileInView="visible"
+        variants={animationConfig.variants}
+        transition={animationConfig.transition}
+        viewport={{ once }}
+        className={`relative ${className}`}
+        style={{ position: 'relative', ...props.style }}
+        {...props}
+      >
+        {children}
+      </Tag>
     )
   }
 )
