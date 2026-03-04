@@ -52,7 +52,7 @@ export default function FooterContent() {
   return (
     <section className="relative flex flex-col justify-between max-md:justify-center max-md:items-center gap-4 w-full h-full bg-bg/50 text-bg capitalize">
       {/* head */}
-      <h6 className="self-center text-[20dvw] max-md:text-8xl tracking-[-2px] select-none">
+      <h6 className="self-center text-[20dvw] tracking-[-2px] select-none">
         <TextWghtGrow
           label={aboutContent.nickname}
           fromFontVariationSettings="'wght' 900, 'slnt' 0"
@@ -109,7 +109,7 @@ export default function FooterContent() {
         </div>
       </div>
 
-      <div className="opacity-50 text-sm px-2 py-1">
+      <div className="opacity-50 max-md:text-xs text-sm px-2 py-1">
         Powered by{' '}
         <Link
           href="https://www.linkedin.com/in/abdulrahman-ngm-20b689345/"

@@ -35,7 +35,7 @@ const AutoVideo = forwardRef<HTMLVideoElement, AutoVideoProps>(({ threshold = 0.
     }
   }, [threshold])
 
-  return <video ref={internalRef} {...props} />
+  return <video ref={internalRef} preload="none" {...props} />
 })
 
 AutoVideo.displayName = 'AutoVideo'

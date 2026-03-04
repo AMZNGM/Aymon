@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import { metadataGenerators } from '@/seo/seo-helpers'
 
 import Hero from '@/components/home-components/hero-components/Hero'
-// const TrustedUs = dynamic(() => import('@/components/home-components/TrustedUs'))
+const TrustedUs = dynamic(() => import('@/components/home-components/TrustedUs'))
 import SectionHeading from '@/components/shared/SectionHeading'
 const SelectedWork = dynamic(() => import('@/components/work-components/SelectedWork'))
 // import Visionary from '@/components/home-components/Visionary'
@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      {/* <TrustedUs /> */}
+      <TrustedUs />
       <SectionHeading title="Selected Work" />
       <SelectedWork />
       {/* <Visionary /> */}

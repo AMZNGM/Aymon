@@ -40,7 +40,7 @@ export default function ImageIn({
       {...props}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      initial={{ opacity: 0 }}
+      initial={priority ? false : { opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration, delay }}
