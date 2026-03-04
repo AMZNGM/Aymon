@@ -31,7 +31,7 @@ export default function PaintContent() {
   }
 
   return (
-    <section className="relative flex flex-col justify-center items-center w-full min-h-dvh bg-text text-bg text-center p-4">
+    <section className="z-10 relative flex flex-col justify-center items-center w-full min-h-dvh text-bg text-center p-4">
       <h2 className="font-extrabold 2xl:text-[8dvw] max-lg:text-4xl max-xl:text-7xl text-8xl uppercase tracking-[-2px] max-md:my-8 md:mb-16">
         {aboutContent.title}
       </h2>

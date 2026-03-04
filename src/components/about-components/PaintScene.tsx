@@ -26,20 +26,6 @@ export default function PaintScene() {
 
   const lerp = (x: number, y: number, a: number) => x * (1 - a) + y * a
 
-  const mouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const { clientX, clientY, movementX, movementY } = e
-    const nbOfCircles = Math.max(Math.abs(movementX), Math.abs(movementY)) / 10
-    if (pervPosRef.current != null) {
-      const { x, y } = pervPosRef.current
-      for (let i = 0; i < nbOfCircles; i++) {
-        const targetX = lerp(x, clientX, (1 / nbOfCircles) * i)
-        const targetY = lerp(y, clientY, (1 / nbOfCircles) * i)
-        paint(targetX, targetY, 50)
-      }
-    }
-    pervPosRef.current = { x: clientX, y: clientY }
-  }
-
   const paint = (x: number, y: number, radius: number) => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -51,10 +37,31 @@ export default function PaintScene() {
     ctx.fill()
   }
 
+  useEffect(() => {
+    const mouseMove = (e: MouseEvent) => {
+      const { clientX, clientY, movementX, movementY } = e
+      const nbOfCircles = Math.max(Math.abs(movementX), Math.abs(movementY)) / 10
+      if (pervPosRef.current != null) {
+        const { x, y } = pervPosRef.current
+        for (let i = 0; i < nbOfCircles; i++) {
+          const targetX = lerp(x, clientX, (1 / nbOfCircles) * i)
+          const targetY = lerp(y, clientY, (1 / nbOfCircles) * i)
+          paint(targetX, targetY, 50)
+        }
+      }
+      pervPosRef.current = { x: clientX, y: clientY }
+    }
+
+    document.addEventListener('mousemove', mouseMove)
+    return () => {
+      document.removeEventListener('mousemove', mouseMove)
+    }
+  }, [])
+
   return (
-    <section className="max-md:hidden z-9999 absolute inset-0">
+    <section className="max-md:hidden absolute inset-0">
       {w === 0 && <div className="absolute inset-0 w-full h-full bg-black" />}
-      <canvas ref={canvasRef} width={w} height={h} onMouseMove={mouseMove} />
+      <canvas ref={canvasRef} width={w} height={h} />
     </section>
   )
 }
