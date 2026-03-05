@@ -1,7 +1,9 @@
+'use client'
+
 import { useGLTF } from '@react-three/drei'
 
 export function Model(props) {
-  const { nodes, materials } = useGLTF('/3dmodel/retro-office.glb')
+  const { nodes, materials } = useGLTF('/3dmodel/retro-office-v1.glb')
 
   return (
     <group {...props} dispose={null}>
@@ -630,4 +632,4 @@ export function Model(props) {
   )
 }
 
-useGLTF.preload('/3dmodel/retro-office.glb')
+useGLTF.preload('/3dmodel/retro-office-v1.glb')
