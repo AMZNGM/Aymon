@@ -3,7 +3,8 @@ import { Suspense } from 'react'
 import { metadataGenerators } from '@/seo/seo-helpers'
 import LoadingOverlay from '@/components/shared/LoadingOverlay'
 
-const PaintReveal = dynamic(() => import('@/components/about-components/PaintReveal'))
+import SubNavbar from '@/components/nav-components/SubNavbar'
+const AboutContent = dynamic(() => import('@/components/about-components/AboutContent'))
 
 export const generateMetadata = metadataGenerators.about
 
@@ -11,7 +12,8 @@ export default function About() {
   return (
     <Suspense fallback={<LoadingOverlay />}>
       <div className="hide-footer">
-        <PaintReveal />
+        <SubNavbar />
+        <AboutContent />
       </div>
     </Suspense>
   )
