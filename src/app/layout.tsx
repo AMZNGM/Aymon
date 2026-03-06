@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.className} ${gambarino.variable}`}>
       <body
         suppressHydrationWarning
-        className="relative w-dvw h-full overflow-x-hidden! bg-text selection:bg-main text-bg selection:text-bg antialiased md:subpixel-antialiased scroll-smooth"
+        className="relative w-full h-full overflow-x-hidden! bg-text selection:bg-main text-bg selection:text-bg antialiased md:subpixel-antialiased scroll-smooth"
       >
         <AppWrapper>{children}</AppWrapper>
       </body>
