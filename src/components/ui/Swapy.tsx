@@ -23,7 +23,8 @@ export const SwapyLayout = ({
 
   useEffect(() => {
     const container = containerRef.current
-    if (!container) return
+    if (!container || isMobile) return
+
     swapyRef.current = createSwapy(container, config)
     if (onSwap) {
       swapyRef.current.onSwap(onSwap)
@@ -31,7 +32,7 @@ export const SwapyLayout = ({
     return () => {
       swapyRef.current?.destroy()
     }
-  }, [config, onSwap])
+  }, [config, onSwap, isMobile])
 
   if (isMobile) return <div className={className}>{children}</div>
 
