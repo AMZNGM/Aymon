@@ -16,7 +16,7 @@ interface FloatingEffectProps extends MotionProps {
 
 export default memo(function FloatingEffect({
   children,
-  intensity = 2,
+  intensity = 1,
   perspective = 1500,
   rotationRange = 13,
   scaleOnHover = 0.95,
