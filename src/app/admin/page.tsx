@@ -21,6 +21,8 @@ export default function AdminPanel() {
     projects,
     setProjectImageFile,
     setProjectGifFile,
+    gifFiles,
+    setGifFiles,
     galleryFiles,
     setGalleryFiles,
     currentImages,
@@ -111,6 +113,8 @@ export default function AdminPanel() {
                   setProjectForm={setProjectForm}
                   setProjectImageFile={setProjectImageFile}
                   setProjectGifFile={setProjectGifFile}
+                  gifFiles={gifFiles}
+                  setGifFiles={setGifFiles}
                   galleryFiles={galleryFiles}
                   setGalleryFiles={setGalleryFiles}
                   currentImages={currentImages}

@@ -37,6 +37,7 @@ export interface Project {
     primary?: string
     gallery?: string[]
     gif?: string
+    gifs?: string[]
     reels?: string[]
     video?: {
       url?: string

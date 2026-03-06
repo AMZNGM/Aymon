@@ -9,10 +9,12 @@ interface ProjectFormProps {
   setProjectForm: React.Dispatch<React.SetStateAction<Project>>
   setProjectImageFile: (file: File | null) => void
   setProjectGifFile: (file: File | null) => void
+  gifFiles: File[]
+  setGifFiles: (files: File[]) => void
   galleryFiles: File[]
   setGalleryFiles: (files: File[]) => void
-  currentImages: { primary: string; gallery: string[]; gif?: string }
-  setCurrentImages: React.Dispatch<React.SetStateAction<{ primary: string; gallery: string[]; gif?: string }>>
+  currentImages: { primary: string; gallery: string[]; gifs: string[] }
+  setCurrentImages: React.Dispatch<React.SetStateAction<{ primary: string; gallery: string[]; gifs: string[] }>>
   editingProjectId: string | null
   projectSubmitting: boolean
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
@@ -24,6 +26,8 @@ export default function ProjectForm({
   setProjectForm,
   setProjectImageFile,
   setProjectGifFile,
+  gifFiles,
+  setGifFiles,
   galleryFiles,
   setGalleryFiles,
   currentImages,
@@ -34,6 +38,7 @@ export default function ProjectForm({
   onCancelEdit,
 }: ProjectFormProps) {
   const [draggedGalleryIndex, setDraggedGalleryIndex] = useState<number | null>(null)
+  const [draggedGifIndex, setDraggedGifIndex] = useState<number | null>(null)
 
   const changeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -43,16 +48,19 @@ export default function ProjectForm({
   }
 
   const changeGif = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      setProjectGifFile(file)
-    }
+    const files = Array.from(e.target.files || []) as File[]
+    const currentFiles = gifFiles
+    setGifFiles([...currentFiles, ...files])
   }
 
   const changeGalleryImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []) as File[]
-
     setGalleryFiles(files)
+  }
+
+  const deleteNewGif = (indexToDelete: number) => {
+    const newGifFiles = gifFiles.filter((_, i) => i !== indexToDelete)
+    setGifFiles(newGifFiles)
   }
 
   const deleteGalleryImage = (indexToDelete: number) => {
@@ -99,6 +107,35 @@ export default function ProjectForm({
 
   const galleryDragEnd = () => {
     setDraggedGalleryIndex(null)
+  }
+
+  const gifDragStart = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+    setDraggedGifIndex(index)
+    e.dataTransfer.effectAllowed = 'move'
+  }
+
+  const gifDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+  }
+
+  const gifDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number) => {
+    e.preventDefault()
+    if (draggedGifIndex === null || draggedGifIndex === dropIndex) return
+
+    const reorderedGifs = [...(currentImages.gifs || [])]
+    const [movedGif] = reorderedGifs.splice(draggedGifIndex, 1)
+    reorderedGifs.splice(dropIndex, 0, movedGif)
+
+    setCurrentImages((prev) => ({
+      ...prev,
+      gifs: reorderedGifs,
+    }))
+    setDraggedGifIndex(null)
+  }
+
+  const gifDragEnd = () => {
+    setDraggedGifIndex(null)
   }
 
   const slugify = (text: string) =>
@@ -460,17 +497,55 @@ export default function ProjectForm({
             GIF Image {editingProjectId ? '(Optional - Leave empty to keep current)' : '(Optional)'}
           </label>
 
-          {editingProjectId && currentImages.gif && (
+          {editingProjectId && currentImages.gifs.length > 0 && (
             <div className="mb-2">
-              <Image
-                src={currentImages.gif}
-                alt="Current GIF"
-                width={80}
-                height={80}
-                className="w-20 h-20 object-cover border border-bg/30 rounded"
-                unoptimized
-              />
-              <p className="opacity-60 text-xs mt-1">Current GIF</p>
+              <p className="opacity-60 text-xs mb-2">Current GIFs ({currentImages.gifs.length}) - Drag to reorder, hover to delete</p>
+              <div id="gif-container" className="flex flex-wrap gap-2">
+                {currentImages.gifs.map((gif, index) => (
+                  <div
+                    key={index}
+                    draggable
+                    onDragStart={(e) => gifDragStart(e, index)}
+                    onDragOver={gifDragOver}
+                    onDrop={(e) => gifDrop(e, index)}
+                    onDragEnd={gifDragEnd}
+                    className="group relative opacity-90 hover:opacity-100 transition-opacity cursor-move"
+                  >
+                    <Image
+                      src={gif}
+                      alt={`Current GIF ${index + 1}`}
+                      width={64}
+                      height={64}
+                      className="w-16 h-16 object-cover border border-bg/30 rounded"
+                      unoptimized
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCurrentImages((prev) => ({
+                          ...prev,
+                          gifs: prev.gifs.filter((_, i) => i !== index),
+                        }))
+                      }}
+                      className="-top-2 -right-2 z-10 absolute flex justify-center items-center w-5 h-5 bg-red-600 hover:bg-red-700 opacity-0 group-hover:opacity-100 rounded-full text-white text-xs transition-opacity"
+                      title="Delete GIF"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setCurrentImages((prev) => ({ ...prev, gifs: [] }))
+                  const gifInput = document.getElementById('project-gif-input') as HTMLInputElement | null
+                  if (gifInput) gifInput.value = ''
+                }}
+                className="hover:bg-red-600/10 rounded-md text-red-500 text-xs transition-colors mt-2 px-2 py-1 cursor-pointer"
+              >
+                Remove All GIFs
+              </button>
             </div>
           )}
 
@@ -478,11 +553,51 @@ export default function ProjectForm({
             id="project-gif-input"
             type="file"
             accept="image/gif"
+            multiple
             onChange={changeGif}
             className="w-full bg-bg/20 hover:bg-main/40 hover:file:bg-main/90 file:bg-main border border-bg/30 file:border-0 rounded-md file:rounded-full focus:outline-none focus:ring-2 focus:ring-main file:font-semibold file:text-text file:text-sm transition-colors file:mr-4 px-3 file:px-3 py-2 file:py-1 cursor-pointer"
           />
 
-          <p className="opacity-60 text-xs mt-1">Animated GIF for the project</p>
+          {gifFiles.length > 0 && (
+            <div className="mt-2">
+              <p className="opacity-60 text-xs mb-2">New GIFs to upload ({gifFiles.length})</p>
+              <div className="gap-2 grid grid-cols-4">
+                {gifFiles.map((file, index) => (
+                  <div key={index} className="group relative">
+                    <Image
+                      src={URL.createObjectURL(file)}
+                      alt={`New GIF ${index + 1}`}
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 object-cover border border-bg/30 rounded"
+                      unoptimized
+                    />
+                    <button
+                      type="button"
+                      onClick={() => deleteNewGif(index)}
+                      className="-top-2 -right-2 z-10 absolute flex justify-center items-center w-5 h-5 bg-red-600 hover:bg-red-700 opacity-0 group-hover:opacity-100 rounded-full text-white text-xs transition-opacity"
+                      title="Remove GIF"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setGifFiles([])
+                  const gifInput = document.getElementById('project-gif-input') as HTMLInputElement | null
+                  if (gifInput) gifInput.value = ''
+                }}
+                className="hover:bg-red-600/10 rounded-md text-red-500 text-xs transition-colors mt-2 px-2 py-1 cursor-pointer"
+              >
+                Clear All New GIFs
+              </button>
+            </div>
+          )}
+
+          <p className="opacity-60 text-xs mt-1">Animated GIFs for the project (multiple files supported)</p>
         </div>
 
         <div>

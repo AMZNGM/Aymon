@@ -2,6 +2,7 @@ export interface Media {
   primary?: string
   gallery?: string[]
   gif?: string
+  gifs?: string[]
   reels?: string[]
   video?: {
     url: string

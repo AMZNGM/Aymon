@@ -31,7 +31,7 @@ export const initialProjectForm = {
     title: '',
   },
   media: {
-    gif: '',
+    gifs: [] as string[],
     reels: [],
   },
 }
