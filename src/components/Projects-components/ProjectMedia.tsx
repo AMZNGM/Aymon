@@ -17,11 +17,13 @@ export default function ProjectMedia({ project }: { project: Project }) {
   const { getEmbedUrl } = useVideoEmbed()
   const mediaItems: { type: string; src: string; title: string }[] = []
 
-  if (project.media?.gif) {
-    mediaItems.push({
-      type: 'gif',
-      src: project.media.gif,
-      title: project.title + ' GIF',
+  if (project.media?.gifs && project.media.gifs.length > 0) {
+    project.media.gifs.forEach((gifSrc) => {
+      mediaItems.push({
+        type: 'gif',
+        src: gifSrc,
+        title: project.title + ' GIF',
+      })
     })
   }
 
