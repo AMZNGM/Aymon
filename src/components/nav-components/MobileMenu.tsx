@@ -16,7 +16,7 @@ export default function MobileMenu({ className, btnClassName }: { className?: st
         className={`absolute top-4 right-2 max-md:right-1 overflow-hidden rounded-xl z-9999 ${btnClassName}`}
       >
         <RippleEffect
-          className={`bg-bg/10 hover:bg-bg/30 duration-200 rounded-xl cursor-pointer z-1001 p-2 active:scale-90 active:rotate-20`}
+          className={`bg-bg/10 hover:bg-bg/30 backdrop-blur-xs duration-200 rounded-xl cursor-pointer z-1001 p-2 active:scale-90 active:rotate-20`}
         >
           <TextAlignJustify strokeWidth={3} />
         </RippleEffect>

@@ -14,7 +14,7 @@ export default function ScrollToTopBtn() {
       style={{ y, opacity }}
       whileTap={{ scale: 0.9 }}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="right-4 bottom-4 z-50 fixed bg-sec rounded-full p-[1dvw] cursor-pointer"
+      className="right-2 bottom-4 z-50 fixed bg-sec rounded-full p-[1dvw] cursor-pointer"
     >
       <ArrowUp />
     </motion.button>
