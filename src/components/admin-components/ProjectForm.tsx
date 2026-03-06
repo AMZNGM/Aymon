@@ -8,10 +8,11 @@ interface ProjectFormProps {
   projectForm: Project
   setProjectForm: React.Dispatch<React.SetStateAction<Project>>
   setProjectImageFile: (file: File | null) => void
+  setProjectGifFile: (file: File | null) => void
   galleryFiles: File[]
   setGalleryFiles: (files: File[]) => void
-  currentImages: { primary: string; gallery: string[] }
-  setCurrentImages: React.Dispatch<React.SetStateAction<{ primary: string; gallery: string[] }>>
+  currentImages: { primary: string; gallery: string[]; gif?: string }
+  setCurrentImages: React.Dispatch<React.SetStateAction<{ primary: string; gallery: string[]; gif?: string }>>
   editingProjectId: string | null
   projectSubmitting: boolean
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
@@ -22,6 +23,7 @@ export default function ProjectForm({
   projectForm,
   setProjectForm,
   setProjectImageFile,
+  setProjectGifFile,
   galleryFiles,
   setGalleryFiles,
   currentImages,
@@ -37,6 +39,13 @@ export default function ProjectForm({
     const file = e.target.files?.[0]
     if (file) {
       setProjectImageFile(file)
+    }
+  }
+
+  const changeGif = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setProjectGifFile(file)
     }
   }
 
@@ -423,7 +432,13 @@ export default function ProjectForm({
 
           {editingProjectId && currentImages.primary && (
             <div className="mb-2">
-              <Image src={currentImages.primary} alt="Current primary" className="w-20 h-20 object-cover border border-bg/30 rounded" />
+              <Image
+                src={currentImages.primary}
+                alt="Current primary"
+                width={80}
+                height={80}
+                className="w-20 h-20 object-cover border border-bg/30 rounded"
+              />
               <p className="opacity-60 text-xs mt-1">Current image</p>
             </div>
           )}
@@ -438,6 +453,36 @@ export default function ProjectForm({
           />
 
           <p className="opacity-60 text-xs mt-1">Primary project image</p>
+        </div>
+
+        <div>
+          <label className="block font-medium text-sm mb-2">
+            GIF Image {editingProjectId ? '(Optional - Leave empty to keep current)' : '(Optional)'}
+          </label>
+
+          {editingProjectId && currentImages.gif && (
+            <div className="mb-2">
+              <Image
+                src={currentImages.gif}
+                alt="Current GIF"
+                width={80}
+                height={80}
+                className="w-20 h-20 object-cover border border-bg/30 rounded"
+                unoptimized
+              />
+              <p className="opacity-60 text-xs mt-1">Current GIF</p>
+            </div>
+          )}
+
+          <input
+            id="project-gif-input"
+            type="file"
+            accept="image/gif"
+            onChange={changeGif}
+            className="w-full bg-bg/20 hover:bg-main/40 hover:file:bg-main/90 file:bg-main border border-bg/30 file:border-0 rounded-md file:rounded-full focus:outline-none focus:ring-2 focus:ring-main file:font-semibold file:text-text file:text-sm transition-colors file:mr-4 px-3 file:px-3 py-2 file:py-1 cursor-pointer"
+          />
+
+          <p className="opacity-60 text-xs mt-1">Animated GIF for the project</p>
         </div>
 
         <div>
@@ -472,7 +517,13 @@ export default function ProjectForm({
                     onDragEnd={galleryDragEnd}
                     className="group relative opacity-90 hover:opacity-100 transition-opacity cursor-move"
                   >
-                    <Image src={img} alt={`Current gallery ${index + 1}`} className="w-16 h-16 object-cover border border-bg/30 rounded" />
+                    <Image
+                      src={img}
+                      alt={`Current gallery ${index + 1}`}
+                      width={64}
+                      height={64}
+                      className="w-16 h-16 object-cover border border-bg/30 rounded"
+                    />
                     <button
                       type="button"
                       onClick={() => deleteGalleryImage(index)}
@@ -502,6 +553,58 @@ export default function ProjectForm({
               {galleryFiles.length} new image{galleryFiles.length > 1 ? 's' : ''} selected
             </div>
           )}
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex justify-between items-center mb-2">
+            <label className="block font-medium text-sm">Instagram Reels URLs</label>
+            <button
+              type="button"
+              onClick={() => {
+                setProjectForm((p) => ({
+                  ...p,
+                  media: {
+                    ...(p.media || {}),
+                    reels: [...(p.media?.reels || []), ''],
+                  },
+                }))
+              }}
+              className="hover:bg-main/20 rounded-md text-main text-xs transition-colors px-2 py-1 cursor-pointer"
+            >
+              + Add Reel
+            </button>
+          </div>
+
+          {(projectForm.media?.reels || []).map((reel, index) => (
+            <div key={index} className="flex gap-2">
+              <input
+                type="url"
+                value={reel}
+                onChange={(e) => {
+                  setProjectForm((p) => {
+                    const newReels = [...(p.media?.reels || [])]
+                    newReels[index] = e.target.value
+                    return { ...p, media: { ...(p.media || {}), reels: newReels } }
+                  })
+                }}
+                placeholder="https://www.instagram.com/reel/..."
+                className="w-full bg-bg/20 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main px-3 py-2"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setProjectForm((p) => {
+                    const newReels = [...(p.media?.reels || [])]
+                    newReels.splice(index, 1)
+                    return { ...p, media: { ...(p.media || {}), reels: newReels } }
+                  })
+                }}
+                className="hover:bg-red-600/10 rounded-md text-red-500 transition-colors px-3 py-2 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
         </div>
 
         <div className="gap-4 grid grid-cols-1 md:grid-cols-3">

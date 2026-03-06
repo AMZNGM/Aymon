@@ -50,7 +50,13 @@ export default function LogoList({ items, onDelete, onEdit, onReorder, loading }
               onDragEnd={handleDragEnd}
               className="group relative bg-bg/20 border border-transparent hover:border-main/40 rounded-xl transition-all p-4 cursor-grab active:cursor-grabbing"
             >
-              <Image src={item.src} alt="Logo" className="w-full object-contain aspect-video brightness-0 rounded p-2" />
+              <Image
+                src={item.src}
+                alt="Logo"
+                width={200}
+                height={100}
+                className="w-full object-contain aspect-video brightness-0 rounded p-2"
+              />
 
               {item.link && (
                 <div className="mt-2 px-1">

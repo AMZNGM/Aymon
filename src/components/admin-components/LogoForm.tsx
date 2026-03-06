@@ -59,7 +59,13 @@ export default function LogoForm({ onAdd, submitting, editingItem, onCancel }: L
           <label className="block font-medium text-sm mb-2">Logo Image</label>
           {preview && (
             <div className="mb-2">
-              <Image src={preview} alt="Preview" className="w-32 h-16 object-contain bg-text/5 border border-bg/30 rounded p-2" />
+              <Image
+                src={preview}
+                alt="Preview"
+                width={128}
+                height={64}
+                className="w-32 h-16 object-contain bg-text/5 border border-bg/30 rounded p-2"
+              />
             </div>
           )}
           <input

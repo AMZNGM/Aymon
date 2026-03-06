@@ -17,10 +17,12 @@ export function useAdmin() {
   const [error, setError] = useState('')
   const [projects, setProjects] = useState<Project[]>([])
   const [projectImageFile, setProjectImageFile] = useState<File | null>(null)
+  const [projectGifFile, setProjectGifFile] = useState<File | null>(null)
   const [galleryFiles, setGalleryFiles] = useState<File[]>([])
-  const [currentImages, setCurrentImages] = useState<{ primary: string; gallery: string[] }>({
+  const [currentImages, setCurrentImages] = useState<{ primary: string; gallery: string[]; gif: string }>({
     primary: '',
     gallery: [],
+    gif: '',
   })
   const [projectSubmitting, setProjectSubmitting] = useState(false)
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null)
@@ -127,6 +129,7 @@ export function useAdmin() {
         const existing = projects.find((p) => p.firestoreId === editingProjectId) as Project | undefined
 
         let primaryUrl = existing?.media?.primary || ''
+        let gifUrl = existing?.media?.gif || ''
         const currentGallery = Array.isArray(currentImages.gallery) ? [...currentImages.gallery] : []
         const gallery = currentGallery
 
@@ -134,6 +137,12 @@ export function useAdmin() {
           const imgRef = ref(storage, `projects/${projectImageFile.name}`)
           await uploadBytes(imgRef, projectImageFile)
           primaryUrl = await getDownloadURL(imgRef)
+        }
+
+        if (projectGifFile) {
+          const gifRef = ref(storage, `projects/gifs/${projectGifFile.name}`)
+          await uploadBytes(gifRef, projectGifFile)
+          gifUrl = await getDownloadURL(gifRef)
         }
 
         for (const file of galleryFiles) {
@@ -162,7 +171,9 @@ export function useAdmin() {
           media: {
             primary: primaryUrl,
             gallery,
-            video: projectForm.video.url
+            gif: gifUrl,
+            reels: projectForm.media?.reels || [],
+            video: projectForm.video?.url
               ? { url: projectForm.video.url, type: projectForm.video.type || '', title: projectForm.video.title || '' }
               : null,
           },
@@ -170,7 +181,7 @@ export function useAdmin() {
         }
 
         await updateDoc(projectRef, updateData)
-        setCurrentImages({ primary: updateData.media.primary, gallery: updateData.media.gallery || [] })
+        setCurrentImages({ primary: updateData.media.primary, gallery: updateData.media.gallery || [], gif: updateData.media.gif || '' })
         setEditingProjectId(null)
       } else {
         if (!projectImageFile) {
@@ -186,6 +197,13 @@ export function useAdmin() {
           await uploadBytes(galleryRef, file)
           const url = await getDownloadURL(galleryRef)
           galleryUrls.push(url)
+        }
+
+        let gifUrlUploaded = ''
+        if (projectGifFile) {
+          const gifRef = ref(storage, `projects/gifs/${projectGifFile.name}`)
+          await uploadBytes(gifRef, projectGifFile)
+          gifUrlUploaded = await getDownloadURL(gifRef)
         }
 
         await addDoc(collection(db!, 'projects'), {
@@ -207,7 +225,9 @@ export function useAdmin() {
           media: {
             primary: primaryUrl,
             gallery: [primaryUrl, ...galleryUrls],
-            video: projectForm.video.url
+            gif: gifUrlUploaded,
+            reels: projectForm.media?.reels || [],
+            video: projectForm.video?.url
               ? { url: projectForm.video.url, type: projectForm.video.type || '', title: projectForm.video.title || '' }
               : null,
           },
@@ -254,6 +274,15 @@ export function useAdmin() {
             }
           }
 
+          if (project.media.gif) {
+            try {
+              const gifRef = ref(storage, project.media.gif)
+              deletePromises.push(deleteObject(gifRef))
+            } catch (error) {
+              console.warn('Failed to delete gif image:', error)
+            }
+          }
+
           await Promise.allSettled(deletePromises)
         }
 
@@ -271,6 +300,7 @@ export function useAdmin() {
     setCurrentImages({
       primary: project.media?.primary || '',
       gallery: project.media?.gallery || [],
+      gif: project.media?.gif || '',
     })
     setProjectForm({
       id: project.id || project.slug || '',
@@ -289,8 +319,13 @@ export function useAdmin() {
       seo: project.seo || { keywords: [] as string[], description: '' },
       metadata: project.metadata || { duration: '', team_size: 1, client_location: '', project_type: 'freelance' },
       video: project.media?.video || { url: '', type: '', title: '' },
-    })
+      media: {
+        gif: project.media?.gif || '',
+        reels: project.media?.reels || [],
+      },
+    } as typeof initialProjectForm)
     setProjectImageFile(null)
+    setProjectGifFile(null)
     setGalleryFiles([])
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -303,11 +338,14 @@ export function useAdmin() {
   const resetForm = () => {
     setProjectForm(initialProjectForm)
     setProjectImageFile(null)
+    setProjectGifFile(null)
     setGalleryFiles([])
-    setCurrentImages({ primary: '', gallery: [] })
+    setCurrentImages({ primary: '', gallery: [], gif: '' })
     const fileInput = document.querySelector('#project-file-input') as HTMLInputElement
+    const fileGifInput = document.querySelector('#project-gif-input') as HTMLInputElement
     const galleryInput = document.querySelector('#gallery-file-input') as HTMLInputElement
     if (fileInput) fileInput.value = ''
+    if (fileGifInput) fileGifInput.value = ''
     if (galleryInput) galleryInput.value = ''
   }
 
@@ -474,6 +512,8 @@ export function useAdmin() {
     projects,
     projectImageFile,
     setProjectImageFile,
+    projectGifFile,
+    setProjectGifFile,
     galleryFiles,
     setGalleryFiles,
     currentImages,

@@ -30,4 +30,8 @@ export const initialProjectForm = {
     type: 'vimeo',
     title: '',
   },
+  media: {
+    gif: '',
+    reels: [],
+  },
 }

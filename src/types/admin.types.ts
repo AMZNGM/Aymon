@@ -1,6 +1,8 @@
 export interface Media {
   primary?: string
   gallery?: string[]
+  gif?: string
+  reels?: string[]
   video?: {
     url: string
     type: string
