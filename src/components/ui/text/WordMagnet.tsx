@@ -1,5 +1,6 @@
 'use client'
 
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { useState, useEffect, useRef } from 'react'
 
 type WordState = {
@@ -19,6 +20,7 @@ export default function WordMagnet({ text, className }) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const wordsRef = useRef<WordState[]>([])
   const animationFrameRef = useRef<number | null>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const container = containerRef.current
@@ -108,6 +110,8 @@ export default function WordMagnet({ text, className }) {
       }
     }
   }, [mousePos])
+
+  if (isMobile) return <div className={className}>{text}</div>
 
   return (
     <div ref={containerRef} className="relative">

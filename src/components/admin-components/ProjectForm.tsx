@@ -438,7 +438,7 @@ export default function ProjectForm({
           <label className="block font-medium text-sm mb-2">SEO Keywords (comma-separated)</label>
           <input
             type="text"
-            value={projectForm.seo?.keywords?.join(', ') || ''}
+            value={Array.isArray(projectForm.seo?.keywords) ? projectForm.seo.keywords.join(', ') : ''}
             onChange={(e) => {
               const keywordsArray = e.target.value
                 .split(',')

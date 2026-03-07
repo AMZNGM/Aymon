@@ -34,7 +34,7 @@ export default function AboutContent() {
 
   return (
     <section className="relative flex justify-center items-center w-dvw min-h-dvh text-center px-4">
-      <div className="flex flex-col justify-center max-w-4xl bg-bg/10 rounded-2xl text-bg m-2 p-18">
+      <div className="flex flex-col justify-center max-w-4xl bg-bg/10 rounded-2xl text-bg md:m-2 p-18 max-md:p-4">
         <AnimText
           as="h2"
           delay={0.3}
