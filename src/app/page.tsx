@@ -13,7 +13,7 @@ export const generateMetadata = metadataGenerators.home
 export default function Home() {
   return (
     <main>
-      <Hero />
+      {/* <Hero /> */}
       <TrustedUs />
       <SectionHeading title="Selected Work" />
       <SelectedWork />

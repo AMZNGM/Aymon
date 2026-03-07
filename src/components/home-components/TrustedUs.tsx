@@ -13,7 +13,7 @@ export default function TrustedUs() {
     <section className="relative h-150 max-md:h-110 2xl:h-full overflow-hidden text-text">
       <LogosMarquee />
 
-      <div ref={sectionRef} className="top-38 max-md:top-50 max-md:-left-4 md:left-[14dvw] absolute overflow-hidden rounded-full">
+      <div ref={sectionRef} className="top-38 max-md:top-50 max-md:left-2 md:left-[14dvw] absolute overflow-hidden rounded-full">
         <div className="flex justify-center items-center size-[25dvw] max-md:size-60 overflow-hidden bg-bg rounded-full">
           <h3 className="z-10 flex flex-wrap justify-center max-2xl:max-w-xs overflow-hidden text-[3dvw] max-md:text-2xl text-center uppercase leading-none cursor-none select-none">
             &nbsp;&nbsp;&nbsp;A
