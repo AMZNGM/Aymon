@@ -5,7 +5,7 @@ import { gsap } from '@/utils/gsapConfig'
 import { Draggable } from 'gsap/dist/Draggable'
 import { useGSAP } from '@gsap/react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
-import ImageIn from '@/components/ui/unstyled/ImageIn'
+import Image from 'next/image'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(Draggable)
@@ -124,18 +124,17 @@ export default function RandomImages() {
     <section ref={sectionRef} className="h-[300dvh] max-md:h-[200dvh]">
       <div ref={containerRef} className="relative flex justify-center items-center h-dvh">
         {IMAGES.map((img, i) => (
-          <div
-            key={i}
-            className="absolute cursor-grab active:cursor-grabbing will-change-transform gsap-image contain-layout contain-paint"
-          >
+          <div key={i} className="absolute cursor-grab active:cursor-grabbing will-change-transform gsap-image">
             <AnimIn delay={0.07 * i}>
-              <ImageIn
+              <Image
                 src={img.src}
                 alt={img.alt}
+                width={1200}
+                height={1200}
                 priority={i < 3}
                 loading={i < 3 ? 'eager' : 'lazy'}
-                className="h-fit! overflow-hidden rounded-2xl scale-100! openInModal"
-                divClassName="h-[50dvh] w-[25dvw] max-md:w-[50dvw] max-lg:w-[33dvw] 2xl:w-[22dvw] overflow-hidden rounded-2xl"
+                sizes="(max-width:768px) 50vw, (max-width:1200px) 33vw, 25vw"
+                className="w-auto max-w-[25dvw] max-md:max-w-[50dvw] max-lg:max-w-[33dvw] 2xl:max-w-[22dvw] h-auto rounded-2xl select-none openInModal"
               />
             </AnimIn>
           </div>
