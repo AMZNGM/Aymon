@@ -1,7 +1,7 @@
 'use client'
 
 import { useVideoEmbed } from '@/hooks/useVideoEmbed'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 import ImageIn from '@/components/ui/unstyled/ImageIn'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
@@ -41,7 +41,7 @@ export default function ProjectMedia({ project }: { project: Project }) {
     (project.media?.video?.url && project.media.video.type === 'youtube') ||
     (project.media?.video?.url && project.media.video.type === 'vimeo')
 
-  const reels = project.media?.reels || []
+  const reels = useMemo(() => project.media?.reels || [], [project.media?.reels])
   const hasReels = reels.length > 0
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function ProjectMedia({ project }: { project: Project }) {
   return (
     <section className="relative w-full overflow-hidden rounded-2xl px-4 max-md:px-1 py-12 md:pe-18">
       <div className="bg-sec rounded-2xl text-bg">
-        <div className="space-y-4 max-w-7xl overflow-hidden mx-auto p-6">
+        <div className="space-y-4 max-w-7xl overflow-hidden mx-auto mb-4">
           {hasVideoLink && (
             <AnimIn center blur duration={0.75}>
               <h3 className="font-semibold text-lg capitalize mb-4">{project.media.video?.type}</h3>
@@ -124,11 +124,11 @@ export default function ProjectMedia({ project }: { project: Project }) {
               })}
             </div>
           )}
-
-          {mediaItems.map((item, index) => (
-            <MediaItem key={index} item={item} />
-          ))}
         </div>
+
+        {mediaItems.map((item, index) => (
+          <MediaItem key={index} item={item} />
+        ))}
       </div>
     </section>
   )
@@ -136,18 +136,19 @@ export default function ProjectMedia({ project }: { project: Project }) {
 
 function MediaItem({ item }: { item: { type: string; src: string; title: string } }) {
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 1.2])
+  // const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  // const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 1.2])
 
   return (
-    <motion.div ref={ref} style={{ scale }} className="relative">
+    <motion.div ref={ref} className="relative max-w-7xl overflow-hidden mx-auto mb-4">
       {(item.type === 'image' || item.type === 'gif') && (
         <ImageIn
           src={item.src}
           alt={item.title}
           unoptimized={item.type === 'gif'}
-          className="object-contain! rounded-2xl scale-100! cursor-zoom-in openInModal"
-          divClassName="relative w-full h-[80vh] overflow-hidden bg-text/10 rounded-2xl bg-transparent!"
+          // style={{ scale }}
+          className="object-contain! scale-100! cursor-zoom-in openInModal"
+          divClassName="aspect-video"
         />
       )}
     </motion.div>
