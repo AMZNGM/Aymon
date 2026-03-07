@@ -50,9 +50,8 @@ function SplitHoverText({ children, className }) {
 
 export default function MoreProjects({ currentSlug }) {
   const { projects, loading } = useProjects()
-  const nonSelectedProjects = projects.filter((project) => !project.showInSelectedWork && project.slug !== currentSlug)
-  const moreProjects =
-    nonSelectedProjects.length > 0 ? nonSelectedProjects : projects.filter((project) => project.slug !== currentSlug).slice(0, 2)
+  const nonSelectedProjects = projects.filter((project) => project.slug !== currentSlug)
+  const moreProjects = nonSelectedProjects.slice(0, 2)
 
   const containerRef = useRef(null)
   const { sx, sy } = useMouseMotion({ containerRef, relative: true, center: true, spring: { stiffness: 150, damping: 20 } })
@@ -85,7 +84,7 @@ export default function MoreProjects({ currentSlug }) {
           <AnimatePresence>{hoveredProject && <ArrowCursor x={sx} y={sy} />}</AnimatePresence>
 
           <div className="gap-4 grid md:grid-cols-2 mb-12">
-            {moreProjects.slice(0, 2).map((project, index) => (
+            {moreProjects.map((project, index) => (
               <AnimIn center blur delay={0.2 * index} key={project.id}>
                 <Link href={`/work/${project.slug}`} className="group block relative cursor-none">
                   <RippleEffect

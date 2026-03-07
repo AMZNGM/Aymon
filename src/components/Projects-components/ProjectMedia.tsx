@@ -1,9 +1,9 @@
 'use client'
 
+import Image from 'next/image'
 import { useVideoEmbed } from '@/hooks/useVideoEmbed'
 import { useRef, useEffect, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
-import ImageIn from '@/components/ui/unstyled/ImageIn'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import type { Project } from '@/types/project.types'
 
@@ -73,9 +73,9 @@ export default function ProjectMedia({ project }: { project: Project }) {
   }
 
   return (
-    <section className="relative w-full overflow-hidden rounded-2xl px-4 max-md:px-1 py-12 md:pe-18">
-      <div className="bg-sec rounded-2xl text-bg">
-        <div className="space-y-4 max-w-7xl overflow-hidden mx-auto mb-4">
+    <section className="relative w-full rounded-2xl px-4 max-md:px-1 py-12 md:pe-18">
+      <div className="bg-sec rounded-2xl text-bg pb-12">
+        <div className="space-y-4 max-w-7xl overflow-hidden mx-auto mb-4 pt-8">
           {hasVideoLink && (
             <AnimIn center blur duration={0.75}>
               <h3 className="font-semibold text-lg capitalize mb-4">{project.media.video?.type}</h3>
@@ -135,20 +135,22 @@ export default function ProjectMedia({ project }: { project: Project }) {
 }
 
 function MediaItem({ item }: { item: { type: string; src: string; title: string } }) {
-  const ref = useRef(null)
+  // const ref = useRef(null)
   // const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   // const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 1.2])
 
   return (
-    <motion.div ref={ref} className="relative max-w-7xl overflow-hidden mx-auto mb-4">
+    <motion.div className="relative w-full max-w-7xl mx-auto mt-2">
       {(item.type === 'image' || item.type === 'gif') && (
-        <ImageIn
+        <Image
           src={item.src}
           alt={item.title}
+          width={2000}
+          height={2000}
+          sizes="100vw"
+          loading="eager"
           unoptimized={item.type === 'gif'}
-          // style={{ scale }}
-          className="object-contain! scale-100! cursor-zoom-in openInModal"
-          divClassName="aspect-video"
+          className="block w-full h-auto cursor-zoom-in openInModal"
         />
       )}
     </motion.div>
