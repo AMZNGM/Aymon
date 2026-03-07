@@ -25,13 +25,13 @@ export const initialProjectForm = {
     project_type: 'freelance',
   },
   showInSelectedWork: false,
-  video: {
-    url: '',
-    type: 'vimeo',
-    title: '',
-  },
   media: {
     gifs: [] as string[],
     reels: [],
+    video: {
+      url: '',
+      type: 'vimeo',
+      title: '',
+    },
   },
 }

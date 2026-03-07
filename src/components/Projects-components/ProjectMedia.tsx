@@ -39,7 +39,8 @@ export default function ProjectMedia({ project }: { project: Project }) {
 
   const hasVideoLink =
     (project.media?.video?.url && project.media.video.type === 'youtube') ||
-    (project.media?.video?.url && project.media.video.type === 'vimeo')
+    (project.media?.video?.url && project.media.video.type === 'vimeo') ||
+    (project.media?.video?.url && project.media.video.type === 'cloudinary')
 
   const reels = useMemo(() => project.media?.reels || [], [project.media?.reels])
   const hasReels = reels.length > 0
@@ -81,13 +82,23 @@ export default function ProjectMedia({ project }: { project: Project }) {
               <h3 className="font-semibold text-lg capitalize mb-4">{project.media.video?.type}</h3>
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative w-full aspect-video overflow-hidden bg-text/10 rounded-lg">
-                  <iframe
-                    allowFullScreen
-                    src={getEmbedUrl(project.media.video.url)}
-                    title={project.media.video.title || 'Project Video'}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    className="w-full h-full rounded-lg"
-                  />
+                  {project.media.video.type === 'cloudinary' ? (
+                    <iframe
+                      src={getEmbedUrl(project.media.video.url)}
+                      title={project.media.video.title || 'Project Video'}
+                      className="w-full h-full rounded-lg"
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                    />
+                  ) : (
+                    <iframe
+                      allowFullScreen
+                      src={getEmbedUrl(project.media.video.url)}
+                      title={project.media.video.title || 'Project Video'}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      className="w-full h-full rounded-lg"
+                    />
+                  )}
                 </div>
               </div>
             </AnimIn>

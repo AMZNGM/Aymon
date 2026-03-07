@@ -21,6 +21,10 @@ export function useVideoEmbed() {
       return url
     }
 
+    if (url.includes('cloudinary.com/embed/')) {
+      return url
+    }
+
     return url
   }
 

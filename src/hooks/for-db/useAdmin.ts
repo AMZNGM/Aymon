@@ -197,8 +197,8 @@ export function useAdmin() {
             gallery,
             gifs: uploadedGifUrls,
             reels: projectForm.media?.reels || [],
-            video: projectForm.video?.url
-              ? { url: projectForm.video.url, type: projectForm.video.type || '', title: projectForm.video.title || '' }
+            video: projectForm.media?.video?.url
+              ? { url: projectForm.media.video.url, type: projectForm.media.video.type || '', title: projectForm.media.video.title || '' }
               : null,
           },
           updatedAt: serverTimestamp(),
@@ -260,8 +260,8 @@ export function useAdmin() {
             gallery: [primaryUrl, ...galleryUrls],
             gifs: uploadedGifUrls,
             reels: projectForm.media?.reels || [],
-            video: projectForm.video?.url
-              ? { url: projectForm.video.url, type: projectForm.video.type || '', title: projectForm.video.title || '' }
+            video: projectForm.media?.video?.url
+              ? { url: projectForm.media.video.url, type: projectForm.media.video.type || '', title: projectForm.media.video.title || '' }
               : null,
           },
           order: projects.length,
@@ -354,10 +354,10 @@ export function useAdmin() {
       description: project.description || { short: '', detailed: '' },
       seo: project.seo || { keywords: [] as string[], description: '' },
       metadata: project.metadata || { duration: '', team_size: 1, client_location: '', project_type: 'freelance' },
-      video: project.media?.video || { url: '', type: '', title: '' },
       media: {
         gifs,
         reels: project.media?.reels || [],
+        video: project.media?.video || { url: '', type: '', title: '' },
       },
     } as typeof initialProjectForm)
     setProjectImageFile(null)

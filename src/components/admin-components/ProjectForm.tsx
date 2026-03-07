@@ -737,7 +737,7 @@ export default function ProjectForm({
                   },
                 }))
               }
-              placeholder="https://vimeo.com/1072571026"
+              placeholder="https://vimeo.com/1072571026 or https://player.cloudinary.com/embed/?cloud_name=..."
               className="w-full bg-bg/20 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main px-3 py-2"
             />
           </div>
@@ -759,6 +759,7 @@ export default function ProjectForm({
             >
               <option value="vimeo">Vimeo</option>
               <option value="youtube">YouTube</option>
+              <option value="cloudinary">Cloudinary</option>
               <option value="other">Other</option>
             </select>
           </div>
