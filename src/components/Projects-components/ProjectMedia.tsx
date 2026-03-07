@@ -1,9 +1,9 @@
 'use client'
 
 import Image from 'next/image'
+import { useEffect, useMemo } from 'react'
+import { motion } from 'motion/react'
 import { useVideoEmbed } from '@/hooks/useVideoEmbed'
-import { useRef, useEffect, useMemo } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import type { Project } from '@/types/project.types'
 
@@ -146,12 +146,8 @@ export default function ProjectMedia({ project }: { project: Project }) {
 }
 
 function MediaItem({ item }: { item: { type: string; src: string; title: string } }) {
-  // const ref = useRef(null)
-  // const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  // const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 1.2])
-
   return (
-    <motion.div className="relative w-full max-w-6xl mx-auto mt-2">
+    <motion.div className="relative w-full max-w-4xl mx-auto mt-2">
       {(item.type === 'image' || item.type === 'gif') && (
         <Image
           src={item.src}
