@@ -137,6 +137,30 @@ export default function DrawingCanvas() {
 
     resize()
     window.addEventListener('resize', resize)
+
+    // Load latest drawing from localStorage if it exists
+    const saved = localStorage.getItem('aymon-last-drawing') || localStorage.getItem('aymon-drawings')
+    if (saved) {
+      try {
+        const data = JSON.parse(saved)
+        // Handle both single object (new logic) and array (legacy)
+        const latest = Array.isArray(data) ? data[data.length - 1] : data
+        if (latest && latest.image) {
+          const img = new Image()
+          img.onload = () => {
+            const ctx = canvas.getContext('2d')
+            if (ctx) {
+              const rect = container.getBoundingClientRect()
+              ctx.drawImage(img, 0, 0, rect.width, rect.height)
+            }
+          }
+          img.src = latest.image
+        }
+      } catch (error) {
+        console.error('Failed to load saved drawing:', error)
+      }
+    }
+
     return () => window.removeEventListener('resize', resize)
   }, [])
 
@@ -213,18 +237,7 @@ export default function DrawingCanvas() {
     lastPos.current = null
   }, [])
 
-  const clearCanvas = useCallback(() => {
-    const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
-    if (!ctx || !canvas) return
-    const dpr = window.devicePixelRatio || 1
-    const w = canvas.width / dpr
-    const h = canvas.height / dpr
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    fillMetallicBg(ctx, w, h)
-  }, [])
-
-  const sendDrawing = async () => {
+  const saveDrawing = async () => {
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -243,6 +256,9 @@ export default function DrawingCanvas() {
     setError('')
 
     try {
+      // Small artificial delay to make the "Sending..." state feel real
+      await new Promise((resolve) => setTimeout(resolve, 800))
+
       // Create export canvas with metallic background
       const exportCanvas = document.createElement('canvas')
       exportCanvas.width = canvas.width
@@ -251,24 +267,39 @@ export default function DrawingCanvas() {
       if (!exportCtx) return
 
       const dpr = window.devicePixelRatio || 1
-      fillMetallicBg(exportCtx, canvas.width / dpr, canvas.height / dpr)
+      const styledWidth = canvas.width / dpr
+      const styledHeight = canvas.height / dpr
+
+      // Scale up exportCtx to handle high-DPR rendering in fillMetallicBg
+      exportCtx.scale(dpr, dpr)
+      fillMetallicBg(exportCtx, styledWidth, styledHeight)
+      
+      // Reset scale before drawing the main canvas (which is already scaled)
+      exportCtx.setTransform(1, 0, 0, 1, 0, 0)
       exportCtx.drawImage(canvas, 0, 0)
 
-      const image = exportCanvas.toDataURL('image/png')
+      // Use JPEG with quality to save space and prevent localStorage quota errors
+      const image = exportCanvas.toDataURL('image/jpeg', 0.8)
 
-      const res = await fetch('/api/send-drawing', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image }),
-      })
+      // Save to localStorage with timestamp
+      const timestamp = new Date().toISOString()
+      const drawingData = {
+        image,
+        timestamp,
+        id: `drawing-${Date.now()}`,
+      }
 
-      if (!res.ok) throw new Error('Failed to send')
+      // Clean up legacy history and prepare for new save to avoid quota issues
+      localStorage.removeItem('aymon-drawings')
+
+      // Store the single latest drawing
+      localStorage.setItem('aymon-last-drawing', JSON.stringify(drawingData))
 
       setSent(true)
-      clearCanvas()
-      setTimeout(() => setSent(false), 5000)
-    } catch {
-      setError('Failed to send. Please try again.')
+      setTimeout(() => setSent(false), 3000)
+    } catch (error) {
+      console.error('Failed to save drawing:', error)
+      setError('Failed to save. Storage might be full.')
       setTimeout(() => setError(''), 4000)
     } finally {
       setSending(false)
@@ -297,7 +328,7 @@ export default function DrawingCanvas() {
         />
       </div>
 
-      <RippleEffect onClick={sendDrawing} className="font-sec text-3xl px-4 py-3 cursor-pointer">
+      <RippleEffect onClick={saveDrawing} className="font-sec text-3xl px-4 py-3 cursor-pointer">
         {sent ? 'Message sent ✓' : sending ? 'Sending...' : 'Send a Visual Message'}
       </RippleEffect>
 
