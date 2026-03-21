@@ -1,6 +1,6 @@
 import type { SEOEntry, Work } from '@/types/seo.types'
 
-export type RouteKey = '/' | '/about' | '/work' | '*'
+export type RouteKey = '/' | '/about' | '/work' | '/contact' | '*'
 
 export const SEO: Record<string, SEOEntry> = {
   '/': {
@@ -33,6 +33,12 @@ export const SEO: Record<string, SEOEntry> = {
     description:
       'Browse all creative projects by Ahmed Ayman (Aymon). Explore motion graphics, visual art, and design projects showcasing innovative artistic work.',
     keywords: ['Ahmed Ayman work', 'Aymon projects', 'motion graphics portfolio', 'visual art projects', 'design portfolio Cairo'],
+  },
+
+  '/contact': {
+    title: 'Contact | Aymon',
+    description: 'Get in touch with Ahmed Ayman (Aymon). Reach out via email, phone, or connect on LinkedIn, Instagram, and Behance.',
+    keywords: ['Ahmed Ayman', 'Aymon', 'contact', 'email', 'phone', 'LinkedIn', 'Instagram', 'Behance'],
   },
 
   '*': {

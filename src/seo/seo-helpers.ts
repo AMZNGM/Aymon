@@ -44,6 +44,7 @@ export const metadataGenerators = {
   home: createMetadataGenerator('/'),
   about: createMetadataGenerator('/about'),
   work: createMetadataGenerator('/work'),
+  contact: createMetadataGenerator('/contact'),
   notFound: createMetadataGenerator('*'),
   works: (data: WorkMetadataInput): Metadata => {
     const keywords = data.keywords

@@ -2,11 +2,9 @@ import Link from 'next/link'
 import { TextAlignJustify } from 'lucide-react'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
 import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
-import ModalTrigger from '@/components/ui/Modal/ModalTrigger'
-import ContactModal from '@/components/nav-components/ContactModal'
 
 export default function MobileMenu({ className, btnClassName }: { className?: string; btnClassName?: string }) {
-  const navLinks = ['/about', '/work']
+  const navLinks = ['/about', '/work', '/contact']
 
   return (
     <div className={`${className} overflow-hidden`}>
@@ -30,13 +28,7 @@ export default function MobileMenu({ className, btnClassName }: { className?: st
             </Link>
           </label>
         ))}
-
-        <ModalTrigger targetId="mobile-contact-modal" className="active:scale-90 duration-200 cursor-pointer">
-          <TextWghtGrow label="contact" className="uppercase" />
-        </ModalTrigger>
       </nav>
-
-      <ContactModal id="mobile-contact-modal" />
     </div>
   )
 }
