@@ -30,11 +30,11 @@ export default function ContactContent() {
   }
 
   const LINKS = [
-    { href: `mailto:${contactContent.email}`, label: `Email: ${contactContent.email}`, display: contactContent.email },
+    { href: `mailto:${contactContent.email}`, label: `Email: ${contactContent.email}`, display: 'Mail' },
     {
       href: `tel:${contactContent.mobile.replace(/\s/g, '')}`,
       label: `Phone: ${contactContent.mobile}`,
-      display: contactContent.mobile,
+      display: 'Phone',
     },
     { href: contactContent.socialLinks.linkedin.replace(/\s/g, ''), label: 'LinkedIn', display: 'LinkedIn' },
     { href: contactContent.socialLinks.instagram.replace(/\s/g, ''), label: 'Instagram', display: 'Instagram' },
@@ -42,20 +42,22 @@ export default function ContactContent() {
   ]
 
   return (
-    <section className="relative w-full max-w-4xl">
+    <section className="relative w-full max-w-2xl">
       <AnimIn center blur delay={0.2} className="flex justify-between items-center w-full text-center">
-        {LINKS.map((link, i) => (
-          <a
-            key={i}
-            target="_blank"
-            href={link.href}
-            rel="noopener noreferrer"
-            aria-label={link.label}
-            className="max-md:text-[10px] text-nowrap px-2 max-md:px-1 cursor-pointer"
-          >
-            <TextWghtGrow label={link.display} />
-          </a>
-        ))}
+        {LINKS.map((link, i) => {
+          return (
+            <a
+              key={i}
+              target="_blank"
+              href={link.href}
+              rel="noopener noreferrer"
+              aria-label={link.label}
+              className="max-md:text-[10px] text-nowrap px-2 max-md:px-1 cursor-pointer"
+            >
+              <TextWghtGrow label={link.display} />
+            </a>
+          )
+        })}
       </AnimIn>
     </section>
   )

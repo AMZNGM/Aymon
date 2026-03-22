@@ -99,6 +99,7 @@ export default function DrawingCanvas() {
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
   const lastPos = useRef<{ x: number; y: number } | null>(null)
+  const [history, setHistory] = useState<string[]>([])
 
   // Initialize canvas
   useEffect(() => {
@@ -164,6 +165,49 @@ export default function DrawingCanvas() {
     return () => window.removeEventListener('resize', resize)
   }, [])
 
+  const saveHistory = useCallback(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const dataUrl = canvas.toDataURL()
+    setHistory((prev) => [...prev.slice(-19), dataUrl]) // Keep last 20 steps
+  }, [])
+
+  const undo = useCallback(() => {
+    if (history.length === 0) return
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext('2d')
+    if (!canvas || !ctx) return
+
+    const newHistory = [...history]
+    const lastState = newHistory.pop()
+    setHistory(newHistory)
+
+    const rect = containerRef.current?.getBoundingClientRect()
+    if (!rect) return
+
+    // Clear and refill background
+    fillMetallicBg(ctx, rect.width, rect.height)
+
+    if (lastState) {
+      const img = new Image()
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, rect.width, rect.height)
+      }
+      img.src = lastState
+    }
+  }, [history])
+
+  const resetCanvas = useCallback(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext('2d')
+    const rect = containerRef.current?.getBoundingClientRect()
+    if (!ctx || !rect) return
+
+    fillMetallicBg(ctx, rect.width, rect.height)
+    setHistory([])
+    localStorage.removeItem('aymon-last-drawing')
+  }, [])
+
   const getPos = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     const canvas = canvasRef.current
     if (!canvas) return { x: 0, y: 0 }
@@ -183,6 +227,7 @@ export default function DrawingCanvas() {
 
   const startDrawing = useCallback(
     (e: React.MouseEvent | React.TouchEvent) => {
+      saveHistory()
       const pos = getPos(e)
       lastPos.current = pos
       setIsDrawing(true)
@@ -193,7 +238,7 @@ export default function DrawingCanvas() {
       if (!ctx) return
       drawMetallic3DDot(ctx, pos.x, pos.y, BRUSH_SIZE)
     },
-    [getPos]
+    [getPos, saveHistory]
   )
 
   const draw = useCallback(
@@ -273,7 +318,7 @@ export default function DrawingCanvas() {
       // Scale up exportCtx to handle high-DPR rendering in fillMetallicBg
       exportCtx.scale(dpr, dpr)
       fillMetallicBg(exportCtx, styledWidth, styledHeight)
-      
+
       // Reset scale before drawing the main canvas (which is already scaled)
       exportCtx.setTransform(1, 0, 0, 1, 0, 0)
       exportCtx.drawImage(canvas, 0, 0)
@@ -313,7 +358,7 @@ export default function DrawingCanvas() {
         style={{
           background: 'linear-gradient(135deg, #d6d6d6 0%, #e8e8e8 15%, #b8b8b8 30%, #cfcfcf 50%, #a8a8a8 65%, #c0c0c0 80%, #b0b0b0 100%)',
         }}
-        className="relative w-full max-w-4xl aspect-square overflow-hidden rounded-lg touch-none cursor-crosshair"
+        className="relative w-full max-w-2xl aspect-square overflow-hidden rounded-lg touch-none cursor-crosshair"
       >
         <canvas
           ref={canvasRef}
@@ -328,7 +373,27 @@ export default function DrawingCanvas() {
         />
       </div>
 
-      <RippleEffect onClick={saveDrawing} className="font-sec text-3xl px-4 py-3 cursor-pointer">
+      <div className="flex gap-8 mt-4 mb-2">
+        <button
+          onClick={undo}
+          disabled={history.length === 0}
+          className="opacity-50 hover:opacity-100 disabled:opacity-20 font-sec text-sm uppercase tracking-widest transition-opacity cursor-pointer"
+        >
+          Undo
+        </button>
+
+        <button
+          onClick={resetCanvas}
+          className="opacity-50 hover:opacity-100 font-sec text-sm uppercase tracking-widest transition-opacity cursor-pointer"
+        >
+          Reset
+        </button>
+      </div>
+
+      <RippleEffect
+        onClick={saveDrawing}
+        className="bg-sec hover:bg-bg/15 rounded-lg font-sec text-3xl transition-colors px-8 py-1 cursor-pointer"
+      >
         {sent ? 'Message sent ✓' : sending ? 'Sending...' : 'Send a Visual Message'}
       </RippleEffect>
 
