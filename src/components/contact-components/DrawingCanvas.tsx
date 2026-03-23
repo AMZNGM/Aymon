@@ -1,10 +1,10 @@
 'use client'
 
 import { useRef, useState, useEffect, useCallback } from 'react'
+import { Undo, RotateCcw } from 'lucide-react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
-import FloatingEffect from '@/components/ui/effect/FloatingEffect'
 
 const BRUSH_SIZE = 4
 
@@ -374,26 +374,32 @@ export default function DrawingCanvas() {
           className="absolute inset-0 w-full h-full touch-none"
         />
 
-        <div className="top-14 left-[94%] absolute flex gap-8 -rotate-90">
-          <button
+        <div className="top-0 -right-12 z-50 absolute flex flex-col gap-4">
+          <RippleEffect
             onClick={undo}
-            disabled={history.length === 0}
-            className="opacity-50 hover:opacity-100 disabled:opacity-20 transition-opacity cursor-pointer"
+            className={`bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 p-2 cursor-pointer backdrop-blur-xs transition-opacity ${
+              history.length === 0 ? 'opacity-40 pointer-events-none' : ''
+            }`}
           >
-            Undo
-          </button>
+            <Undo strokeWidth={2.5} />
+          </RippleEffect>
 
-          <button onClick={resetCanvas} className="opacity-50 hover:opacity-100 transition-opacity cursor-pointer">
-            Reset
-          </button>
+          <RippleEffect
+            onClick={resetCanvas}
+            className="bg-bg/10 hover:bg-bg/30 backdrop-blur-xs rounded-xl transition-opacity duration-100 p-2 cursor-pointer"
+          >
+            <RotateCcw strokeWidth={2.5} />
+          </RippleEffect>
         </div>
       </div>
 
       <RippleEffect
         onClick={saveDrawing}
-        className="bg-bg/10 hover:bg-bg/30 rounded-md outline-none font-medium text-bg/75 2xl:text-[1dvw] transition-colors duration-100 mt-8 px-4 py-2 cursor-pointer select-none"
+        className={`rounded-md outline-none font-medium 2xl:text-[1dvw] transition-colors duration-100 mt-8 px-4 py-2 cursor-pointer select-none ${
+          sent ? 'bg-bg text-text' : 'bg-bg/10 hover:bg-bg/30 text-bg/75'
+        }`}
       >
-        <TextWghtGrow label={sent ? 'Message sent ✓' : sending ? 'Sending...' : 'Send a Visual Message'} />
+        <TextWghtGrow label={sent ? 'Message sent' : sending ? 'Sending...' : 'Send a Visual Message'} />
       </RippleEffect>
 
       {error && <p className="text-red-400 text-xs text-center">{error}</p>}
