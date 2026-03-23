@@ -373,34 +373,34 @@ export default function DrawingCanvas() {
           onTouchEnd={stopDrawing}
           className="absolute inset-0 w-full h-full touch-none"
         />
-
-        <div className="top-0 -right-12 z-50 absolute flex flex-col gap-4">
-          <RippleEffect
-            onClick={undo}
-            className={`bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 p-2 cursor-pointer backdrop-blur-xs transition-opacity ${
-              history.length === 0 ? 'opacity-40 pointer-events-none' : ''
-            }`}
-          >
-            <Undo strokeWidth={2.5} />
-          </RippleEffect>
-
-          <RippleEffect
-            onClick={resetCanvas}
-            className="bg-bg/10 hover:bg-bg/30 backdrop-blur-xs rounded-xl transition-opacity duration-100 p-2 cursor-pointer"
-          >
-            <RotateCcw strokeWidth={2.5} />
-          </RippleEffect>
-        </div>
       </div>
 
-      <RippleEffect
-        onClick={saveDrawing}
-        className={`rounded-md outline-none font-medium 2xl:text-[1dvw] transition-colors duration-100 mt-8 px-4 py-2 cursor-pointer select-none ${
-          sent ? 'bg-bg text-text' : 'bg-bg/10 hover:bg-bg/30 text-bg/75'
-        }`}
-      >
-        <TextWghtGrow label={sent ? 'Message sent' : sending ? 'Sending...' : 'Send a Visual Message'} />
-      </RippleEffect>
+      <div className="flex justify-center items-center gap-4 w-full mt-4">
+        <RippleEffect
+          onClick={undo}
+          className={`bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 p-2 cursor-pointer backdrop-blur-xs transition-opacity ${
+            history.length === 0 ? 'opacity-40 pointer-events-none' : ''
+          }`}
+        >
+          <Undo strokeWidth={2.5} />
+        </RippleEffect>
+
+        <RippleEffect
+          onClick={saveDrawing}
+          className={`rounded-md outline-none font-medium 2xl:text-[1dvw] transition-colors duration-100  px-4 py-2 cursor-pointer select-none ${
+            sent ? 'bg-bg text-text' : 'bg-bg/10 hover:bg-bg/30 text-bg/75'
+          }`}
+        >
+          <TextWghtGrow label={sent ? 'Message sent' : sending ? 'Sending...' : 'Send a Visual Message'} />
+        </RippleEffect>
+
+        <RippleEffect
+          onClick={resetCanvas}
+          className="bg-bg/10 hover:bg-bg/30 backdrop-blur-xs rounded-xl transition-opacity duration-100 p-2 cursor-pointer"
+        >
+          <RotateCcw strokeWidth={2.5} />
+        </RippleEffect>
+      </div>
 
       {error && <p className="text-red-400 text-xs text-center">{error}</p>}
     </AnimIn>
