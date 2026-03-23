@@ -2,7 +2,9 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
+import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
+import FloatingEffect from '@/components/ui/effect/FloatingEffect'
 
 const BRUSH_SIZE = 4
 
@@ -358,7 +360,7 @@ export default function DrawingCanvas() {
         style={{
           background: 'linear-gradient(135deg, #d6d6d6 0%, #e8e8e8 15%, #b8b8b8 30%, #cfcfcf 50%, #a8a8a8 65%, #c0c0c0 80%, #b0b0b0 100%)',
         }}
-        className="relative w-full max-w-2xl aspect-square overflow-hidden rounded-lg touch-none cursor-crosshair"
+        className="relative w-full max-w-2xl aspect-square rounded-lg touch-none cursor-crosshair"
       >
         <canvas
           ref={canvasRef}
@@ -371,30 +373,27 @@ export default function DrawingCanvas() {
           onTouchEnd={stopDrawing}
           className="absolute inset-0 w-full h-full touch-none"
         />
-      </div>
 
-      <div className="flex gap-8 mt-4 mb-2">
-        <button
-          onClick={undo}
-          disabled={history.length === 0}
-          className="opacity-50 hover:opacity-100 disabled:opacity-20 font-sec text-sm uppercase tracking-widest transition-opacity cursor-pointer"
-        >
-          Undo
-        </button>
+        <div className="top-14 left-[94%] absolute flex gap-8 -rotate-90">
+          <button
+            onClick={undo}
+            disabled={history.length === 0}
+            className="opacity-50 hover:opacity-100 disabled:opacity-20 transition-opacity cursor-pointer"
+          >
+            Undo
+          </button>
 
-        <button
-          onClick={resetCanvas}
-          className="opacity-50 hover:opacity-100 font-sec text-sm uppercase tracking-widest transition-opacity cursor-pointer"
-        >
-          Reset
-        </button>
+          <button onClick={resetCanvas} className="opacity-50 hover:opacity-100 transition-opacity cursor-pointer">
+            Reset
+          </button>
+        </div>
       </div>
 
       <RippleEffect
         onClick={saveDrawing}
-        className="bg-sec hover:bg-bg/15 rounded-lg font-sec text-3xl transition-colors px-8 py-1 cursor-pointer"
+        className="bg-bg/10 hover:bg-bg/30 rounded-md outline-none font-medium text-bg/75 2xl:text-[1dvw] transition-colors duration-100 mt-8 px-4 py-2 cursor-pointer select-none"
       >
-        {sent ? 'Message sent ✓' : sending ? 'Sending...' : 'Send a Visual Message'}
+        <TextWghtGrow label={sent ? 'Message sent ✓' : sending ? 'Sending...' : 'Send a Visual Message'} />
       </RippleEffect>
 
       {error && <p className="text-red-400 text-xs text-center">{error}</p>}
