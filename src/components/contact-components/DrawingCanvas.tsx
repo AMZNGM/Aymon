@@ -354,7 +354,7 @@ export default function DrawingCanvas() {
   }
 
   return (
-    <AnimIn center blur delay={0.4} className="relative flex flex-col justify-center items-center w-full h-full overflow-hidden">
+    <AnimIn center blur delay={0.4} className="relative flex flex-col justify-center items-center w-full h-full overflow-hidden uppercase">
       <div
         ref={containerRef}
         style={{

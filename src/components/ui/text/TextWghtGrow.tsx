@@ -58,17 +58,23 @@ export default function TextWghtGrow({
   }
 
   return (
-    <motion.span className={`${className}`} onClick={onClick} whileHover="hover" initial="initial" {...props}>
-      <span className="sr-only">{label}</span>
+    <>
+      <span className={`md:hidden ${className || ''}`} onClick={onClick} {...props}>
+        {label}
+      </span>
 
-      {label.split('').map((letter: string, i: number) => {
-        const index = shuffledIndices[i]
-        return (
-          <motion.span key={i} className="inline-block whitespace-pre" aria-hidden="true" variants={letterVariants} custom={index}>
-            {letter}
-          </motion.span>
-        )
-      })}
-    </motion.span>
+      <motion.span className={`hidden md:inline ${className || ''}`} onClick={onClick} whileHover="hover" initial="initial" {...props}>
+        <span className="sr-only">{label}</span>
+
+        {label.split('').map((letter: string, i: number) => {
+          const index = shuffledIndices[i]
+          return (
+            <motion.span key={i} className="inline-block whitespace-pre" aria-hidden="true" variants={letterVariants} custom={index}>
+              {letter}
+            </motion.span>
+          )
+        })}
+      </motion.span>
+    </>
   )
 }

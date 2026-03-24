@@ -43,7 +43,7 @@ export default function ContactContent() {
 
   return (
     <section className="relative w-full max-w-2xl">
-      <AnimIn center blur delay={0.2} className="flex justify-between items-center w-full text-center">
+      <AnimIn center blur delay={0.2} className="flex justify-between items-center w-full text-center uppercase">
         {LINKS.map((link, i) => {
           return (
             <a
