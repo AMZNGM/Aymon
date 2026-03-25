@@ -42,12 +42,12 @@ This web application serves as his digital canvas, showcasing his diverse portfo
 - **[Motion](https://motion.dev/)**: For elegant React animations.
 - **[React Three Fiber](https://r3f.docs.pmnd.rs/)** & **[Drei](https://github.com/pmndrs/drei)**: 3D scene management in React.
 - **[Lenis](https://lenis.darkroom.engineering/)**: Smooth scrolling for enhanced UX.
+- **[Swapy](https://swapy.berkaysariay.com/)**: For interactive drag-and-drop layouts.
+- **[Lucide Icons](https://lucide.dev/)**: Beautifully simple pixel-perfect icons.
 
 ### Backend & Tools
 
 - **[Firebase](https://firebase.google.com/)**: Database and authentication services.
-- **[Swapy](https://swapy.berkaysariay.com/)**: For interactive drag-and-drop layouts.
-- **[Lucide Icons](https://lucide.dev/)**: Beautifully simple pixel-perfect icons.
 
 ---
 
@@ -121,5 +121,5 @@ src/
 ---
 
 <div align="center">
-  <p>Crafted with ❤️ by <a href="https://github.com/AMZNGM" target="_blank">NGM</a></p>
+  <p>by <a href="https://github.com/AMZNGM" target="_blank">NGM</a></p>
 </div>
