@@ -149,7 +149,11 @@ export default function DrawingCanvas() {
       tempCanvas.width = canvas.width
       tempCanvas.height = canvas.height
       const tempCtx = tempCanvas.getContext('2d')
-      tempCtx?.drawImage(canvas, 0, 0)
+
+      // Only draw if canvas has valid dimensions
+      if (canvas.width > 0 && canvas.height > 0) {
+        tempCtx?.drawImage(canvas, 0, 0)
+      }
 
       canvas.width = rect.width * dpr
       canvas.height = rect.height * dpr
@@ -391,7 +395,8 @@ export default function DrawingCanvas() {
   return (
     <AnimIn center blur delay={0.4} className="relative flex flex-col justify-center items-center w-full h-full overflow-hidden uppercase">
       {/* Canvas Container - Takes full available space */}
-      <div className="flex justify-center items-center w-full">
+      <div className="flex max-md:flex-col justify-center max-md:items-center gap-2 w-full">
+        <div className="w-13"></div>
         {/* Canvas - Centered with full space */}
         <div
           ref={containerRef}
@@ -413,60 +418,60 @@ export default function DrawingCanvas() {
             className="absolute inset-0 w-full h-full touch-none"
           />
         </div>
-      </div>
 
-      {/* Color Palette - Right Aligned Like Top Navigation */}
-      <div className="top-0 right-126 absolute flex flex-col gap-1">
-        {/* Color Columns */}
-        <div className="flex gap-1">
-          {/* First Column */}
-          <div className="flex flex-col gap-1">
-            {COLOR_PALETTE.slice(0, 8).map((color) => (
-              <button
-                key={color}
-                onClick={() => setCurrentColor(color)}
-                className={`w-6 h-6 border transition-all hover:border-gray-400 ${
-                  currentColor === color ? 'border-black border-2 shadow-sm' : 'border-gray-300'
-                }`}
-                style={{ backgroundColor: color }}
-                aria-label={`Select ${color} color`}
-              />
-            ))}
+        {/* Color Palette - Right Aligned Like Top Navigation */}
+        <div className="flex md:flex-col gap-1">
+          {/* Color Columns */}
+          <div className="flex max-md:flex-col gap-1">
+            {/* First Column */}
+            <div className="flex md:flex-col gap-1">
+              {COLOR_PALETTE.slice(0, 8).map((color) => (
+                <button
+                  key={color}
+                  onClick={() => setCurrentColor(color)}
+                  className={`w-6 h-6 border transition-all hover:border-gray-400 ${
+                    currentColor === color ? 'border-black border-2 shadow-sm' : 'border-gray-300'
+                  }`}
+                  style={{ backgroundColor: color }}
+                  aria-label={`Select ${color} color`}
+                />
+              ))}
+            </div>
+
+            {/* Second Column */}
+            <div className="flex md:flex-col gap-1">
+              {COLOR_PALETTE.slice(8).map((color) => (
+                <button
+                  key={color}
+                  onClick={() => setCurrentColor(color)}
+                  className={`w-6 h-6 border transition-all hover:border-gray-400 ${
+                    currentColor === color ? 'border-black border-2 shadow-sm' : 'border-gray-300'
+                  }`}
+                  style={{ backgroundColor: color }}
+                  aria-label={`Select ${color} color`}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* Second Column */}
-          <div className="flex flex-col gap-1">
-            {COLOR_PALETTE.slice(8).map((color) => (
-              <button
-                key={color}
-                onClick={() => setCurrentColor(color)}
-                className={`w-6 h-6 border transition-all hover:border-gray-400 ${
-                  currentColor === color ? 'border-black border-2 shadow-sm' : 'border-gray-300'
-                }`}
-                style={{ backgroundColor: color }}
-                aria-label={`Select ${color} color`}
-              />
-            ))}
+          {/* Color Controls - Under the Columns */}
+          <div className="flex max-md:flex-col justify-between gap-1 md:mt-1">
+            <input
+              type="color"
+              value={currentColor}
+              onChange={(e) => setCurrentColor(e.target.value)}
+              className="w-6 h-6 bg-bg/10 hover:bg-bg/30 border-2 border-gray-300 transition-all cursor-pointer"
+              aria-label="Color picker"
+            />
+
+            <RippleEffect
+              onClick={() => setCurrentColor('#c8c8cc')}
+              className="h-fit bg-bg/10 hover:bg-bg/30 transition-all duration-100 p-1 cursor-pointer"
+              title="Reset to silver color"
+            >
+              <Droplets strokeWidth={2.5} size={16} />
+            </RippleEffect>
           </div>
-        </div>
-
-        {/* Color Controls - Under the Columns */}
-        <div className="flex justify-between gap-1 mt-1">
-          <input
-            type="color"
-            value={currentColor}
-            onChange={(e) => setCurrentColor(e.target.value)}
-            className="w-6 h-6 bg-bg/10 hover:bg-bg/30 border-2 border-gray-300 transition-all cursor-pointer"
-            aria-label="Color picker"
-          />
-
-          <RippleEffect
-            onClick={() => setCurrentColor('#c8c8cc')}
-            className="bg-bg/10 hover:bg-bg/30 transition-all duration-100 p-1 cursor-pointer"
-            title="Reset to silver color"
-          >
-            <Droplets strokeWidth={2.5} size={16} />
-          </RippleEffect>
         </div>
       </div>
 
