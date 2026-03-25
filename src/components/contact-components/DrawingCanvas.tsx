@@ -8,20 +8,24 @@ import RippleEffect from '@/components/ui/effect/RippleEffect'
 
 const BRUSH_SIZE = 4
 
-// Color palette for the drawing canvas
+// Color palette matching Windows Paint app
 const COLOR_PALETTE = [
   '#000000', // Black
-  '#FF0000', // Red
-  '#00FF00', // Green
-  '#0000FF', // Blue
-  '#FFFF00', // Yellow
-  '#FF00FF', // Magenta
-  '#00FFFF', // Cyan
-  '#FFA500', // Orange
-  '#800080', // Purple
-  '#FFC0CB', // Pink
-  '#A52A2A', // Brown
   '#808080', // Gray
+  '#800000', // Maroon
+  '#808000', // Olive
+  '#008000', // Green
+  '#008080', // Teal
+  '#000080', // Navy
+  '#800080', // Purple
+  '#808040', // Brown
+  '#004040', // Dark Teal
+  '#0080FF', // Blue
+  '#FF0000', // Red
+  '#FF00FF', // Magenta
+  '#FFFF00', // Yellow
+  '#00FFFF', // Cyan
+  '#FFFFFF', // White
 ]
 
 // Draw the metallic gradient background onto a canvas context
@@ -385,58 +389,84 @@ export default function DrawingCanvas() {
 
   return (
     <AnimIn center blur delay={0.4} className="relative flex flex-col justify-center items-center w-full h-full overflow-hidden uppercase">
-      <div
-        ref={containerRef}
-        style={{
-          background: 'linear-gradient(135deg, #d6d6d6 0%, #e8e8e8 15%, #b8b8b8 30%, #cfcfcf 50%, #a8a8a8 65%, #c0c0c0 80%, #b0b0b0 100%)',
-        }}
-        className="relative w-full max-w-2xl aspect-square rounded-lg touch-none cursor-crosshair"
-      >
-        <canvas
-          ref={canvasRef}
-          onMouseDown={startDrawing}
-          onMouseMove={draw}
-          onMouseUp={stopDrawing}
-          onMouseLeave={stopDrawing}
-          onTouchStart={startDrawing}
-          onTouchMove={draw}
-          onTouchEnd={stopDrawing}
-          className="absolute inset-0 w-full h-full touch-none"
-        />
+      {/* Canvas Container - Takes full available space */}
+      <div className="flex justify-center items-center w-full">
+        {/* Canvas - Centered with full space */}
+        <div
+          ref={containerRef}
+          style={{
+            background:
+              'linear-gradient(135deg, #d6d6d6 0%, #e8e8e8 15%, #b8b8b8 30%, #cfcfcf 50%, #a8a8a8 65%, #c0c0c0 80%, #b0b0b0 100%)',
+          }}
+          className="relative w-full max-w-2xl aspect-square rounded-lg touch-none cursor-crosshair"
+        >
+          <canvas
+            ref={canvasRef}
+            onMouseDown={startDrawing}
+            onMouseMove={draw}
+            onMouseUp={stopDrawing}
+            onMouseLeave={stopDrawing}
+            onTouchStart={startDrawing}
+            onTouchMove={draw}
+            onTouchEnd={stopDrawing}
+            className="absolute inset-0 w-full h-full touch-none"
+          />
+        </div>
       </div>
 
-      {/* Color Palette and Color Controls */}
-      <div className="flex flex-wrap justify-center items-center gap-2 w-full mt-4">
-        {/* Color Picker */}
-        <input
-          type="color"
-          value={currentColor}
-          onChange={(e) => setCurrentColor(e.target.value)}
-          aria-label="Color picker"
-          className="w-8 h-8 bg-bg/10 hover:bg-bg/30 border-2 border-gray-300 rounded-lg transition-all cursor-pointer"
-        />
+      {/* Color Palette - Right Aligned Like Top Navigation */}
+      <div className="top-0 right-126 absolute flex flex-col gap-1">
+        {/* Color Columns */}
+        <div className="flex gap-1">
+          {/* First Column */}
+          <div className="flex flex-col gap-1">
+            {COLOR_PALETTE.slice(0, 8).map((color) => (
+              <button
+                key={color}
+                onClick={() => setCurrentColor(color)}
+                className={`w-6 h-6 border transition-all hover:border-gray-400 ${
+                  currentColor === color ? 'border-black border-2 shadow-sm' : 'border-gray-300'
+                }`}
+                style={{ backgroundColor: color }}
+                aria-label={`Select ${color} color`}
+              />
+            ))}
+          </div>
 
-        {/* Color Palette */}
-        {COLOR_PALETTE.map((color) => (
-          <button
-            key={color}
-            onClick={() => setCurrentColor(color)}
-            className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 ${
-              currentColor === color ? 'border-white scale-110 shadow-lg' : 'border-gray-300'
-            }`}
-            style={{ backgroundColor: color }}
-            aria-label={`Select ${color} color`}
+          {/* Second Column */}
+          <div className="flex flex-col gap-1">
+            {COLOR_PALETTE.slice(8).map((color) => (
+              <button
+                key={color}
+                onClick={() => setCurrentColor(color)}
+                className={`w-6 h-6 border transition-all hover:border-gray-400 ${
+                  currentColor === color ? 'border-black border-2 shadow-sm' : 'border-gray-300'
+                }`}
+                style={{ backgroundColor: color }}
+                aria-label={`Select ${color} color`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Color Controls - Under the Columns */}
+        <div className="flex justify-between gap-1 mt-1">
+          <input
+            type="color"
+            value={currentColor}
+            onChange={(e) => setCurrentColor(e.target.value)}
+            className="w-6 h-6 bg-bg/10 hover:bg-bg/30 border-2 border-gray-300 transition-all cursor-pointer"
+            aria-label="Color picker"
           />
-        ))}
 
-        {/* Silver Reset Button */}
-        <RippleEffect
-          onClick={() => setCurrentColor('#c8c8cc')}
-          className="bg-bg/10 hover:bg-bg/30 rounded-xl transition-all duration-100 p-2 cursor-pointer"
-          title="Reset to silver color"
-        >
-          <Droplets strokeWidth={2.5} size={20} />
-        </RippleEffect>
+          <RippleEffect
+            onClick={() => setCurrentColor('#c8c8cc')}
+            className="bg-bg/10 hover:bg-bg/30 rounded transition-all duration-100 p-1 cursor-pointer"
+            title="Reset to silver color"
+          >
+            <Droplets strokeWidth={2.5} size={16} />
+          </RippleEffect>
+        </div>
       </div>
 
       {/* Action Buttons */}
@@ -449,7 +479,6 @@ export default function DrawingCanvas() {
         >
           <Undo strokeWidth={2.5} />
         </RippleEffect>
-
         <RippleEffect
           onClick={saveDrawing}
           className={`rounded-md outline-none font-medium 2xl:text-[1dvw] transition-colors duration-100  px-4 py-2 cursor-pointer select-none ${
