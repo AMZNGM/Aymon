@@ -1,12 +1,28 @@
 'use client'
 
 import { useRef, useState, useEffect, useCallback } from 'react'
-import { Undo, RotateCcw } from 'lucide-react'
+import { Undo, RotateCcw, Droplets } from 'lucide-react'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 import RippleEffect from '@/components/ui/effect/RippleEffect'
 
 const BRUSH_SIZE = 4
+
+// Color palette for the drawing canvas
+const COLOR_PALETTE = [
+  '#000000', // Black
+  '#FF0000', // Red
+  '#00FF00', // Green
+  '#0000FF', // Blue
+  '#FFFF00', // Yellow
+  '#FF00FF', // Magenta
+  '#00FFFF', // Cyan
+  '#FFA500', // Orange
+  '#800080', // Purple
+  '#FFC0CB', // Pink
+  '#A52A2A', // Brown
+  '#808080', // Gray
+]
 
 // Draw the metallic gradient background onto a canvas context
 function fillMetallicBg(ctx: CanvasRenderingContext2D, w: number, h: number) {
@@ -36,7 +52,15 @@ function fillMetallicBg(ctx: CanvasRenderingContext2D, w: number, h: number) {
 }
 
 // Draw a 3D metallic stroke segment between two points
-function drawMetallic3DStroke(ctx: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number, size: number) {
+function drawMetallic3DStroke(
+  ctx: CanvasRenderingContext2D,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  size: number,
+  color: string = '#000000'
+) {
   // Layer 1: soft shadow (bottom-right offset)
   ctx.beginPath()
   ctx.moveTo(x1 + 1, y1 + 1)
@@ -45,19 +69,19 @@ function drawMetallic3DStroke(ctx: CanvasRenderingContext2D, x1: number, y1: num
   ctx.lineWidth = size + 1.5
   ctx.stroke()
 
-  // Layer 2: mid-tone silver base
+  // Layer 2: colored base
   ctx.beginPath()
   ctx.moveTo(x1, y1)
   ctx.lineTo(x2, y2)
-  ctx.strokeStyle = '#ffffff'
+  ctx.strokeStyle = color
   ctx.lineWidth = size + 0.5
   ctx.stroke()
 
-  // Layer 3: silver highlight (top-left offset)
+  // Layer 3: color highlight (top-left offset)
   ctx.beginPath()
   ctx.moveTo(x1 - 0.4, y1 - 0.4)
   ctx.lineTo(x2 - 0.4, y2 - 0.4)
-  ctx.strokeStyle = 'rgba(210, 210, 215, 0.7)'
+  ctx.strokeStyle = color + 'B3' // Add transparency for highlight
   ctx.lineWidth = size * 0.5
   ctx.stroke()
 
@@ -65,13 +89,13 @@ function drawMetallic3DStroke(ctx: CanvasRenderingContext2D, x1: number, y1: num
   ctx.beginPath()
   ctx.moveTo(x1 - 0.6, y1 - 0.6)
   ctx.lineTo(x2 - 0.6, y2 - 0.6)
-  ctx.strokeStyle = 'rgba(195, 195, 200, 0.35)'
+  ctx.strokeStyle = color + '59' // More transparency for specular
   ctx.lineWidth = size * 0.2
   ctx.stroke()
 }
 
 // Draw a 3D metallic dot
-function drawMetallic3DDot(ctx: CanvasRenderingContext2D, x: number, y: number, size: number) {
+function drawMetallic3DDot(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, color: string = '#000000') {
   const r = size / 2
 
   // Shadow
@@ -83,13 +107,13 @@ function drawMetallic3DDot(ctx: CanvasRenderingContext2D, x: number, y: number, 
   // Base
   ctx.beginPath()
   ctx.arc(x, y, r + 0.3, 0, Math.PI * 2)
-  ctx.fillStyle = '#c8c8cc'
+  ctx.fillStyle = color
   ctx.fill()
 
   // Highlight
   ctx.beginPath()
   ctx.arc(x - 0.2, y - 0.2, r * 0.5, 0, Math.PI * 2)
-  ctx.fillStyle = 'rgba(210, 210, 215, 0.6)'
+  ctx.fillStyle = color + '99' // Add transparency for highlight
   ctx.fill()
 }
 
@@ -100,8 +124,10 @@ export default function DrawingCanvas() {
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
+  const [currentColor, setCurrentColor] = useState('#000000')
   const lastPos = useRef<{ x: number; y: number } | null>(null)
   const [history, setHistory] = useState<string[]>([])
+  const [historyStep, setHistoryStep] = useState(0)
 
   // Initialize canvas
   useEffect(() => {
@@ -171,18 +197,21 @@ export default function DrawingCanvas() {
     const canvas = canvasRef.current
     if (!canvas) return
     const dataUrl = canvas.toDataURL()
-    setHistory((prev) => [...prev.slice(-19), dataUrl]) // Keep last 20 steps
-  }, [])
+    setHistory((prev) => {
+      const newHistory = [...prev.slice(0, historyStep), dataUrl]
+      setHistoryStep(newHistory.length)
+      return newHistory
+    })
+  }, [historyStep])
 
   const undo = useCallback(() => {
-    if (history.length === 0) return
+    if (historyStep <= 0) return
     const canvas = canvasRef.current
     const ctx = canvas?.getContext('2d')
     if (!canvas || !ctx) return
 
-    const newHistory = [...history]
-    const lastState = newHistory.pop()
-    setHistory(newHistory)
+    const newStep = historyStep - 1
+    setHistoryStep(newStep)
 
     const rect = containerRef.current?.getBoundingClientRect()
     if (!rect) return
@@ -190,14 +219,14 @@ export default function DrawingCanvas() {
     // Clear and refill background
     fillMetallicBg(ctx, rect.width, rect.height)
 
-    if (lastState) {
+    if (newStep > 0 && history[newStep - 1]) {
       const img = new Image()
       img.onload = () => {
         ctx.drawImage(img, 0, 0, rect.width, rect.height)
       }
-      img.src = lastState
+      img.src = history[newStep - 1]
     }
-  }, [history])
+  }, [history, historyStep])
 
   const resetCanvas = useCallback(() => {
     const canvas = canvasRef.current
@@ -207,6 +236,7 @@ export default function DrawingCanvas() {
 
     fillMetallicBg(ctx, rect.width, rect.height)
     setHistory([])
+    setHistoryStep(0)
     localStorage.removeItem('aymon-last-drawing')
   }, [])
 
@@ -238,9 +268,9 @@ export default function DrawingCanvas() {
       const canvas = canvasRef.current
       const ctx = canvas?.getContext('2d')
       if (!ctx) return
-      drawMetallic3DDot(ctx, pos.x, pos.y, BRUSH_SIZE)
+      drawMetallic3DDot(ctx, pos.x, pos.y, BRUSH_SIZE, currentColor)
     },
-    [getPos, saveHistory]
+    [getPos, saveHistory, currentColor]
   )
 
   const draw = useCallback(
@@ -260,7 +290,7 @@ export default function DrawingCanvas() {
       const step = Math.max(1, BRUSH_SIZE * 0.4)
 
       if (dist <= step) {
-        drawMetallic3DStroke(ctx, prev.x, prev.y, pos.x, pos.y, BRUSH_SIZE)
+        drawMetallic3DStroke(ctx, prev.x, prev.y, pos.x, pos.y, BRUSH_SIZE, currentColor)
       } else {
         const steps = Math.ceil(dist / step)
         for (let i = 0; i < steps; i++) {
@@ -270,13 +300,13 @@ export default function DrawingCanvas() {
           const sy = prev.y + dy * t1
           const ex = prev.x + dx * t2
           const ey = prev.y + dy * t2
-          drawMetallic3DStroke(ctx, sx, sy, ex, ey, BRUSH_SIZE)
+          drawMetallic3DStroke(ctx, sx, sy, ex, ey, BRUSH_SIZE, currentColor)
         }
       }
 
       lastPos.current = pos
     },
-    [isDrawing, getPos]
+    [isDrawing, getPos, currentColor]
   )
 
   const stopDrawing = useCallback(() => {
@@ -375,11 +405,46 @@ export default function DrawingCanvas() {
         />
       </div>
 
+      {/* Color Palette and Color Controls */}
+      <div className="flex flex-wrap justify-center items-center gap-2 w-full mt-4">
+        {/* Color Picker */}
+        <input
+          type="color"
+          value={currentColor}
+          onChange={(e) => setCurrentColor(e.target.value)}
+          aria-label="Color picker"
+          className="w-8 h-8 bg-bg/10 hover:bg-bg/30 border-2 border-gray-300 rounded-lg transition-all cursor-pointer"
+        />
+
+        {/* Color Palette */}
+        {COLOR_PALETTE.map((color) => (
+          <button
+            key={color}
+            onClick={() => setCurrentColor(color)}
+            className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 ${
+              currentColor === color ? 'border-white scale-110 shadow-lg' : 'border-gray-300'
+            }`}
+            style={{ backgroundColor: color }}
+            aria-label={`Select ${color} color`}
+          />
+        ))}
+
+        {/* Silver Reset Button */}
+        <RippleEffect
+          onClick={() => setCurrentColor('#c8c8cc')}
+          className="bg-bg/10 hover:bg-bg/30 rounded-xl transition-all duration-100 p-2 cursor-pointer"
+          title="Reset to silver color"
+        >
+          <Droplets strokeWidth={2.5} size={20} />
+        </RippleEffect>
+      </div>
+
+      {/* Action Buttons */}
       <div className="flex justify-center items-center gap-4 w-full mt-4">
         <RippleEffect
           onClick={undo}
           className={`bg-bg/10 hover:bg-bg/30 rounded-xl duration-100 p-2 cursor-pointer backdrop-blur-xs transition-opacity ${
-            history.length === 0 ? 'opacity-40 pointer-events-none' : ''
+            historyStep <= 0 ? 'pointer-events-none opacity-50' : ''
           }`}
         >
           <Undo strokeWidth={2.5} />
