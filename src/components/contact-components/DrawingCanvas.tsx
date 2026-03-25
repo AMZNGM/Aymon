@@ -12,20 +12,21 @@ const BRUSH_SIZE = 4
 const COLOR_PALETTE = [
   '#000000', // Black
   '#808080', // Gray
-  '#800000', // Maroon
-  '#808000', // Olive
+  '#FF0000', // Red
+  '#FFFF00', // Yellow
   '#008000', // Green
   '#008080', // Teal
+  '#0080FF', // Blue
+  '#FF00FF', // Magenta
+
+  '#FFFFFF', // White
+  '#555555', // Dark Gray
+  '#800000', // Maroon
+  '#808040', // Brown
+  '#556b2f', // Dark Green
+  '#004040', // Dark Teal
   '#000080', // Navy
   '#800080', // Purple
-  '#808040', // Brown
-  '#004040', // Dark Teal
-  '#0080FF', // Blue
-  '#FF0000', // Red
-  '#FF00FF', // Magenta
-  '#FFFF00', // Yellow
-  '#00FFFF', // Cyan
-  '#FFFFFF', // White
 ]
 
 // Draw the metallic gradient background onto a canvas context
@@ -461,7 +462,7 @@ export default function DrawingCanvas() {
 
           <RippleEffect
             onClick={() => setCurrentColor('#c8c8cc')}
-            className="bg-bg/10 hover:bg-bg/30 rounded transition-all duration-100 p-1 cursor-pointer"
+            className="bg-bg/10 hover:bg-bg/30 transition-all duration-100 p-1 cursor-pointer"
             title="Reset to silver color"
           >
             <Droplets strokeWidth={2.5} size={16} />
