@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useAdmin } from '@/hooks/for-db/useAdmin'
 import LoadingOverlay from '@/components/shared/LoadingOverlay'
-import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
 import ProtectedRoute from '@/components/shared/ProtectedRoute'
 import AdminHeader from '@/components/admin-components/AdminHeader'
 import ProjectForm from '@/components/admin-components/ProjectForm'
@@ -16,7 +15,6 @@ import LogoList from '@/components/admin-components/LogoList'
 
 export default function AdminPanel() {
   const {
-    loading,
     error,
     projects,
     setProjectImageFile,
@@ -59,10 +57,6 @@ export default function AdminPanel() {
   } = useAdmin()
 
   const [activeTab, setActiveTab] = useState<'projects' | 'logos' | 'content'>('projects')
-
-  if (loading) {
-    return <LoadingSkeleton />
-  }
 
   if (error) {
     return (
