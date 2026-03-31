@@ -96,7 +96,7 @@ export function useAdmin() {
   const fetchLogos = async () => {
     setLogosLoading(true)
     try {
-      const data = await getLogos()
+      const data = await getLogos(true) // Bypass cache for real-time updates
       setLogos(data)
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Unknown error')
@@ -493,8 +493,20 @@ export function useAdmin() {
         const item = logos.find((l) => l.firestoreId === id)
         if (item?.src) {
           const publicId = getPublicIdFromUrl(item.src)
+          console.log('Attempting to delete logo with publicId:', publicId)
+          console.log('Logo URL:', item.src)
+
           if (publicId) {
-            await deleteFromCloudinary(publicId, 'image')
+            try {
+              const deleted = await deleteFromCloudinary(publicId, 'image')
+              console.log('Cloudinary delete result:', deleted)
+            } catch (cloudinaryError) {
+              console.error('Failed to delete from Cloudinary:', cloudinaryError)
+              // Continue with database deletion even if Cloudinary delete fails
+              console.log('Continuing with database deletion...')
+            }
+          } else {
+            console.warn('Could not extract public ID from URL:', item.src)
           }
         }
         await deleteDoc(doc(db!, 'logos', id))

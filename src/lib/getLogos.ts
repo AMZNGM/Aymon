@@ -13,10 +13,10 @@ let cachedLogos: Logo[] | null = null
 let cacheTimestamp = 0
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 
-export const getLogos = async (): Promise<Logo[]> => {
+export const getLogos = async (bypassCache: boolean = false): Promise<Logo[]> => {
   if (!db) return []
 
-  if (cachedLogos && Date.now() - cacheTimestamp < CACHE_DURATION) {
+  if (!bypassCache && cachedLogos && Date.now() - cacheTimestamp < CACHE_DURATION) {
     return cachedLogos
   }
 

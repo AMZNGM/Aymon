@@ -48,24 +48,24 @@ export const deleteFromCloudinary = async (publicId: string, resourceType: strin
   }
 
   try {
-    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloud}/${resourceType}/destroy`, {
+    const response = await fetch('/api/delete-cloudinary', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        public_id: publicId,
-        resource_type: resourceType,
+        publicId,
+        resourceType,
       }),
     })
 
     if (!response.ok) {
       const errorData = await response.json()
-      throw new Error(`Cloudinary delete failed: ${errorData.error?.message || 'Unknown error'}`)
+      throw new Error(`Cloudinary delete failed: ${errorData.error || 'Unknown error'}`)
     }
 
     const data = await response.json()
-    return data.result === 'ok'
+    return data.success
   } catch (error) {
     console.error('Error deleting from Cloudinary:', error)
     throw new Error(`Failed to delete file from Cloudinary: ${error instanceof Error ? error.message : 'Unknown error'}`)
