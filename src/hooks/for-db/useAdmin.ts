@@ -3,9 +3,9 @@
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, updateDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
-import { auth, db, storage } from '@/lib/firebase'
+import { auth, db } from '@/lib/firebase'
+import { uploadToCloudinary, deleteFromCloudinary, getPublicIdFromUrl } from '@/lib/cloudinary'
 import { getAboutContent, updateAboutContent, getContactContent, updateContactContent } from '@/lib/getAbout'
 import { getLogos } from '@/lib/getLogos'
 import { initialProjectForm } from '@/components/admin-components/ProjectFormConstants'
@@ -13,7 +13,6 @@ import { Project, Logo, AboutContent, ContactContent } from '@/types/admin.types
 
 export function useAdmin() {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [projects, setProjects] = useState<Project[]>([])
   const [projectImageFile, setProjectImageFile] = useState<File | null>(null)
@@ -115,14 +114,14 @@ export function useAdmin() {
       }
       const d = value instanceof Date ? value : new Date(value as string | number | Date)
       return !isNaN(d.getTime()) ? d.toLocaleDateString() : ''
-    } catch (e) {
+    } catch {
       return ''
     }
   }
 
   const addProject = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!projectForm.title || !projectForm.slug || !db || !storage) return
+    if (!projectForm.title || !projectForm.slug || !db) return
     setProjectSubmitting(true)
     try {
       if (editingProjectId) {
@@ -136,18 +135,20 @@ export function useAdmin() {
         const gallery = currentGallery
 
         if (projectImageFile) {
-          const imgRef = ref(storage, `projects/${projectImageFile.name}`)
-          await uploadBytes(imgRef, projectImageFile)
-          primaryUrl = await getDownloadURL(imgRef)
+          primaryUrl = await uploadToCloudinary(projectImageFile, 'data/projects')
         }
 
         const removedGifs = existingGifs.filter((url) => !currentImages.gifs.includes(url))
+        // Delete removed GIFs from Cloudinary
         await Promise.allSettled(
           removedGifs.map(async (url) => {
             try {
-              await deleteObject(ref(storage, url))
+              const publicId = getPublicIdFromUrl(url)
+              if (publicId) {
+                await deleteFromCloudinary(publicId, 'image')
+              }
             } catch (e) {
-              console.warn('Failed to delete GIF from storage:', e)
+              console.warn('Failed to delete GIF from Cloudinary:', e)
             }
           })
         )
@@ -157,22 +158,18 @@ export function useAdmin() {
 
         // Handle single GIF file
         if (projectGifFile) {
-          const gifRef = ref(storage, `projects/gifs/${Date.now()}_${projectGifFile.name}`)
-          await uploadBytes(gifRef, projectGifFile)
-          uploadedGifUrls.push(await getDownloadURL(gifRef))
+          const gifUrl = await uploadToCloudinary(projectGifFile, 'data/projects/gifs')
+          uploadedGifUrls.push(gifUrl)
         }
 
         // Handle multiple GIF files
         for (const file of gifFiles) {
-          const gifRef = ref(storage, `projects/gifs/${Date.now()}_${file.name}`)
-          await uploadBytes(gifRef, file)
-          uploadedGifUrls.push(await getDownloadURL(gifRef))
+          const gifUrl = await uploadToCloudinary(file, 'data/projects/gifs')
+          uploadedGifUrls.push(gifUrl)
         }
 
         for (const file of galleryFiles) {
-          const galleryRef = ref(storage, `projects/gallery/${file.name}`)
-          await uploadBytes(galleryRef, file)
-          const url = await getDownloadURL(galleryRef)
+          const url = await uploadToCloudinary(file, 'data/projects/gallery')
           gallery.push(url)
         }
 
@@ -211,15 +208,11 @@ export function useAdmin() {
         if (!projectImageFile) {
           throw new Error('Primary image is required for new projects')
         }
-        const imgRef = ref(storage, `projects/${projectImageFile.name}`)
-        await uploadBytes(imgRef, projectImageFile)
-        const primaryUrl = await getDownloadURL(imgRef)
+        const primaryUrl = await uploadToCloudinary(projectImageFile, 'data/projects')
 
         const galleryUrls = []
         for (const file of galleryFiles) {
-          const galleryRef = ref(storage, `projects/gallery/${file.name}`)
-          await uploadBytes(galleryRef, file)
-          const url = await getDownloadURL(galleryRef)
+          const url = await uploadToCloudinary(file, 'data/projects/gallery')
           galleryUrls.push(url)
         }
 
@@ -227,16 +220,14 @@ export function useAdmin() {
 
         // Handle single GIF file
         if (projectGifFile) {
-          const gifRef = ref(storage, `projects/gifs/${Date.now()}_${projectGifFile.name}`)
-          await uploadBytes(gifRef, projectGifFile)
-          uploadedGifUrls.push(await getDownloadURL(gifRef))
+          const gifUrl = await uploadToCloudinary(projectGifFile, 'data/projects/gifs')
+          uploadedGifUrls.push(gifUrl)
         }
 
         // Handle multiple GIF files
         for (const file of gifFiles) {
-          const gifRef = ref(storage, `projects/gifs/${Date.now()}_${file.name}`)
-          await uploadBytes(gifRef, file)
-          uploadedGifUrls.push(await getDownloadURL(gifRef))
+          const gifUrl = await uploadToCloudinary(file, 'data/projects/gifs')
+          uploadedGifUrls.push(gifUrl)
         }
 
         await addDoc(collection(db!, 'projects'), {
@@ -279,7 +270,7 @@ export function useAdmin() {
   }
 
   const deleteProject = async (projectId: string) => {
-    if (!db || !storage) return
+    if (!db) return
     if (confirm('Are you sure you want to delete this project and all its images?')) {
       try {
         const project = projects.find((p) => (p.firestoreId || p.id) === projectId)
@@ -287,22 +278,20 @@ export function useAdmin() {
         if (project?.media) {
           const deletePromises = []
 
+          // Delete primary image
           if (project.media.primary) {
-            try {
-              const primaryRef = ref(storage, project.media.primary)
-              deletePromises.push(deleteObject(primaryRef))
-            } catch (error) {
-              console.warn('Failed to delete primary image:', error)
+            const publicId = getPublicIdFromUrl(project.media.primary)
+            if (publicId) {
+              deletePromises.push(deleteFromCloudinary(publicId, 'image'))
             }
           }
 
+          // Delete gallery images
           if (project.media.gallery && Array.isArray(project.media.gallery)) {
             for (const imageUrl of project.media.gallery) {
-              try {
-                const imgRef = ref(storage, imageUrl)
-                deletePromises.push(deleteObject(imgRef))
-              } catch (error) {
-                console.warn('Failed to delete gallery image:', error)
+              const publicId = getPublicIdFromUrl(imageUrl)
+              if (publicId) {
+                deletePromises.push(deleteFromCloudinary(publicId, 'image'))
               }
             }
           }
@@ -310,14 +299,13 @@ export function useAdmin() {
           // Delete gifs (new field) + legacy single gif
           const gifsToDelete = [...(project.media.gifs || []), ...(project.media.gif ? [project.media.gif] : [])]
           for (const gifUrl of gifsToDelete) {
-            try {
-              const gifRef = ref(storage, gifUrl)
-              deletePromises.push(deleteObject(gifRef))
-            } catch (error) {
-              console.warn('Failed to delete gif image:', error)
+            const publicId = getPublicIdFromUrl(gifUrl)
+            if (publicId) {
+              deletePromises.push(deleteFromCloudinary(publicId, 'image'))
             }
           }
 
+          // Wait for all deletions to complete
           await Promise.allSettled(deletePromises)
         }
 
@@ -451,16 +439,14 @@ export function useAdmin() {
   }
 
   const addLogo = async (file: File | string | null, link: string = '') => {
-    if (!db || !storage) return
+    if (!db) return
     setLogoSubmitting(true)
     try {
       let imageUrl = ''
       if (file) {
         // If it's a new file (not just a string URL from an existing logo)
         if (typeof file !== 'string') {
-          const imgRef = ref(storage, `projects/logos/${Date.now()}_${file.name}`)
-          await uploadBytes(imgRef, file)
-          imageUrl = await getDownloadURL(imgRef)
+          imageUrl = await uploadToCloudinary(file, 'data/logos')
         } else {
           imageUrl = file
         }
@@ -501,16 +487,14 @@ export function useAdmin() {
   }
 
   const deleteLogo = async (id: string) => {
-    if (!db || !storage) return
+    if (!db) return
     if (confirm('Are you sure you want to delete this logo?')) {
       try {
         const item = logos.find((l) => l.firestoreId === id)
         if (item?.src) {
-          try {
-            const imgRef = ref(storage, item.src)
-            await deleteObject(imgRef)
-          } catch (e) {
-            console.warn('Failed to delete storage object:', e)
+          const publicId = getPublicIdFromUrl(item.src)
+          if (publicId) {
+            await deleteFromCloudinary(publicId, 'image')
           }
         }
         await deleteDoc(doc(db!, 'logos', id))
@@ -543,7 +527,6 @@ export function useAdmin() {
   }
 
   return {
-    loading,
     error,
     projects,
     projectImageFile,
