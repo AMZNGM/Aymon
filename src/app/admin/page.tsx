@@ -14,6 +14,7 @@ import LogoForm from '@/components/admin-components/LogoForm'
 import LogoList from '@/components/admin-components/LogoList'
 import VideoForm from '@/components/admin-components/VideoForm'
 import VideoList from '@/components/admin-components/VideoList'
+import ProfileImageForm from '@/components/admin-components/ProfileImageForm'
 
 export default function AdminPanel() {
   const {
@@ -70,6 +71,10 @@ export default function AdminPanel() {
     editVideo,
     cancelVideoEdit,
     reorderVideos,
+    // Profile Image
+    profileImage,
+    profileImageSubmitting,
+    updateProfileImage,
   } = useAdmin()
 
   const [activeTab, setActiveTab] = useState<'projects' | 'logos' | 'videos' | 'content'>('projects')
@@ -95,6 +100,7 @@ export default function AdminPanel() {
     <ProtectedRoute>
       {projectSubmitting && <LoadingOverlay text="Uploading Project..." para="Please do not close this window" />}
       {videoSubmitting && <LoadingOverlay text="Uploading Video..." para="Please do not close this window" />}
+      {profileImageSubmitting && <LoadingOverlay text="Uploading Profile Image..." para="Please do not close this window" />}
 
       <div className="relative w-dvw min-h-dvh bg-text text-bg px-1 py-8">
         <div className="max-w-6xl mx-auto">
@@ -187,13 +193,19 @@ export default function AdminPanel() {
                   message={message}
                   updateAbout={updateAbout}
                 />
-                <ContactPopupContent
-                  contactContent={contactContent}
-                  setContactContent={setContactContent}
-                  saving={saving}
-                  message={message}
-                  updateContact={updateContact}
-                />
+                <div className="flex flex-col gap-8">
+                  <ContactPopupContent
+                    contactContent={contactContent}
+                    setContactContent={setContactContent}
+                    saving={saving}
+                    message={message}
+                    updateContact={updateContact}
+                  />
+                  {/* Profile Image Management */}
+                  <div className="h-fit">
+                    <ProfileImageForm currentImage={profileImage?.url} onSubmit={updateProfileImage} submitting={profileImageSubmitting} />
+                  </div>
+                </div>
               </>
             )}
           </div>

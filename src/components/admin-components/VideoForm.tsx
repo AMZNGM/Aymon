@@ -53,15 +53,10 @@ export default function VideoForm({
 
   return (
     <div className="bg-bg/10 rounded-xl mb-6 p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="flex items-center gap-2 font-semibold text-xl">
-          <Video size={20} />
-          {editingVideo ? 'Edit Video' : 'Add New Video'}
-        </h2>
-        <button onClick={onCancel} className="text-bg/60 hover:text-bg transition-colors p-1" title="Cancel">
-          <X size={20} />
-        </button>
-      </div>
+      <h2 className="flex items-center gap-2 font-semibold text-xl mb-4">
+        <Video size={20} />
+        {editingVideo ? 'Edit Video' : 'Add New Video'}
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

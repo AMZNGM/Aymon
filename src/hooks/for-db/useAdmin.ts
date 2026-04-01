@@ -9,8 +9,9 @@ import { uploadToCloudinary, deleteFromCloudinary, getPublicIdFromUrl } from '@/
 import { getAboutContent, updateAboutContent, getContactContent, updateContactContent } from '@/lib/getAbout'
 import { getLogos } from '@/lib/getLogos'
 import { getVideos } from '@/lib/getVideos'
+import { getProfileImage } from '@/lib/getProfileImage'
 import { initialProjectForm } from '@/components/admin-components/ProjectFormConstants'
-import { Project, Logo, AboutContent, ContactContent, Video } from '@/types/admin.types'
+import { Project, Logo, AboutContent, ContactContent, Video, ProfileImage } from '@/types/admin.types'
 
 export function useAdmin() {
   const router = useRouter()
@@ -41,6 +42,10 @@ export function useAdmin() {
   const [videoFile, setVideoFile] = useState<File | null>(null)
   const [videoThumbnailFile, setVideoThumbnailFile] = useState<File | null>(null)
 
+  // Profile image management state
+  const [profileImage, setProfileImage] = useState<ProfileImage | null>(null)
+  const [profileImageSubmitting, setProfileImageSubmitting] = useState(false)
+
   // Content management state
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null)
   const [contactContent, setContactContent] = useState<ContactContent | null>(null)
@@ -58,6 +63,7 @@ export function useAdmin() {
         fetchProjects()
         fetchLogos()
         fetchVideos()
+        fetchProfileImage()
         loadContent()
       }
     })
@@ -124,6 +130,15 @@ export function useAdmin() {
       setError(error instanceof Error ? error.message : 'Unknown error')
     } finally {
       setVideosLoading(false)
+    }
+  }
+
+  const fetchProfileImage = async () => {
+    try {
+      const data = await getProfileImage(true) // Bypass cache for real-time updates
+      setProfileImage(data)
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Unknown error')
     }
   }
 
@@ -626,6 +641,51 @@ export function useAdmin() {
     }
   }
 
+  // Profile image management functions
+  const updateProfileImage = async (file: File) => {
+    if (!db) return
+    setProfileImageSubmitting(true)
+    try {
+      // Upload new image to Cloudinary
+      const imageUrl = await uploadToCloudinary(file, 'data/profile')
+
+      // Delete old image from Cloudinary if it exists
+      if (profileImage?.url) {
+        const publicId = getPublicIdFromUrl(profileImage.url)
+        if (publicId) {
+          try {
+            await deleteFromCloudinary(publicId, 'image')
+          } catch (e) {
+            console.warn('Failed to delete old profile image from Cloudinary:', e)
+          }
+        }
+      }
+
+      const docData = {
+        url: imageUrl,
+        updatedAt: serverTimestamp(),
+      }
+
+      if (profileImage?.firestoreId) {
+        // Update existing profile image
+        await updateDoc(doc(db!, 'profileImages', profileImage.firestoreId), docData)
+      } else {
+        // Create new profile image
+        await addDoc(collection(db!, 'profileImages'), {
+          ...docData,
+          createdAt: serverTimestamp(),
+        })
+      }
+
+      fetchProfileImage()
+    } catch (err) {
+      console.error('Error updating profile image:', err)
+      throw err
+    } finally {
+      setProfileImageSubmitting(false)
+    }
+  }
+
   const deleteLogo = async (id: string) => {
     if (!db) return
     if (confirm('Are you sure you want to delete this logo?')) {
@@ -739,5 +799,10 @@ export function useAdmin() {
     cancelVideoEdit,
     reorderVideos,
     fetchVideos,
+    // Profile Image
+    profileImage,
+    profileImageSubmitting,
+    updateProfileImage,
+    fetchProfileImage,
   }
 }

@@ -88,3 +88,9 @@ export interface Video {
   createdAt?: Date | { toDate(): Date; toMillis(): number }
   updatedAt?: Date | { toDate(): Date; toMillis(): number }
 }
+
+export interface ProfileImage {
+  firestoreId?: string
+  url: string
+  updatedAt?: Date | { toDate(): Date; toMillis(): number }
+}
