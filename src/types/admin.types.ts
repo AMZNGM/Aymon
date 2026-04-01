@@ -76,3 +76,15 @@ export interface ContactContent {
   mobile: string
   socialLinks: SocialLinks
 }
+
+export interface Video {
+  firestoreId?: string
+  title: string
+  description?: string
+  url: string
+  thumbnail?: string
+  order?: number
+  featured?: boolean
+  createdAt?: Date | { toDate(): Date; toMillis(): number }
+  updatedAt?: Date | { toDate(): Date; toMillis(): number }
+}

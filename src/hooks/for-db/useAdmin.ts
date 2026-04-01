@@ -8,8 +8,9 @@ import { auth, db } from '@/lib/firebase'
 import { uploadToCloudinary, deleteFromCloudinary, getPublicIdFromUrl } from '@/lib/cloudinary'
 import { getAboutContent, updateAboutContent, getContactContent, updateContactContent } from '@/lib/getAbout'
 import { getLogos } from '@/lib/getLogos'
+import { getVideos } from '@/lib/getVideos'
 import { initialProjectForm } from '@/components/admin-components/ProjectFormConstants'
-import { Project, Logo, AboutContent, ContactContent } from '@/types/admin.types'
+import { Project, Logo, AboutContent, ContactContent, Video } from '@/types/admin.types'
 
 export function useAdmin() {
   const router = useRouter()
@@ -32,6 +33,14 @@ export function useAdmin() {
   const [logoSubmitting, setLogoSubmitting] = useState(false)
   const [editingLogoId, setEditingLogoId] = useState<string | null>(null)
 
+  // Video management state
+  const [videos, setVideos] = useState<Video[]>([])
+  const [videosLoading, setVideosLoading] = useState(false)
+  const [videoSubmitting, setVideoSubmitting] = useState(false)
+  const [editingVideoId, setEditingVideoId] = useState<string | null>(null)
+  const [videoFile, setVideoFile] = useState<File | null>(null)
+  const [videoThumbnailFile, setVideoThumbnailFile] = useState<File | null>(null)
+
   // Content management state
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null)
   const [contactContent, setContactContent] = useState<ContactContent | null>(null)
@@ -48,6 +57,7 @@ export function useAdmin() {
       } else {
         fetchProjects()
         fetchLogos()
+        fetchVideos()
         loadContent()
       }
     })
@@ -102,6 +112,18 @@ export function useAdmin() {
       setError(error instanceof Error ? error.message : 'Unknown error')
     } finally {
       setLogosLoading(false)
+    }
+  }
+
+  const fetchVideos = async () => {
+    setVideosLoading(true)
+    try {
+      const data = await getVideos(true) // Bypass cache for real-time updates
+      setVideos(data)
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Unknown error')
+    } finally {
+      setVideosLoading(false)
     }
   }
 
@@ -486,6 +508,124 @@ export function useAdmin() {
     setEditingLogoId(null)
   }
 
+  // Video management functions
+  const addVideo = async (videoData: { title: string }) => {
+    if (!db) return
+    setVideoSubmitting(true)
+    try {
+      let videoUrl = ''
+      let thumbnailUrl = ''
+
+      // Upload video file if provided
+      if (videoFile) {
+        videoUrl = await uploadToCloudinary(videoFile, 'data/videos')
+      }
+
+      // Upload thumbnail if provided
+      if (videoThumbnailFile) {
+        thumbnailUrl = await uploadToCloudinary(videoThumbnailFile, 'data/video-thumbnails')
+      }
+
+      const docData = {
+        title: videoData.title,
+        url: videoUrl,
+        thumbnail: thumbnailUrl,
+        order: videos.length,
+        updatedAt: serverTimestamp(),
+      }
+
+      if (editingVideoId) {
+        await updateDoc(doc(db!, 'videos', editingVideoId), docData)
+        setEditingVideoId(null)
+      } else {
+        await addDoc(collection(db!, 'videos'), {
+          ...docData,
+          createdAt: serverTimestamp(),
+        })
+      }
+
+      setVideoFile(null)
+      setVideoThumbnailFile(null)
+      fetchVideos()
+    } catch (err) {
+      console.error('Error adding/updating video:', err)
+      throw err
+    } finally {
+      setVideoSubmitting(false)
+    }
+  }
+
+  const deleteVideo = async (id: string) => {
+    if (!db) return
+    if (confirm('Are you sure you want to delete this video?')) {
+      try {
+        const item = videos.find((v) => v.firestoreId === id)
+        if (item) {
+          // Delete video from Cloudinary
+          if (item.url) {
+            const publicId = getPublicIdFromUrl(item.url)
+            if (publicId) {
+              try {
+                await deleteFromCloudinary(publicId, 'video')
+              } catch (e) {
+                console.warn('Failed to delete video from Cloudinary:', e)
+              }
+            }
+          }
+
+          // Delete thumbnail from Cloudinary
+          if (item.thumbnail) {
+            const publicId = getPublicIdFromUrl(item.thumbnail)
+            if (publicId) {
+              try {
+                await deleteFromCloudinary(publicId, 'image')
+              } catch (e) {
+                console.warn('Failed to delete thumbnail from Cloudinary:', e)
+              }
+            }
+          }
+        }
+
+        await deleteDoc(doc(db!, 'videos', id))
+        fetchVideos()
+      } catch (err) {
+        console.error('Error deleting video:', err)
+      }
+    }
+  }
+
+  const editVideo = (video: Video) => {
+    setEditingVideoId(video.firestoreId || '')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const cancelVideoEdit = () => {
+    setEditingVideoId(null)
+    setVideoFile(null)
+    setVideoThumbnailFile(null)
+  }
+
+  const reorderVideos = async (oldIndex: number, newIndex: number) => {
+    if (!db) return
+    const reordered = [...videos]
+    const [moved] = reordered.splice(oldIndex, 1)
+    reordered.splice(newIndex, 0, moved)
+
+    setVideos(reordered)
+
+    try {
+      const batch = writeBatch(db!)
+      reordered.forEach((video, index) => {
+        const ref = doc(db!, 'videos', video.firestoreId!)
+        batch.update(ref, { order: index })
+      })
+      await batch.commit()
+    } catch (err) {
+      console.error('Error reordering videos:', err)
+      fetchVideos()
+    }
+  }
+
   const deleteLogo = async (id: string) => {
     if (!db) return
     if (confirm('Are you sure you want to delete this logo?')) {
@@ -584,5 +724,20 @@ export function useAdmin() {
     fetchLogos,
     editLogo,
     cancelLogoEdit,
+    // Videos
+    videos,
+    videosLoading,
+    videoSubmitting,
+    editingVideoId,
+    videoFile,
+    setVideoFile,
+    videoThumbnailFile,
+    setVideoThumbnailFile,
+    addVideo,
+    deleteVideo,
+    editVideo,
+    cancelVideoEdit,
+    reorderVideos,
+    fetchVideos,
   }
 }

@@ -12,6 +12,8 @@ import ContentManagement from '@/components/admin-components/ContentManagement'
 import ContactPopupContent from '@/components/admin-components/ContactPopupContent'
 import LogoForm from '@/components/admin-components/LogoForm'
 import LogoList from '@/components/admin-components/LogoList'
+import VideoForm from '@/components/admin-components/VideoForm'
+import VideoList from '@/components/admin-components/VideoList'
 
 export default function AdminPanel() {
   const {
@@ -54,9 +56,23 @@ export default function AdminPanel() {
     reorderLogos,
     editLogo,
     cancelLogoEdit,
+    // Videos
+    videos,
+    videosLoading,
+    videoSubmitting,
+    editingVideoId,
+    videoFile,
+    setVideoFile,
+    videoThumbnailFile,
+    setVideoThumbnailFile,
+    addVideo,
+    deleteVideo,
+    editVideo,
+    cancelVideoEdit,
+    reorderVideos,
   } = useAdmin()
 
-  const [activeTab, setActiveTab] = useState<'projects' | 'logos' | 'content'>('projects')
+  const [activeTab, setActiveTab] = useState<'projects' | 'logos' | 'videos' | 'content'>('projects')
 
   if (error) {
     return (
@@ -78,6 +94,7 @@ export default function AdminPanel() {
   return (
     <ProtectedRoute>
       {projectSubmitting && <LoadingOverlay text="Uploading Project..." para="Please do not close this window" />}
+      {videoSubmitting && <LoadingOverlay text="Uploading Video..." para="Please do not close this window" />}
 
       <div className="relative w-dvw min-h-dvh bg-text text-bg px-1 py-8">
         <div className="max-w-6xl mx-auto">
@@ -85,10 +102,10 @@ export default function AdminPanel() {
 
           {/* Navigation Tabs */}
           <div className="flex gap-4 border-bg/10 border-b mb-8 pb-2">
-            {['projects', 'logos', 'content'].map((tab) => (
+            {['projects', 'logos', 'videos', 'content'].map((tab) => (
               <button
                 key={tab}
-                onClick={() => setActiveTab(tab as 'projects' | 'logos' | 'content')}
+                onClick={() => setActiveTab(tab as 'projects' | 'logos' | 'videos' | 'content')}
                 className={`pb-2 px-1 cursor-pointer capitalize transition-all ${
                   activeTab === tab ? 'border-b-2 border-main font-bold' : 'opacity-50 hover:opacity-100'
                 }`}
@@ -141,6 +158,23 @@ export default function AdminPanel() {
                 />
                 <div className="top-8 sticky h-fit">
                   <LogoList items={logos} onDelete={deleteLogo} onEdit={editLogo} onReorder={reorderLogos} loading={logosLoading} />
+                </div>
+              </>
+            ) : activeTab === 'videos' ? (
+              <>
+                <VideoForm
+                  key={editingVideoId || 'new'}
+                  onSubmit={addVideo}
+                  onCancel={cancelVideoEdit}
+                  submitting={videoSubmitting}
+                  editingVideo={videos.find((v) => v.firestoreId === editingVideoId) || undefined}
+                  videoFile={videoFile}
+                  setVideoFile={setVideoFile}
+                  videoThumbnailFile={videoThumbnailFile}
+                  setVideoThumbnailFile={setVideoThumbnailFile}
+                />
+                <div className="top-8 sticky h-fit">
+                  <VideoList items={videos} onDelete={deleteVideo} onEdit={editVideo} onReorder={reorderVideos} loading={videosLoading} />
                 </div>
               </>
             ) : (
