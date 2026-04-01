@@ -129,7 +129,7 @@ export default function DrawingCanvas() {
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
-  const [currentColor, setCurrentColor] = useState('#000000')
+  const [currentColor, setCurrentColor] = useState('#c8c8cc')
   const lastPos = useRef<{ x: number; y: number } | null>(null)
   const [history, setHistory] = useState<string[]>([])
   const [historyStep, setHistoryStep] = useState(0)
