@@ -121,7 +121,7 @@ export default function RandomImages() {
   )
 
   return (
-    <section ref={sectionRef} className="h-[300dvh] max-md:h-[200dvh]">
+    <section ref={sectionRef} className="h-[300dvh] max-md:h-fit">
       <div ref={containerRef} className="relative flex justify-center items-center h-dvh">
         {IMAGES.map((img, i) => (
           <div key={i} className="absolute cursor-grab active:cursor-grabbing will-change-transform gsap-image">
