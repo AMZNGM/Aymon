@@ -78,7 +78,6 @@ export default function ProjectMedia({ project }: { project: Project }) {
           {/* videos */}
           {hasVideoLink && (
             <AnimIn center blur duration={0.75} className="w-full max-w-4xl mx-auto">
-              <h3 className="font-semibold text-lg capitalize mb-4">{project.media.video?.type}</h3>
               <div className="flex flex-col items-center space-y-4">
                 <VideoThumbnail
                   videoSrc={project.media?.video?.url || ''}
