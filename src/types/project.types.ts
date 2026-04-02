@@ -43,6 +43,7 @@ export interface Project {
       url?: string
       type?: string
       title?: string
+      thumbnail?: string
     }
   }
 }
