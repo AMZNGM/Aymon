@@ -1,9 +1,16 @@
 'use client'
 
 import { useGLTF } from '@react-three/drei'
+import { useEffect } from 'react'
 
 export function Model(props) {
   const { nodes, materials } = useGLTF('/3dmodel/retro-office-v1.glb')
+
+  useEffect(() => {
+    if (props.onLoad) {
+      props.onLoad()
+    }
+  }, [props.onLoad])
 
   return (
     <group {...props} dispose={null}>

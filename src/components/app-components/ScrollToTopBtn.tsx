@@ -12,6 +12,7 @@ export default function ScrollToTopBtn() {
   return (
     <motion.button
       style={{ y, opacity }}
+      whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       className="right-2 bottom-4 z-50 fixed bg-sec rounded-full p-[1dvw] cursor-pointer"

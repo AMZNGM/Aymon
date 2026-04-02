@@ -2,13 +2,26 @@
 
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Environment, PerspectiveCamera, Center, Preload } from '@react-three/drei'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { Model } from '@/components/home-components/3dModal/Model'
 
 export default function Modal3d() {
+  const [isLoaded, setIsLoaded] = useState(false)
+
   return (
     <div className="-top-[12dvh] md:-top-[15dvh] -bottom-[12dvh] md:-bottom-[10dvh] z-10 absolute inset-x-0 max-md:scale-90 cursor-grab active:cursor-grabbing">
-      <Canvas shadows dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: 'high-performance' }} frameloop="always">
+      {!isLoaded && (
+        <div className="absolute inset-0 flex justify-center items-center bg-transparent">
+          <div className="w-8 h-8 border-text border-b-2 rounded-full animate-spin"></div>
+        </div>
+      )}
+
+      <Canvas
+        shadows
+        dpr={[1, 1.2]}
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
+        frameloop={isLoaded ? 'demand' : 'never'}
+      >
         <PerspectiveCamera makeDefault position={[8, 4, 8]} fov={25} />
 
         <OrbitControls
@@ -26,7 +39,7 @@ export default function Modal3d() {
         <Suspense fallback={null}>
           <Environment preset="studio" />
           <Center>
-            <Model />
+            <Model onLoad={() => setIsLoaded(true)} />
           </Center>
           <Preload all />
         </Suspense>

@@ -1,9 +1,37 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Modal3d from '@/components/home-components/3dModal/Modal3d'
+import { useGLTF } from '@react-three/drei'
+
+// Preload the 3D model
+useGLTF.preload('/3dmodel/retro-office-v1.glb')
 
 export default function Visionary() {
+  const [isInView, setIsInView] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.disconnect() // Only load once
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <section className="relative w-dvw h-[40dvh] md:h-[50dvh] lg:h-[60dvh]">
-      <Modal3d />
+    <section ref={ref} className="relative w-dvw h-[40dvh] md:h-[50dvh] lg:h-[60dvh]">
+      {isInView && <Modal3d />}
 
       <div className="flex flex-col justify-center items-center gap-6 w-full h-full uppercase">
         <h3 className="font-sec text-[14.5dvw] leading-none whitespace-nowrap mb-6">{`// Visionary **`}</h3>

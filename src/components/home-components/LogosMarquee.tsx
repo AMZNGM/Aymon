@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { useEffect, useState, useCallback } from 'react'
 import { getLogos } from '@/lib/getLogos'
 import ImagesMarquee from '@/components/ui/ImagesMarquee'
-import LoadingScreen from '@/components/shared/LoadingScreen'
 
 const path =
   'M51.5 517.243C211.013 361.522 344.994 30.4648 618.524 52.5637C922.173 77.0959 1020.81 452.453 1240.41 517.243C1722.64 659.519 2250.74 349.442 2755.5 349.442'
@@ -27,10 +26,6 @@ export default function LogosMarquee() {
   useEffect(() => {
     fetchLogos()
   }, [fetchLogos])
-
-  if (loading) {
-    return <LoadingScreen />
-  }
 
   if (!logos || logos.length === 0) return null
 

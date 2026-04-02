@@ -38,7 +38,7 @@ export default function SelectedWork({
 
       <div className="gap-4 grid md:grid-cols-2">
         {filteredProjects.map((project, index) => (
-          <AnimIn center blur delay={0.2 * index} key={project.id}>
+          <AnimIn center blur delay={0.1 * index} key={project.id}>
             <Link href={`/work/${project.slug}`} className="block relative cursor-none">
               <RippleEffect className="relative aspect-5/4 overflow-hidden rounded-2xl">
                 <ImageIn
