@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'motion/react'
 import { useVideoEmbed } from '@/hooks/useVideoEmbed'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
@@ -106,7 +106,7 @@ export default function ProjectMedia({ project }: { project: Project }) {
 
           {hasReels && (
             <div
-              className={`pt-8 grid gap-6 w-full h-full ${reels.length === 1 ? 'grid-cols-1 max-w-sm mx-auto' : 'grid-cols-1 sm:grid-cols-2'}`}
+              className={`pt-8 grid gap-6 w-full h-full ${reels.length === 1 ? 'grid-cols-1 max-w-sm mx-auto' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}
             >
               {reels.map((reel, index) => {
                 const cleanUrl = reel.split('?')[0].replace(/\/$/, '') + '/'
@@ -146,19 +146,26 @@ export default function ProjectMedia({ project }: { project: Project }) {
 }
 
 function MediaItem({ item }: { item: { type: string; src: string; title: string } }) {
+  const [isLoading, setIsLoading] = useState(true)
+
   return (
     <motion.div className="relative w-full max-w-4xl mx-auto mt-2">
       {(item.type === 'image' || item.type === 'gif') && (
-        <Image
-          src={item.src}
-          alt={item.title}
-          width={2000}
-          height={2000}
-          sizes="100vw"
-          loading="eager"
-          unoptimized={item.type === 'gif'}
-          className="block w-full h-auto rounded-2xl cursor-zoom-in openInModal"
-        />
+        <div className="relative">
+          {!isLoading && <div className="absolute inset-0 bg-bg/25 rounded-2xl animate-pulse" />}
+
+          <Image
+            src={item.src}
+            alt={item.title}
+            width={2000}
+            height={2000}
+            sizes="100vw"
+            loading="eager"
+            unoptimized={item.type === 'gif'}
+            onLoad={() => setIsLoading(false)}
+            className={`block w-full h-auto rounded-2xl cursor-zoom-in openInModal transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+          />
+        </div>
       )}
     </motion.div>
   )
