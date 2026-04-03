@@ -66,7 +66,7 @@ export const generateWorkSEO = (work: Work) => {
   ]
 
   return {
-    title: `${work.name} - ${work.tagline}`,
+    title: `${work.name}`,
     description: work.description || `${work.name} Project by Ahmed Ayman (Aymon).`,
     keywords: keywords.filter(Boolean).join(', '),
   }

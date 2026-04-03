@@ -11,7 +11,7 @@ export default function ProjectHeader({ project, className }: { project: Project
           <div>
             <h1 className="font-sec font-extrabold 2xl:text-[2dvw] max-md:text-3xl text-5xl">{project.client}</h1>
 
-            <div className="flex gap-4 font-mono text-bg/75 2xl:text-[0.9dvw] max-md:text-xs text-sm mt-8">
+            <div className="flex gap-4 font-mono text-bg/75 2xl:text-[0.8dvw] max-md:text-xs text-sm mt-8">
               <span>{project.year}</span>
               <span>•</span>
               <span>{project.category}</span>
