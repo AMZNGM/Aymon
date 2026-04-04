@@ -13,10 +13,10 @@ import LoadingOverlay from '@/components/shared/LoadingOverlay'
 import type { AboutContent } from '@/types/admin.types'
 
 const IMAGES = [
-  '/images/2dModal/11.png',
-  '/images/2dModal/12.png',
-  '/images/2dModal/13.png',
-  '/images/2dModal/14.png',
+  // '/images/2dModal/11.png',
+  // '/images/2dModal/12.png',
+  // '/images/2dModal/13.png',
+  // '/images/2dModal/14.png',
   '/images/2dModal/20.png',
   '/images/2dModal/21.png',
   '/images/2dModal/22.png',
