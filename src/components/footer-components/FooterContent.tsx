@@ -102,7 +102,7 @@ export default function FooterContent() {
             <div className="max-md:flex max-md:justify-between opacity-60 text-[0.8dvw] max-2xl:text-sm max-md:text-end">
               <span>© {aboutContent.nickname}</span>
 
-              <div className="max-md:text-xs text-sm px-2 py-1">
+              <div className="max-md:text-xs text-sm">
                 Powered by{' '}
                 <Link href="https://ngm-lemon.vercel.app/" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
                   <TextWghtGrow label="NGM" />
