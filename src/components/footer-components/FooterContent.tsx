@@ -52,7 +52,7 @@ export default function FooterContent() {
   return (
     <section className="relative flex flex-col justify-between max-md:justify-center max-md:items-center gap-4 w-full h-full bg-bg/50 text-bg capitalize">
       {/* head */}
-      <h6 className="self-center text-[18.5dvw] max-md:text-[20dvw] tracking-[-2px] select-none">
+      <h6 className="self-center max-md:font-extrabold text-[18.5dvw] max-md:text-[20dvw] uppercase tracking-[-2px] select-none">
         <TextWghtGrow
           label={aboutContent.nickname}
           fromFontVariationSettings="'wght' 900, 'slnt' 0"
@@ -99,26 +99,20 @@ export default function FooterContent() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="flex max-md:flex-col-reverse justify-between"
           >
-            <p className="max-md:flex max-md:justify-between opacity-60 text-[0.8dvw] max-2xl:text-sm max-md:text-end">
-              © {aboutContent.nickname} {new Date().getFullYear()}
-              <span className="block text-xs mt-2 md:mt-0">All rights reserved.</span>
-            </p>
+            <div className="max-md:flex max-md:justify-between opacity-60 text-[0.8dvw] max-2xl:text-sm max-md:text-end">
+              <span>© {aboutContent.nickname}</span>
+
+              <div className="max-md:text-xs text-sm px-2 py-1">
+                Powered by{' '}
+                <Link href="https://ngm-lemon.vercel.app/" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                  <TextWghtGrow label="NGM" />
+                </Link>
+              </div>
+            </div>
 
             <div className="flex justify-between md:justify-end md:items-end gap-4 h-full md:text-end pb-4">{socialLinks}</div>
           </motion.div>
         </div>
-      </div>
-
-      <div className="opacity-50 max-md:text-xs text-sm px-2 py-1">
-        Powered by{' '}
-        <Link
-          href="https://www.linkedin.com/in/abdulrahman-ngm-20b689345/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cursor-pointer"
-        >
-          <TextWghtGrow label="NGM" />
-        </Link>
       </div>
     </section>
   )
