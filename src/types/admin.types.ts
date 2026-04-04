@@ -66,6 +66,9 @@ export interface AboutContent {
   position: string
   slogan: string
   bio: string
+  bio1: string
+  bio2: string
+  bio3: string
   location: string
   socialLinks: SocialLinks
 }

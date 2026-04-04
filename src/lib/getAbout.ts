@@ -16,6 +16,9 @@ export interface AboutContent {
   position: string
   slogan: string
   bio: string
+  bio1: string
+  bio2: string
+  bio3: string
   location: string
   socialLinks: SocialLinks
 }
@@ -27,7 +30,10 @@ const defaultAboutContent: AboutContent = {
   nickname: 'Aymon',
   position: 'Multidisciplinary Visual Artist',
   slogan: 'I Shut My eyes to See',
-  bio: `Ahmed Ayman, Known As Aymon...`,
+  bio: `Ahmed Ayman has dedicated his life to it ever since From the age of nine, he has been deeply involved in visual arts, letting curiosity lead him through unexplored territory.`,
+  bio1: `Ahmed Ayman has dedicated his life to it ever since From the age of nine, he has been deeply involved in visual arts, letting curiosity lead him through unexplored territory.`,
+  bio2: `Over the years he explored photography and filmmaking — learning to capture not just what the eye sees, but what it feels. He later expanded his craft into graphic design and 3D design accumulating experience across creative fields that rarely speak the same language.`,
+  bio3: `Aymon has collaborated with many prominent figures in music industry, as well as with advertising companies — leaving his mark through powerful visuals and creative storytelling that lingers long after the moment has passed.`,
   location: 'Cairo, Egypt',
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/aymonin/',

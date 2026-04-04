@@ -18,7 +18,7 @@ export default function ContentManagement({ aboutContent, setAboutContent, savin
         {aboutContent && (
           <div className="space-y-4">
             {Object.entries(aboutContent).map(([key, value]) => {
-              if (key === 'socialLinks') return null
+              if (key === 'socialLinks' || key.startsWith('bio')) return null
 
               return (
                 <div key={key}>
@@ -33,6 +33,20 @@ export default function ContentManagement({ aboutContent, setAboutContent, savin
                 </div>
               )
             })}
+
+            {/* Bio Fields - Always Show bio1, bio2, bio3 */}
+            {['bio1', 'bio2', 'bio3'].map((bioKey) => (
+              <div key={bioKey}>
+                <label className="block font-medium text-bg/70 text-sm uppercase mb-2">{bioKey}</label>
+                <textarea
+                  value={(aboutContent[bioKey as keyof AboutContent] as string) || ''}
+                  onChange={(e) => setAboutContent({ ...aboutContent, [bioKey]: e.target.value })}
+                  placeholder={bioKey}
+                  rows={4}
+                  className="w-full bg-bg/20 border border-bg/30 rounded-md focus:outline-none focus:ring-2 focus:ring-main text-bg px-3 py-2 resize-y"
+                />
+              </div>
+            ))}
 
             {/* Social Links Section */}
             <div className="space-y-2">
