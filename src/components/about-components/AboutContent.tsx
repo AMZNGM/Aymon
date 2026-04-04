@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { getAboutContent } from '@/lib/getAbout'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import AnimText from '@/components/ui/unstyled/AnimText'
 import LoadingOverlay from '@/components/shared/LoadingOverlay'
@@ -34,6 +35,7 @@ export default function AboutContent() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isHoveringBio, setIsHoveringBio] = useState(false)
   const [randomImageIndex, setRandomImageIndex] = useState(0)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const unsubscribe = imageIndex.on('change', (value) => {
@@ -72,30 +74,31 @@ export default function AboutContent() {
   }
 
   return (
-    <section className="relative flex max-md:flex-col justify-between gap-4 w-dvw min-h-dvh uppercase max-md:px-1 md:pe-18">
+    <section className="relative flex justify-between gap-4 w-dvw min-h-dvh uppercase px-4 max-md:px-1 md:pe-18 max-md:pt-12">
       {/* Left Side */}
-      <div className="top-0 z-10 max-md:fixed md:sticky flex flex-col justify-between space-y-12 w-full h-dvh md:p-8">
-        <AnimText as="h2" delay={0.3} className="font-extrabold text-[7.2dvw] leading-[7dvw] max-md:pt-12">
+      <div className="z-10 flex flex-col justify-between gap-1 max-md:text-text md:p-8 max-md:mix-blend-difference">
+        <AnimText as="h2" delay={0.3} className="font-extrabold text-[7.2dvw] leading-[7dvw]">
           {aboutContent.title}
         </AnimText>
 
+        <AnimText as="h2" delay={0.3} className="opacity-60 font-bold text-2xl tracking-tighter">
+          Biography
+        </AnimText>
+
         <div
-          className="relative"
+          onMouseMove={handleBioMouseMove}
           onMouseEnter={() => setIsHoveringBio(true)}
           onMouseLeave={() => setIsHoveringBio(false)}
-          onMouseMove={handleBioMouseMove}
+          className="relative h-full"
         >
-          <AnimIn center blur delay={0.2} className="space-y-18 max-2xl:space-y-8 pe-4">
-            <AnimText as="h2" delay={0.3} className="opacity-60 font-bold text-2xl tracking-tighter">
-              Biography
-            </AnimText>
+          <AnimIn center blur delay={0.2} className="flex flex-col justify-evenly gap-18 h-full pe-4">
             <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio1 || ''}</p>
             <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio2 || ''}</p>
             <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio3 || ''}</p>
           </AnimIn>
 
           {/* Mouse Follower IMAGES */}
-          {isHoveringBio && (
+          {isHoveringBio && !isMobile && (
             <motion.div
               style={{ left: mousePos.x + 20, top: mousePos.y - 100 }}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -112,14 +115,14 @@ export default function AboutContent() {
                   fill
                   sizes="300px"
                   style={{ opacity: randomImageIndex === index ? 1 : 0 }}
-                  className="object-center"
+                  className="object-cover"
                 />
               ))}
             </motion.div>
           )}
         </div>
 
-        <AnimIn center blur delay={0.3} className="max-sm:self-center max-md:mb-8">
+        <AnimIn center blur delay={0.3} className="max-md:mb-8">
           <p className="flex gap-6 opacity-60 font-sec text-lg">
             <span>I Shut My</span>
             <span className="relative">
@@ -132,32 +135,32 @@ export default function AboutContent() {
       </div>
 
       {/* Right Side */}
-      <div className="top-0 max-xl:right-0 max-xl:fixed xl:sticky flex flex-col justify-between w-full max-w-lg h-dvh max-md:h-dvh p-8 max-xl:py-28 max-xl:mix-blend-difference">
-        <span className="opacity-60 font-bold max-xl:text-text/50 text-2xl leading-tight">
+      <div className="top-0 right-0 max-md:fixed sticky flex flex-col justify-between w-full h-dvh p-8">
+        <span className="opacity-60 font-bold max-md:text-sm text-2xl leading-tight">
           est 2003 <br /> Known as - {aboutContent.nickname}
         </span>
 
-        <div className="relative w-full h-[80%]">
+        <div className="relative w-full h-full">
           {IMAGES.map((src, index) => (
             <motion.div
               key={src}
               initial={{ opacity: 0 }}
               animate={{ opacity: currentImage === index ? 1 : 0 }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              transition={{ duration: 0, ease: 'easeInOut' }}
               className="absolute inset-0"
             >
-              <Image src={src} alt={`About image ${index + 1}`} fill className="object-center" sizes="400px" priority={index === 0} />
+              <Image src={src} alt={`About image ${index + 1}`} fill className="object-cover" sizes="400px" priority={index === 0} />
             </motion.div>
           ))}
         </div>
 
-        <p className="opacity-60 font-bold text-bg/75 max-xl:text-text/50 max-md:text-lg text-2xl text-center tracking-tighter">
+        <p className="opacity-60 font-bold max-md:text-sm text-2xl text-center tracking-tighter">
           [{aboutContent.position || 'Multidisciplinary Visual Artist'}]
         </p>
       </div>
 
       {/* Spacer */}
-      <div className="h-[200dvh]" />
+      {/* <div className="h-[200dvh]" /> */}
     </section>
   )
 }
