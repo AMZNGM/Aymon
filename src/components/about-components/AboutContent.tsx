@@ -1,8 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import { gsap } from '@/utils/gsapConfig'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { getAboutContent } from '@/lib/getAbout'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
@@ -26,7 +28,6 @@ const RANDOM_IMAGES = [
   '/images/hero-Images/Proof.webp',
 ]
 
-// Helper to bold specific names in text
 function BioText({ text, className }: { text: string; className?: string }) {
   const parts = text.split(/(Ahmed Ayman|Aymon|filmmaking)/g)
   return (
@@ -45,23 +46,37 @@ function BioText({ text, className }: { text: string; className?: string }) {
 }
 
 export default function AboutContent() {
+  const isMobile = useIsMobile()
+  const sectionRef = useRef<HTMLDivElement>(null)
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null)
   const [loading, setLoading] = useState(true)
   const [currentImage, setCurrentImage] = useState(0)
-  const { scrollYProgress } = useScroll()
-  const imageIndex = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75], [0, 1, 2, 3])
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isHoveringBio, setIsHoveringBio] = useState(false)
   const [randomImageIndex, setRandomImageIndex] = useState(0)
-  const isMobile = useIsMobile()
 
   useEffect(() => {
-    const unsubscribe = imageIndex.on('change', (value) => {
-      const newIndex = Math.max(0, Math.min(3, Math.round(value)))
-      setCurrentImage(newIndex)
+    if (!sectionRef.current || loading) return
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: `+=${IMAGES.length * 20}%`,
+        pin: true,
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress
+          const newIndex = Math.floor(progress * IMAGES.length)
+          const clampedIndex = Math.min(IMAGES.length - 1, newIndex)
+          setCurrentImage(clampedIndex)
+        },
+      })
     })
-    return () => unsubscribe()
-  }, [imageIndex])
+
+    ScrollTrigger.refresh()
+    return () => ctx.revert()
+  }, [loading])
 
   const handleBioMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -92,9 +107,12 @@ export default function AboutContent() {
   }
 
   return (
-    <section className="relative flex justify-between gap-4 w-dvw min-h-dvh uppercase px-4 max-md:px-1 md:pe-18 max-md:pt-12">
+    <section
+      ref={sectionRef}
+      className="relative flex justify-between gap-4 w-dvw min-h-dvh uppercase px-4 max-md:px-1 md:pe-18 max-md:pt-12"
+    >
       {/* Left Side */}
-      <div className="z-10 flex flex-col justify-between gap-1 max-md:text-text md:p-8 max-md:mix-blend-difference">
+      <div className="z-10 flex flex-col justify-between gap-12 max-md:text-text md:p-8 max-md:mix-blend-difference">
         <AnimText as="h2" delay={0.3} className="font-extrabold text-[7.2dvw] leading-[7dvw]">
           {aboutContent.title}
         </AnimText>
@@ -107,12 +125,12 @@ export default function AboutContent() {
           onMouseMove={handleBioMouseMove}
           onMouseEnter={() => setIsHoveringBio(true)}
           onMouseLeave={() => setIsHoveringBio(false)}
-          className="relative h-full"
+          className="relative flex-1 h-full"
         >
-          <AnimIn center blur delay={0.2} className="flex flex-col justify-evenly gap-18 h-full pe-4">
-            <BioText text={aboutContent.bio1 || ''} className="font-medium max-2xl:text-lg text-2xl leading-relaxed" />
-            <BioText text={aboutContent.bio2 || ''} className="font-medium max-2xl:text-lg text-2xl leading-relaxed" />
-            <BioText text={aboutContent.bio3 || ''} className="font-medium max-2xl:text-lg text-2xl leading-relaxed" />
+          <AnimIn center blur delay={0.2} className="flex flex-col justify-evenly gap-8 md:gap-18 h-full pe-4">
+            <BioText text={aboutContent.bio1 || ''} className="font-medium text-lg md:text-2xl leading-relaxed" />
+            <BioText text={aboutContent.bio2 || ''} className="font-medium text-lg md:text-2xl leading-relaxed" />
+            <BioText text={aboutContent.bio3 || ''} className="font-medium text-lg md:text-2xl leading-relaxed" />
           </AnimIn>
 
           {/* Mouse Follower IMAGES */}
@@ -153,32 +171,29 @@ export default function AboutContent() {
       </div>
 
       {/* Right Side */}
-      <div className="top-0 right-0 max-md:fixed sticky flex flex-col justify-between w-full h-dvh p-8">
-        <span className="opacity-60 font-bold max-md:text-sm text-2xl leading-tight">
+      <div className="-z-10 md:z-0 max-md:fixed max-md:inset-0 flex flex-col justify-between gap-12 w-full max-md:h-dvh bg-text md:p-8">
+        <span className="max-md:hidden opacity-60 font-bold text-sm md:text-2xl leading-tight tracking-tighter">
           est 2003 <br /> Known as - {aboutContent.nickname}
         </span>
 
-        <div className="relative w-full h-full">
+        <div className="relative flex-1">
           {IMAGES.map((src, index) => (
             <motion.div
               key={src}
-              initial={{ opacity: 0 }}
+              initial={false}
               animate={{ opacity: currentImage === index ? 1 : 0 }}
-              transition={{ duration: 0, ease: 'easeInOut' }}
+              transition={{ duration: 0, ease: 'easeOut' }}
               className="absolute inset-0"
             >
-              <Image src={src} alt={`About image ${index + 1}`} fill className="object-cover" sizes="400px" priority={index === 0} />
+              <Image src={src} alt={`About image ${index + 1}`} priority={index === 0} fill className="object-cover md:object-contain" />
             </motion.div>
           ))}
         </div>
 
-        <p className="opacity-60 font-bold text-[1.4dvw] max-md:text-sm text-center text-nowrap tracking-tighter">
+        <p className="max-md:hidden opacity-60 font-bold text-[1.4dvw] max-md:text-sm tracking-tighter">
           [{aboutContent.position || 'Multidisciplinary Visual Artist'}]
         </p>
       </div>
-
-      {/* Spacer */}
-      {/* <div className="h-[200dvh]" /> */}
     </section>
   )
 }

@@ -11,7 +11,7 @@ export const generateMetadata = metadataGenerators.about
 export default function About() {
   return (
     <Suspense fallback={<LoadingOverlay />}>
-      <div className="hide-scroll-percent hide-footer">
+      <div className="hide-scroll-percent">
         <SubNavbar />
         <AboutContent />
       </div>
