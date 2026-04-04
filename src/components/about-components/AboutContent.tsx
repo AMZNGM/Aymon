@@ -14,7 +14,6 @@ const IMAGES = ['/images/2dModal/1.png', '/images/2dModal/2.png', '/images/2dMod
 
 const RANDOM_IMAGES = [
   '/images/hero-Images/Asfour.webp',
-  '/images/hero-Images/aymon-self-portrai',
   '/images/hero-Images/caligula.webp',
   '/images/hero-Images/Crow2.webp',
   '/images/hero-Images/Folk.webp',
