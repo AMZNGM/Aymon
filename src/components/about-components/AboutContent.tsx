@@ -12,7 +12,20 @@ import AnimText from '@/components/ui/unstyled/AnimText'
 import LoadingOverlay from '@/components/shared/LoadingOverlay'
 import type { AboutContent } from '@/types/admin.types'
 
-const IMAGES = ['/images/2dModal/11.png', '/images/2dModal/12.png', '/images/2dModal/13.png', '/images/2dModal/14.png']
+const IMAGES = [
+  '/images/2dModal/11.png',
+  '/images/2dModal/12.png',
+  '/images/2dModal/13.png',
+  '/images/2dModal/14.png',
+  '/images/2dModal/20.png',
+  '/images/2dModal/21.png',
+  '/images/2dModal/22.png',
+  '/images/2dModal/23.png',
+  '/images/2dModal/24.png',
+  '/images/2dModal/25.png',
+  '/images/2dModal/26.png',
+  '/images/2dModal/27.png',
+]
 
 const RANDOM_IMAGES = [
   '/images/hero-Images/Asfour.webp',
@@ -29,11 +42,21 @@ const RANDOM_IMAGES = [
 ]
 
 function BioText({ text, className }: { text: string; className?: string }) {
-  const parts = text.split(/(Ahmed Ayman|Aymon|filmmaking)/g)
+  const parts = text.split(
+    /(Ahmed Ayman|Aymon|filmmaking|the age of nine|photography|graphic design|3D design|music industry|advertising companies)/g
+  )
   return (
     <p className={className}>
       {parts.map((part, i) =>
-        part === 'Ahmed Ayman' || part === 'Aymon' || part === 'filmmaking' ? (
+        part === 'Ahmed Ayman' ||
+        part === 'Aymon' ||
+        part === 'filmmaking' ||
+        part === 'the age of nine' ||
+        part === 'photography' ||
+        part === 'graphic design' ||
+        part === '3D design' ||
+        part === 'music industry' ||
+        part === 'advertising companies' ? (
           <strong key={i} className="font-bold">
             {part}
           </strong>
@@ -109,7 +132,7 @@ export default function AboutContent() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex justify-between gap-4 w-dvw min-h-dvh uppercase px-4 max-md:px-1 md:pe-18 max-md:pt-12"
+      className="relative flex justify-between gap-4 w-dvw min-h-dvh uppercase px-4 max-md:px-1 md:pe-18 max-md:pt-18"
     >
       {/* Left Side */}
       <div className="z-10 flex flex-col justify-between gap-12 max-md:text-text md:p-8 max-md:mix-blend-difference">
@@ -127,10 +150,10 @@ export default function AboutContent() {
           onMouseLeave={() => setIsHoveringBio(false)}
           className="relative flex-1 h-full"
         >
-          <AnimIn center blur delay={0.2} className="flex flex-col justify-evenly gap-8 md:gap-18 h-full pe-4">
-            <BioText text={aboutContent.bio1 || ''} className="font-medium text-lg md:text-2xl leading-relaxed" />
-            <BioText text={aboutContent.bio2 || ''} className="font-medium text-lg md:text-2xl leading-relaxed" />
-            <BioText text={aboutContent.bio3 || ''} className="font-medium text-lg md:text-2xl leading-relaxed" />
+          <AnimIn center blur delay={0.2} className="flex flex-col md:justify-evenly gap-8 md:gap-18 h-full pe-4">
+            <BioText text={aboutContent.bio1 || ''} className="font-medium max-md:text-sm text-2xl leading-relaxed" />
+            <BioText text={aboutContent.bio2 || ''} className="font-medium max-md:text-sm text-2xl leading-relaxed" />
+            <BioText text={aboutContent.bio3 || ''} className="font-medium max-md:text-sm text-2xl leading-relaxed" />
           </AnimIn>
 
           {/* Mouse Follower IMAGES */}
@@ -171,12 +194,12 @@ export default function AboutContent() {
       </div>
 
       {/* Right Side */}
-      <div className="-z-10 md:z-0 max-md:fixed max-md:inset-0 flex flex-col justify-between gap-12 w-full max-md:h-dvh bg-text md:p-8">
+      <div className="-z-10 md:z-0 max-md:fixed max-md:inset-0 flex flex-col justify-between gap-12 w-full bg-text md:p-8">
         <span className="max-md:hidden opacity-60 font-bold text-sm md:text-2xl leading-tight tracking-tighter">
           est 2003 <br /> Known as - {aboutContent.nickname}
         </span>
 
-        <div className="relative flex-1">
+        <div className="relative flex-1 max-md:scale-70 max-md:origin-top max-md:mt-18">
           {IMAGES.map((src, index) => (
             <motion.div
               key={src}
