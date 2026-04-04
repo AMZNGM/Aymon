@@ -15,7 +15,7 @@ export default function ScrollIcon() {
         </div>
       </div>
 
-      <motion.span className="max-md:hidden block font-medium text-bg/60 text-xs text-center md:mt-2">
+      <motion.span className="in-[:where(.hide-scroll-percent)]:hidden max-md:hidden block font-medium text-bg/60 text-xs text-center md:mt-2">
         {useTransform(percentage, (v) => `${Math.round(v)}%`)}
       </motion.span>
     </section>
