@@ -172,7 +172,7 @@ export default function AboutContent() {
           ))}
         </div>
 
-        <p className="opacity-60 font-bold max-md:text-sm text-2xl text-center tracking-tighter">
+        <p className="opacity-60 font-bold text-[1.4dvw] max-md:text-sm text-center text-nowrap tracking-tighter">
           [{aboutContent.position || 'Multidisciplinary Visual Artist'}]
         </p>
       </div>
