@@ -26,6 +26,24 @@ const RANDOM_IMAGES = [
   '/images/hero-Images/Proof.webp',
 ]
 
+// Helper to bold specific names in text
+function BioText({ text, className }: { text: string; className?: string }) {
+  const parts = text.split(/(Ahmed Ayman|Aymon|filmmaking)/g)
+  return (
+    <p className={className}>
+      {parts.map((part, i) =>
+        part === 'Ahmed Ayman' || part === 'Aymon' || part === 'filmmaking' ? (
+          <strong key={i} className="font-bold">
+            {part}
+          </strong>
+        ) : (
+          part
+        )
+      )}
+    </p>
+  )
+}
+
 export default function AboutContent() {
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null)
   const [loading, setLoading] = useState(true)
@@ -92,9 +110,9 @@ export default function AboutContent() {
           className="relative h-full"
         >
           <AnimIn center blur delay={0.2} className="flex flex-col justify-evenly gap-18 h-full pe-4">
-            <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio1 || ''}</p>
-            <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio2 || ''}</p>
-            <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio3 || ''}</p>
+            <BioText text={aboutContent.bio1 || ''} className="font-medium max-2xl:text-lg text-2xl leading-relaxed" />
+            <BioText text={aboutContent.bio2 || ''} className="font-medium max-2xl:text-lg text-2xl leading-relaxed" />
+            <BioText text={aboutContent.bio3 || ''} className="font-medium max-2xl:text-lg text-2xl leading-relaxed" />
           </AnimIn>
 
           {/* Mouse Follower IMAGES */}
