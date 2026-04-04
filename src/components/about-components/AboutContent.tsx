@@ -6,11 +6,10 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { getAboutContent } from '@/lib/getAbout'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import AnimText from '@/components/ui/unstyled/AnimText'
-import WordMagnet from '@/components/ui/text/WordMagnet'
 import LoadingOverlay from '@/components/shared/LoadingOverlay'
 import type { AboutContent } from '@/types/admin.types'
 
-const IMAGES = ['/images/2dModal/1.png', '/images/2dModal/2.png', '/images/2dModal/3.png', '/images/2dModal/4.png']
+const IMAGES = ['/images/2dModal/11.png', '/images/2dModal/12.png', '/images/2dModal/13.png', '/images/2dModal/14.png']
 
 const RANDOM_IMAGES = [
   '/images/hero-Images/Asfour.webp',
@@ -87,12 +86,12 @@ export default function AboutContent() {
           onMouseMove={handleBioMouseMove}
         >
           <AnimIn center blur delay={0.2} className="space-y-18 max-2xl:space-y-8 pe-4">
-            <AnimText as="h2" delay={0.3} className="text-2xl">
+            <AnimText as="h2" delay={0.3} className="opacity-60 font-bold text-2xl tracking-tighter">
               Biography
             </AnimText>
-            <WordMagnet text={aboutContent.bio1 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
-            <WordMagnet text={aboutContent.bio2 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
-            <WordMagnet text={aboutContent.bio3 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
+            <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio1 || ''}</p>
+            <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio2 || ''}</p>
+            <p className="font-medium max-2xl:text-lg text-2xl leading-relaxed">{aboutContent.bio3 || ''}</p>
           </AnimIn>
 
           {/* Mouse Follower IMAGES */}
@@ -113,7 +112,7 @@ export default function AboutContent() {
                   fill
                   sizes="300px"
                   style={{ opacity: randomImageIndex === index ? 1 : 0 }}
-                  className="object-cover"
+                  className="object-center"
                 />
               ))}
             </motion.div>
@@ -121,7 +120,7 @@ export default function AboutContent() {
         </div>
 
         <AnimIn center blur delay={0.3} className="max-sm:self-center max-md:mb-8">
-          <p className="flex gap-6 font-sec text-bg/60 text-lg">
+          <p className="flex gap-6 opacity-60 font-sec text-lg">
             <span>I Shut My</span>
             <span className="relative">
               **
@@ -134,7 +133,7 @@ export default function AboutContent() {
 
       {/* Right Side */}
       <div className="top-0 max-xl:right-0 max-xl:fixed xl:sticky flex flex-col justify-between w-full max-w-lg h-dvh max-md:h-dvh p-8 max-xl:py-28 max-xl:mix-blend-difference">
-        <span className="max-xl:text-text/50 text-2xl">
+        <span className="opacity-60 font-bold max-xl:text-text/50 text-2xl leading-tight">
           est 2003 <br /> Known as - {aboutContent.nickname}
         </span>
 
@@ -152,7 +151,7 @@ export default function AboutContent() {
           ))}
         </div>
 
-        <p className="text-bg/75 max-xl:text-text/50 max-md:text-lg text-2xl text-center">
+        <p className="opacity-60 font-bold text-bg/75 max-xl:text-text/50 max-md:text-lg text-2xl text-center tracking-tighter">
           [{aboutContent.position || 'Multidisciplinary Visual Artist'}]
         </p>
       </div>
