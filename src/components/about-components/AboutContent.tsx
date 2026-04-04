@@ -12,12 +12,30 @@ import type { AboutContent } from '@/types/admin.types'
 
 const IMAGES = ['/images/2dModal/1.png', '/images/2dModal/2.png', '/images/2dModal/3.png', '/images/2dModal/4.png']
 
+const RANDOM_IMAGES = [
+  '/images/hero-Images/Asfour.webp',
+  '/images/hero-Images/aymon-self-portrai',
+  '/images/hero-Images/caligula.webp',
+  '/images/hero-Images/Crow2.webp',
+  '/images/hero-Images/Folk.webp',
+  '/images/hero-Images/Forcing.webp',
+  '/images/hero-Images/Inside.webp',
+  '/images/hero-Images/Metro.webp',
+  '/images/hero-Images/Working24.webp',
+  '/images/hero-Images/Perspective.webp',
+  '/images/hero-Images/Pigeon.webp',
+  '/images/hero-Images/Proof.webp',
+]
+
 export default function AboutContent() {
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null)
   const [loading, setLoading] = useState(true)
   const [currentImage, setCurrentImage] = useState(0)
   const { scrollYProgress } = useScroll()
   const imageIndex = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75], [0, 1, 2, 3])
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isHoveringBio, setIsHoveringBio] = useState(false)
+  const [randomImageIndex, setRandomImageIndex] = useState(0)
 
   useEffect(() => {
     const unsubscribe = imageIndex.on('change', (value) => {
@@ -26,6 +44,15 @@ export default function AboutContent() {
     })
     return () => unsubscribe()
   }, [imageIndex])
+
+  const handleBioMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const y = e.clientY - rect.top
+    setMousePos({ x: e.clientX, y: e.clientY })
+    const percentage = y / rect.height
+    const newIndex = Math.floor(percentage * RANDOM_IMAGES.length)
+    setRandomImageIndex(Math.max(0, Math.min(RANDOM_IMAGES.length - 1, newIndex)))
+  }
 
   useEffect(() => {
     async function fetchContent() {
@@ -54,14 +81,45 @@ export default function AboutContent() {
           {aboutContent.title}
         </AnimText>
 
-        <AnimIn center blur delay={0.2} className="space-y-18 max-2xl:space-y-8 pe-4">
-          <AnimText as="h2" delay={0.3} className="text-2xl">
-            Biography
-          </AnimText>
-          <WordMagnet text={aboutContent.bio1 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
-          <WordMagnet text={aboutContent.bio2 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
-          <WordMagnet text={aboutContent.bio3 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
-        </AnimIn>
+        <div
+          className="relative"
+          onMouseEnter={() => setIsHoveringBio(true)}
+          onMouseLeave={() => setIsHoveringBio(false)}
+          onMouseMove={handleBioMouseMove}
+        >
+          <AnimIn center blur delay={0.2} className="space-y-18 max-2xl:space-y-8 pe-4">
+            <AnimText as="h2" delay={0.3} className="text-2xl">
+              Biography
+            </AnimText>
+            <WordMagnet text={aboutContent.bio1 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
+            <WordMagnet text={aboutContent.bio2 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
+            <WordMagnet text={aboutContent.bio3 || ''} className="max-2xl:text-sm text-lg leading-relaxed" />
+          </AnimIn>
+
+          {/* Mouse Follower IMAGES */}
+          {isHoveringBio && (
+            <motion.div
+              style={{ left: mousePos.x + 20, top: mousePos.y - 100 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2 }}
+              className="z-50 fixed w-75 h-75 overflow-hidden shadow-2xl rounded-lg pointer-events-none"
+            >
+              {RANDOM_IMAGES.map((src, index) => (
+                <Image
+                  key={src}
+                  src={src}
+                  alt={`Random image ${index + 1}`}
+                  fill
+                  sizes="300px"
+                  style={{ opacity: randomImageIndex === index ? 1 : 0 }}
+                  className="object-cover"
+                />
+              ))}
+            </motion.div>
+          )}
+        </div>
 
         <AnimIn center blur delay={0.3} className="max-sm:self-center max-md:mb-8">
           <p className="flex gap-6 font-sec text-bg/60 text-lg">
@@ -90,7 +148,7 @@ export default function AboutContent() {
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               className="absolute inset-0"
             >
-              <Image src={src} alt={`About image ${index + 1}`} fill className="object-contain" sizes="400px" priority={index === 0} />
+              <Image src={src} alt={`About image ${index + 1}`} fill className="object-center" sizes="400px" priority={index === 0} />
             </motion.div>
           ))}
         </div>
@@ -101,7 +159,7 @@ export default function AboutContent() {
       </div>
 
       {/* Spacer */}
-      <div className="h-[400dvh]" />
+      <div className="h-[200dvh]" />
     </section>
   )
 }
