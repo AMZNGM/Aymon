@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { gsap } from '@/utils/gsapConfig'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { gsap, ScrollTrigger } from '@/utils/gsapConfig'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { getAboutContent } from '@/lib/getAbout'
 import AnimIn from '@/components/ui/unstyled/AnimIn'
 import AnimText from '@/components/ui/unstyled/AnimText'
@@ -50,6 +50,7 @@ function BioText({ text, className }: { text: string; className?: string }) {
 }
 
 export default function AboutContent() {
+  const isMobile = useIsMobile()
   const sectionRef = useRef<HTMLDivElement>(null)
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null)
   const [loading, setLoading] = useState(true)
@@ -57,11 +58,12 @@ export default function AboutContent() {
 
   // Auto-cycle images
   useEffect(() => {
+    if (!isMobile) return
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % IMAGES.length)
     }, 500)
     return () => clearInterval(interval)
-  }, [])
+  }, [isMobile])
 
   // scroll-driven image animation on desktop
   useEffect(() => {
