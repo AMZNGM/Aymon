@@ -48,6 +48,8 @@ This web application serves as his digital canvas, showcasing his diverse portfo
 ### Backend & Tools
 
 - **[Firebase](https://firebase.google.com/)**: Database and authentication services.
+- **[Cloudinary](https://cloudinary.com/)**: Image and video hosting, optimization, and transformations.
+- **[usehooks-ts](https://usehooks-ts.com/)**: Essential React hooks for common use cases.
 
 ---
 
