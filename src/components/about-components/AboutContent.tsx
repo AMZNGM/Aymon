@@ -55,11 +55,11 @@ export default function AboutContent() {
   const [loading, setLoading] = useState(true)
   const [currentImage, setCurrentImage] = useState(0)
 
-  // Auto-cycle images on mobile
+  // Auto-cycle images
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % IMAGES.length)
-    }, 3000)
+    }, 500)
     return () => clearInterval(interval)
   }, [])
 
