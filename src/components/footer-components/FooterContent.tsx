@@ -4,17 +4,13 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { useInterval } from 'usehooks-ts'
+import { usePathname } from 'next/navigation'
 import { useAbout } from '@/hooks/for-db/useAbout'
 import TextWghtGrow from '@/components/ui/text/TextWghtGrow'
 
-const quickLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/work', label: 'Work' },
-  { href: '/about', label: 'About' },
-]
-
 export default function FooterContent() {
   const { aboutContent, loading } = useAbout()
+  const pathname = usePathname()
   const [currentTime, setCurrentTime] = useState(new Date())
 
   useInterval(() => {
@@ -31,6 +27,17 @@ export default function FooterContent() {
       }),
     []
   )
+
+  const quickLinks = useMemo(() => {
+    const allLinks = [
+      { href: '/', label: 'Home' },
+      { href: '/work', label: 'Work' },
+      { href: '/about', label: 'About' },
+      { href: '/contact', label: 'Contact' },
+    ]
+
+    return allLinks.filter((link) => link.href !== pathname)
+  }, [pathname])
 
   const socialLinks = useMemo(() => {
     if (!aboutContent?.socialLinks) return []

@@ -19,6 +19,34 @@ export const metadata = {
   title: 'Ahmed Ayman',
   description:
     'Ahmed Ayman, also known as Aymon, is a multidisciplinary visual artist based in Cairo, Egypt. He is known for his unique style and innovative approach to art, which has earned him recognition in the art world.',
+  openGraph: {
+    title: 'Ahmed Ayman - Visual Artist',
+    description: 'Multidisciplinary visual artist based in Cairo, Egypt. Explore innovative artworks and creative projects.',
+    url: 'https://aymon.work/',
+    siteName: 'Ahmed Ayman',
+    images: [
+      {
+        url: '/images/profile2.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Ahmed Ayman - Visual Artist',
+      },
+      {
+        url: '/images/profile2.webp',
+        width: 1200,
+        height: 1200,
+        alt: 'Ahmed Ayman Profile',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ahmed Ayman - Visual Artist',
+    description: 'Multidisciplinary visual artist based in Cairo, Egypt. Explore innovative artworks and creative projects.',
+    url: '/images/profile2.webp',
+  },
   robots: {
     index: true,
     follow: true,

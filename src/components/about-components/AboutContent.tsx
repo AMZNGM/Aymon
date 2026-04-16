@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform, type MotionValue } from 'motion/react'
 import { gsap, ScrollTrigger } from '@/utils/gsapConfig'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import { getAboutContent } from '@/lib/getAbout'
@@ -22,30 +22,139 @@ const IMAGES = [
   '/images/2dModal/27.png',
 ]
 
-function BioText({ text, className }: { text: string; className?: string }) {
-  const parts = text.split(
-    /(Ahmed Ayman|Aymon|filmmaking|the age of nine|photography|graphic design|3D design|music industry|advertising companies)/g
-  )
+const HIGHLIGHT_KEYWORDS = new Set([
+  'Ahmed Ayman',
+  'Aymon',
+  'filmmaking',
+  'the age of nine',
+  'photography',
+  'graphic design',
+  '3D design',
+  'music industry',
+  'advertising companies',
+])
+
+const HIGHLIGHT_REGEX = new RegExp(`(${[...HIGHLIGHT_KEYWORDS].join('|')})`, 'g')
+
+function ScrollChar({
+  char,
+  index,
+  total,
+  scrollYProgress,
+  progressRange,
+}: {
+  char: string
+  index: number
+  total: number
+  scrollYProgress: MotionValue<number>
+  progressRange: [number, number]
+}) {
+  const animStart = progressRange[0] + (index / total) * (progressRange[1] - progressRange[0])
+  const animEnd = progressRange[0] + ((index + 1) / total) * (progressRange[1] - progressRange[0])
+  const opacity = useTransform(scrollYProgress, [animStart, animEnd], [0.5, 1])
+
+  return <motion.span style={{ opacity }}>{char}</motion.span>
+}
+
+function BioText({
+  text,
+  className,
+  scrollYProgress,
+  progressRange,
+}: {
+  text: string
+  className?: string
+  scrollYProgress: MotionValue<number>
+  progressRange: [number, number]
+}) {
+  const parts = text.split(HIGHLIGHT_REGEX)
+
+  // flatten all chars with their bold info
+  const chars: { char: string; bold: boolean }[] = []
+  for (const part of parts) {
+    const isBold = HIGHLIGHT_KEYWORDS.has(part)
+    for (const c of part) chars.push({ char: c, bold: isBold })
+  }
+
+  // group consecutive chars by bold flag for wrapping
+  const groups: { bold: boolean; startIdx: number; chars: string[] }[] = []
+  for (let i = 0; i < chars.length; i++) {
+    const last = groups[groups.length - 1]
+    if (last && last.bold === chars[i].bold) {
+      last.chars.push(chars[i].char)
+    } else {
+      groups.push({ bold: chars[i].bold, startIdx: i, chars: [chars[i].char] })
+    }
+  }
+
+  const total = chars.length
+
   return (
     <p className={className}>
-      {parts.map((part, i) =>
-        part === 'Ahmed Ayman' ||
-        part === 'Aymon' ||
-        part === 'filmmaking' ||
-        part === 'the age of nine' ||
-        part === 'photography' ||
-        part === 'graphic design' ||
-        part === '3D design' ||
-        part === 'music industry' ||
-        part === 'advertising companies' ? (
-          <strong key={i} className="font-bold">
-            {part}
+      {groups.map((group, gi) => {
+        const inner = group.chars.map((c, ci) => (
+          <ScrollChar
+            key={group.startIdx + ci}
+            char={c}
+            index={group.startIdx + ci}
+            total={total}
+            scrollYProgress={scrollYProgress}
+            progressRange={progressRange}
+          />
+        ))
+
+        return group.bold ? (
+          <strong key={gi} className="font-bold">
+            {inner}
           </strong>
         ) : (
-          part
+          <span key={gi}>{inner}</span>
         )
-      )}
+      })}
     </p>
+  )
+}
+
+function ScrollBio({
+  bio1,
+  bio2,
+  bio3,
+  scrollYProgress,
+}: {
+  bio1: string
+  bio2: string
+  bio3: string
+  scrollYProgress: MotionValue<number>
+}) {
+  const len1 = bio1.length
+  const len2 = bio2.length
+  const len3 = bio3.length
+  const totalLength = Math.max(1, len1 + len2 + len3)
+
+  const end1 = len1 / totalLength
+  const end2 = (len1 + len2) / totalLength
+
+  return (
+    <AnimIn center blur delay={0.2} className="relative flex flex-col flex-1 md:justify-evenly gap-10 md:gap-18 h-full md:pe-4">
+      <BioText
+        text={bio1}
+        scrollYProgress={scrollYProgress}
+        progressRange={[0, end1]}
+        className="font-medium md:text-2xl leading-relaxed max-md:leading-loose"
+      />
+      <BioText
+        text={bio2}
+        scrollYProgress={scrollYProgress}
+        progressRange={[end1, end2]}
+        className="font-medium md:text-2xl leading-relaxed max-md:leading-loose"
+      />
+      <BioText
+        text={bio3}
+        scrollYProgress={scrollYProgress}
+        progressRange={[end2, 1]}
+        className="font-medium md:text-2xl leading-relaxed max-md:leading-loose"
+      />
+    </AnimIn>
   )
 }
 
@@ -55,6 +164,7 @@ export default function AboutContent() {
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null)
   const [loading, setLoading] = useState(true)
   const [currentImage, setCurrentImage] = useState(0)
+  const progressMV = useMotionValue(0)
 
   // Auto-cycle images
   useEffect(() => {
@@ -83,6 +193,18 @@ export default function AboutContent() {
               const newIndex = Math.floor(progress * IMAGES.length)
               const clampedIndex = Math.min(IMAGES.length - 1, newIndex)
               setCurrentImage(clampedIndex)
+              progressMV.set(progress)
+            },
+          })
+        },
+        '(max-width: 767px)': () => {
+          ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            end: 'bottom 40%',
+            scrub: 1,
+            onUpdate: (self) => {
+              progressMV.set(self.progress)
             },
           })
         },
@@ -91,7 +213,7 @@ export default function AboutContent() {
 
     ScrollTrigger.refresh()
     return () => ctx.revert()
-  }, [loading])
+  }, [loading, progressMV])
 
   // fetching
   useEffect(() => {
@@ -143,11 +265,12 @@ export default function AboutContent() {
           [{aboutContent.position || 'Multidisciplinary Visual Artist'}]
         </p>
 
-        <AnimIn center blur delay={0.2} className="relative flex flex-col flex-1 md:justify-evenly gap-10 md:gap-18 h-full md:pe-4">
-          <BioText text={aboutContent.bio1 || ''} className="font-medium md:text-2xl leading-relaxed max-md:leading-loose" />
-          <BioText text={aboutContent.bio2 || ''} className="font-medium md:text-2xl leading-relaxed max-md:leading-loose" />
-          <BioText text={aboutContent.bio3 || ''} className="font-medium md:text-2xl leading-relaxed max-md:leading-loose" />
-        </AnimIn>
+        <ScrollBio
+          bio1={aboutContent.bio1 || ''}
+          bio2={aboutContent.bio2 || ''}
+          bio3={aboutContent.bio3 || ''}
+          scrollYProgress={progressMV}
+        />
 
         <AnimIn as="p" center blur delay={0.3} className="flex max-md:justify-center gap-6 opacity-60! font-sec text-xl mb-12">
           <span>I Shut My</span>
