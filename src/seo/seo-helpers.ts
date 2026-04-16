@@ -23,10 +23,16 @@ export function createMetadataGenerator(route: RouteKey) {
         url: `https://www.aymon.work${route === '/' ? '' : route}`,
         images: [
           {
-            url: '/images/mainPhoto2.webp',
+            url: '/images/hero-Images/aymon-self-portrait.webp',
             width: 1200,
             height: 630,
             alt: 'Ahmed Ayman | Aymon',
+          },
+          {
+            url: '/images/profile2.webp',
+            width: 1200,
+            height: 1200,
+            alt: 'Ahmed Ayman Profile',
           },
         ],
       },
@@ -34,7 +40,7 @@ export function createMetadataGenerator(route: RouteKey) {
         card: 'summary_large_image',
         title: seoData.title,
         description: seoData.description,
-        images: ['/images/mainPhoto2.webp'],
+        images: ['/images/hero-Images/aymon-self-portrait.webp'],
       },
     }
   }
