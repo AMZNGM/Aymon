@@ -110,7 +110,7 @@ export default function FooterContent() {
               <span>© {aboutContent.nickname}</span>
 
               <div className="max-md:text-xs text-sm">
-                Powered by{' '}
+                Built by{' '}
                 <Link href="https://ngm-lemon.vercel.app/" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
                   <TextWghtGrow label="NGM" />
                 </Link>
